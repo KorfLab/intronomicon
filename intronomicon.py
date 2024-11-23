@@ -1,4 +1,27 @@
-import korflab
+import re
+import xml.etree.ElementTree as ET
+
+def descend_tree(node, prev):
+	if len(node) == 0: return prev
+	objects = []
+	for item in node:
+		obj = {'tag': item.tag}
+		if item.text and re.match('\S',  item.text): obj['txt'] = item.text
+		if item.attrib: obj['att'] = item.attrib
+		contents = descend_tree(item, [])
+		if len(contents) > 0: obj['has'] = contents
+		objects.append(obj)
+	return objects
+
+def read_xml(fp):
+	tree = ET.parse(fp)
+	root = tree.getroot()
+	data = {'tag': root.tag}
+	if re.search('\S', root.text): data['txt'] = root.text
+	if root.attrib: data['att'] = root.attrib
+	contents = descend_tree(root, [])
+	if contents: data['has'] = contents
+	return data
 
 def get(src, tag, att=None):
 	if src['tag'] != tag: return None
@@ -22,7 +45,7 @@ def read_sra_xml(fp):
 		'runs': [],
 	}
 
-	eps = korflab.read_xml(fp)
+	eps = read_xml(fp)
 	pkg = eps['has'][0]
 	if len(pkg['has']) != 7: return None, 'incomplete experiment package'
 
@@ -32,10 +55,10 @@ def read_sra_xml(fp):
 	exp = pkg['has'][0]
 	obj['srx_id'] = get(exp['has'][0]['has'][0], 'PRIMARY_ID')
 	obj['srp_id'] = get(exp['has'][2], 'STUDY_REF', att='accession')
+
+	# get library data
 	des = exp['has'][3]
 	obj['sam_id'] = get(des['has'][1], 'SAMPLE_DESCRIPTOR', att='accession')
-
-	# library info is not always in the same order
 	lib = {}
 	for thing in des['has'][2]['has']:
 		if 'tag' in thing and 'txt' in thing:
@@ -61,7 +84,7 @@ def read_sra_xml(fp):
 		return None, 'unknown strategy'
 	if lib['LIBRARY_SOURCE'] != 'TRANSCRIPTOMIC':
 		return None, lib['LIBRARY_SOURCE']
-	obj['paired'] = False if lib['LIBRARY_SELECTION'] == 'SINGLE' else True
+	obj['paired'] = 0 if lib['LIBRARY_SELECTION'] == 'SINGLE' else 1
 
 	# platform
 	obj['platform'] = exp['has'][4]['has'][0]['tag']
@@ -85,6 +108,7 @@ def read_sra_xml(fp):
 				satt[tag] = val
 	if taxid is None: sys.exit('wtf taxid')
 	obj['taxid'] = taxid
+	obj['info'] = satt
 
 	##################
 	# RUNSET SECTION #
@@ -98,9 +122,9 @@ def read_sra_xml(fp):
 		for val in (srr_id, spots, bases, size):
 			if val is None: sys.exit('wtf run')
 			obj['runs'].append({
-				'srr_id': srr_id,
-				'seqs': int(spots),
-				'length': int(bases)/int(spots)})
+				'run_id': srr_id,
+				'nts': int(bases),
+				'seqs': int(spots)})
 
 	###################
 	# UNUSED SECTIONS #
