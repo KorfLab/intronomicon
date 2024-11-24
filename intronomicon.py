@@ -119,12 +119,14 @@ def read_sra_xml(fp):
 		spots = get(r, 'RUN', att='total_spots')
 		bases = get(r, 'RUN', att='total_bases')
 		size = get(r, 'RUN', att='size')
+		date = get(r, 'RUN', att='published')
 		for val in (srr_id, spots, bases, size):
 			if val is None: sys.exit('wtf run')
 			obj['runs'].append({
 				'run_id': srr_id,
 				'nts': int(bases),
-				'seqs': int(spots)})
+				'seqs': int(spots),
+				'date': date})
 
 	###################
 	# UNUSED SECTIONS #

@@ -11,7 +11,7 @@ parser.add_argument('--name', default='intronomicon.db',
 parser.add_argument('--xml', default='build',
 	help='directory of xml files [%(default)s]')
 parser.add_argument('--taxid', default='6239',
-	help='verify the correct taxon [%(default)i]')
+	help='verify the correct taxon [%(default)s]')
 parser.add_argument('--test', action='store_true')
 arg = parser.parse_args()
 
