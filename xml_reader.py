@@ -4,7 +4,7 @@ import json
 import re
 import sys
 
-import intronomicon
+import sraxml
 import korflab
 
 parser = argparse.ArgumentParser(description='xml reader test')
@@ -17,7 +17,7 @@ for filename in glob.glob(f'{arg.dir}/*'):
 	if arg.test and log['count'] >= 999: break
 	log['count'] += 1
 
-	with open(filename) as fp: data, status = intronomicon.read_sra_xml(fp)
+	with open(filename) as fp: data, status = sraxml.read(fp)
 	with open(filename) as fp: raw = korflab.read_xml(fp)
 	if data is None:
 		if status not in log: log[status] = 0

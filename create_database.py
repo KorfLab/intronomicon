@@ -3,7 +3,7 @@ import glob
 import sqlite3
 import sys
 
-import intronomicon
+import sraxml
 
 parser = argparse.ArgumentParser(description='create intronomicon database')
 parser.add_argument('--name', default='intronomicon.db',
@@ -50,7 +50,7 @@ n = 0
 for filename in glob.glob(f'{arg.xml}/*'):
 	if arg.test and n > 10: break
 
-	with open(filename) as fp: data, status = intronomicon.read_sra_xml(fp)
+	with open(filename) as fp: data, status = sraxml.read(fp)
 	if data is None: continue
 	if data['taxid'] != arg.taxid:
 		print(data['taxid'], arg.taxid)
