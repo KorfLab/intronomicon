@@ -13,6 +13,7 @@ parser.add_argument('--test', action='store_true', help='limit to 999 files')
 arg = parser.parse_args()
 
 log = {'count': 0, 'RNA-Seq': 0}
+printed = set()
 for filename in glob.glob(f'{arg.dir}/*'):
 	if arg.test and log['count'] >= 999: break
 	log['count'] += 1
@@ -24,11 +25,18 @@ for filename in glob.glob(f'{arg.dir}/*'):
 		log[status] += 1
 	else:
 		log['RNA-Seq'] += 1
-		if 'strain' in data['info']:
-			print(data['info']['strain'])
-		else:
-			pass
-			#for tag in data['info']:
+		stuff = []
+		for tag, val in data['info'].items():
+			stuff.append(f'{tag}: {val}')
+		if data['srx_id'] in printed: continue
+		printed.add(data['srx_id'])
+		print(data['srx_id'], end='\t')
+		print('; '.join(stuff))
+		#if 'strain' in data['info']:
+		#	print(data['info']['strain'])
+		#else:
+		#	pass
+		#	#for tag in data['info']:
 			#	if re.search('tissue', tag, re.IGNORECASE):
 			#		print('found related', tag)
 			#print(data['info'].keys())
@@ -36,4 +44,4 @@ for filename in glob.glob(f'{arg.dir}/*'):
 		#print(data['runs'][0]['date'])
 		#print(json.dumps(data, indent=4))
 		#print(json.dumps(raw, indent=2))
-print(json.dumps(log, indent=4), file=sys.stderr)
+#print(json.dumps(log, indent=4), file=sys.stderr)
