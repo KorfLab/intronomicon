@@ -1,0 +1,12 @@
+name: intronomicon-align
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bamtools
+  - blat
+  - bowtie2
+  - bwa
+  - minimap2
+  - samtools

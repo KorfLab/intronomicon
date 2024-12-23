@@ -1,0 +1,7 @@
+name: intronomicon-db
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - sqlite
