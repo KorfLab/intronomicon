@@ -5,8 +5,11 @@ channels:
   - defaults
 dependencies:
   - bamtools
+  - bedtools
   - blat
   - bowtie2
   - bwa
+  - hisat2
   - minimap2
   - samtools
+  - star
