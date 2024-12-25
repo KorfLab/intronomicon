@@ -6,8 +6,9 @@ This is the home of the alignment bakeoff project.
 - Stage 1: hello world
 	- install a few aligners (done)
 	- create minimal synthetic data (done)
-	- determine cli for each program (in progress)
-	- develop input/output wrapper for each program
+	- determine cli for each program (done)
+	- develop input wrapper for each program (done)
+	- all programs result in SAM output (done except blat)
 	- develop comparison program to check accuracy
 - Stage 2: parameter optimization
 	- figure out best way to run each program
@@ -57,7 +58,7 @@ python3 read-simulator.py ~/Code/datacore2024/genome_celegans/1* --samplegenes 0
 
 ## Alignment Wrapper ##
 
-All programs should result in SAM.
+All programs should result in SAM and are then processed to _something_ else.
 
 - The `--threads` parameter isn't implemented for most.
 - Alignment and splicing parameters not optimized
@@ -65,7 +66,7 @@ All programs should result in SAM.
 - blat - alignments look suspect and no SAM
 - bowtie2 - done
 - bwa - done
-- hisat2 -
+- hisat2 - done
 - minimap2 - done
 - star - done
 
