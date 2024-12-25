@@ -5,58 +5,50 @@ import sys
 from grimoire.genome import Reader
 from grimoire.toolbox import revcomp_str
 
-def genomic_coords(tx, seq, pos):
-	rna_off = []
-	dna_off = []
+def read_coords(tx, pos, rlen):
+	rna_exons = []
+	dna_exons = []
+	#rseq = [] # not needed eventually
 	used = 0
 	for exon in tx.exons:
 		size = (exon.end - exon.beg) + 1
-		rna_off.append( (used, used+size))
-		dna_off.append( (exon.beg, exon.beg + size))
+		rna_exons.append((used, used+size))
+		dna_exons.append((exon.beg-1, exon.end-1))
+		#rseq.append(tx.dna.seq[exon.beg-1:exon.end]) # remove later
 		used += size
-	print(rna_off)
-	print(dna_off)
+	#print(rna_exons)
+	#print(dna_exons)
+	#print(rseq)
 
-	remain = len(seq)
-	rexons = []
-	gexons = []
-	beg = pos
-	end = pos + remain
-	for (rbeg, rend), (dbeg, dend) in zip(rna_off, dna_off):
-		#print('considering', beg, rbeg, rend)
-		if beg >= rbeg and beg <= rend:
-			#print('found overlapping exon starting at', rbeg, rend)
-			avail = rend - beg
-			if remain > avail:
-				end = beg + avail
-				rexons.append( (beg, end) )
-				gexons.append( (beg+dbeg, end+dbeg) )
-				beg = end + 1
-				remain -= avail
-				#print('created exon, sequence remains')
-			else:
-				end = beg + remain
-				rexons.append( (beg, end) )
-				gexons.append( (beg+dbeg, end+dbeg) )
-				#print('created exon, done')
-				break
+	# find the exon where the read starts and its offset within the exon
+	idx = None
+	tot = 0
+	off = None
+	for i, (rbeg, rend) in enumerate(rna_exons):
+		if pos >= rbeg and pos <= rend:
+			idx = i
+			off = pos - tot
+			tot += rbeg
+			break
+	assert(idx is not None)
+	#print(f'exon-index:{idx} offset:{off}')
 
-	rna = tx.seq_str()
-	dna = tx.dna.seq.lower()
+	# create alignment coordinates
+	align = []
+	avail = rlen
+	for (beg, end) in dna_exons[idx:]:
+		elen = end - beg + 1
+		if len(align) == 0:
+			a = beg + off
+			b = min(end, beg + off + avail)
+		else:
+			if avail > elen:  a, b = beg, end
+			else:             a, b = beg, beg + avail
+		align.append((a, b))
+		avail -= b - a
+		if avail < 1: break
 
-	print(len(rna), len(dna))
-	print(rexons)
-	print(gexons)
-	for (rbeg, rend), (gbeg, gend) in zip(rexons, gexons):
-		print('lengths', rend-rbeg, gend-gbeg)
-		rseq = rna[rbeg:rend]
-		gseq = dna[gbeg:gend]
-		print(rbeg, rend, gbeg, gend)
-		print(rseq)
-		print(gseq)
-
-	sys.exit('here')
-	return exons
+	return align
 
 
 parser = argparse.ArgumentParser()
@@ -86,27 +78,23 @@ bases = 0
 genome = Reader(fasta=arg.fasta, gff=arg.gff)
 for chrom in genome:
 	for gene in chrom.ftable.build_genes():
+		if gene.strand == '-': continue # DEBUG
 		if not gene.is_coding(): continue
 		if gene.issues: continue
 		if random.random() > arg.samplegenes: continue
 		genes += 1
 		tx = gene.transcripts()[0]
 		txs = tx.seq_str()
-		start = 0
-		size = 250
-		seq = txs[start:start+size]
-		exons = genomic_coords(tx, seq, start)
-		print(exons)
-		sys.exit()
-
-
-
-
-
-		txs = tx.seq_str()
 		for i in range(0, len(txs) - arg.readlength -1):
-			seq = txs[i:i+arg.readlength]
-			exons = genomic_coords(tx, seq, i)
+
+			exons = read_coords(tx, i, arg.readlength)
+			if len(exons) == 1 and arg.spliced:
+			#	print(f'skipping {i}')
+				continue
+			print('using coordinate', i)
+			for f in tx.exons: print('exon', f.beg-1, f.end, f. strand, f.end-f.beg)
+			for f in tx.introns: print('intron', f.beg-1, f.end, f.strand, f.end-f.beg)
+
 			print(exons)
 			sys.exit()
 
