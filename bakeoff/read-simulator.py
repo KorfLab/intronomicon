@@ -5,39 +5,53 @@ import sys
 from grimoire.genome import Reader
 from grimoire.toolbox import revcomp_str
 
+def show_introns(genome, exons):
+	for i in range(len(exons) -1):
+		ib = exons[i][1]
+		ie = exons[i+1][0]
+		print('>', genome[ib:ie], '<')
+
+def read_seq(genome, exons):
+	seqs = []
+	for beg, end in exons: seqs.append(genome[beg:end])
+	return ''.join(seqs)
+
+def read_name(exons):
+	name = []
+	for beg, end in exons: name.append(f'{beg+1}-{end+1}')
+	return ','.join(name)
+
+
 def read_coords(tx, pos, rlen):
+	# collect exons in rna and dna coordinates
 	rna_exons = []
 	dna_exons = []
-	#rseq = [] # not needed eventually
 	used = 0
+	sizes = []
 	for exon in tx.exons:
-		size = (exon.end - exon.beg) + 1
+		size = exon.end - exon.beg + 1
+		sizes.append(len(exon.seq_str()))
 		rna_exons.append((used, used+size))
-		dna_exons.append((exon.beg-1, exon.end-1))
-		#rseq.append(tx.dna.seq[exon.beg-1:exon.end]) # remove later
+		dna_exons.append((exon.beg-1, exon.end))
 		used += size
-	#print(rna_exons)
-	#print(dna_exons)
-	#print(rseq)
 
 	# find the exon where the read starts and its offset within the exon
 	idx = None
 	tot = 0
 	off = None
 	for i, (rbeg, rend) in enumerate(rna_exons):
-		if pos >= rbeg and pos <= rend:
+		if pos >= rbeg and pos < rend:
 			idx = i
 			off = pos - tot
-			tot += rbeg
 			break
+		tot += rend - rbeg
 	assert(idx is not None)
-	#print(f'exon-index:{idx} offset:{off}')
 
 	# create alignment coordinates
 	align = []
 	avail = rlen
 	for (beg, end) in dna_exons[idx:]:
-		elen = end - beg + 1
+		elen = end - beg # + 1?
 		if len(align) == 0:
 			a = beg + off
 			b = min(end, beg + off + avail)
@@ -50,6 +64,7 @@ def read_coords(tx, pos, rlen):
 
 	return align
 
+##############################################################################
 
 parser = argparse.ArgumentParser()
 parser.add_argument('fasta', help='fasta file, compressed ok')
@@ -78,33 +93,25 @@ bases = 0
 genome = Reader(fasta=arg.fasta, gff=arg.gff)
 for chrom in genome:
 	for gene in chrom.ftable.build_genes():
-		if gene.strand == '-': continue # DEBUG
 		if not gene.is_coding(): continue
 		if gene.issues: continue
 		if random.random() > arg.samplegenes: continue
 		genes += 1
-		tx = gene.transcripts()[0]
-		txs = tx.seq_str()
+		tx = gene.transcripts()[0] # 1 transcript per gene
+		txs = tx.tx_str()
 		for i in range(0, len(txs) - arg.readlength -1):
-
 			exons = read_coords(tx, i, arg.readlength)
-			if len(exons) == 1 and arg.spliced:
-			#	print(f'skipping {i}')
-				continue
-			print('using coordinate', i)
-			for f in tx.exons: print('exon', f.beg-1, f.end, f. strand, f.end-f.beg)
-			for f in tx.introns: print('intron', f.beg-1, f.end, f.strand, f.end-f.beg)
-
-			print(exons)
-			sys.exit()
+			if len(exons) == 1 and arg.spliced: continue
+			seq = read_seq(tx.dna.seq, exons)
+			name = '|'.join((str(i+1), tx.id, tx.strand, read_name(exons)))
 
 			if random.random() < arg.samplereads:
-				print(f'@{tx.id}|{i}+', seq, '+', 'J'*arg.readlength, sep='\n')
+				print(f'>{name}|+', seq, sep='\n')
 				reads += 1
 				bases += arg.readlength
 			if arg.double and random.random() < arg.samplereads:
 				seq = revcomp_str(seq)
-				print(f'@{tx.id}|{i}-', seq, '+', 'J'*arg.readlength, sep='\n')
+				print(f'>{name}|-', seq, sep='\n')
 				reads += 1
 				bases += arg.readlength
 
