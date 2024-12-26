@@ -64,6 +64,11 @@ def read_coords(tx, pos, rlen):
 
 	return align
 
+def read_coords2(dna, rna, size):
+	exons = []
+	seq = None
+	return exons, seq
+
 ##############################################################################
 
 parser = argparse.ArgumentParser()
@@ -98,6 +103,20 @@ for chrom in genome:
 		if random.random() > arg.samplegenes: continue
 		genes += 1
 		tx = gene.transcripts()[0] # 1 transcript per gene
+
+		# new algorithm: build index first
+		dna = []
+		rna = []
+		tot = 0
+		for exon in tx.exons:
+			for i in range(exon.length):
+				dna.append(i + tx.beg + tot)
+				rna.append(i + tot)
+			tot += exon.length
+		for i in range(len(rna) - arg.readlength -1):
+			exons, seq = read_coords2(dna, rna, arg.readlength)
+
+		""" original algorithm
 		txs = tx.tx_str()
 		for i in range(0, len(txs) - arg.readlength -1):
 			exons = read_coords(tx, i, arg.readlength)
@@ -114,7 +133,7 @@ for chrom in genome:
 				print(f'>{name}|-', seq, sep='\n')
 				reads += 1
 				bases += arg.readlength
-
+		"""
 print(f'genes: {genes}', f'reads: {reads}', f'bases: {bases}',
 	sep='\n', file=sys.stderr)
 

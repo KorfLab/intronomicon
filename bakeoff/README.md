@@ -52,10 +52,10 @@ python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --sa
 - genes: 11
 - reads: 2425
 - bases: 242500
-- 1 exon: 1479
-- 2 exons: 850
-- 3 exons: 86
-- 4 exons: 10  (there's a gene with 4 exons in 100 bp)
+- 1 exon: 1479 reads
+- 2 exons: 850 reads
+- 3 exons: 86 reads
+- 4 exons: 10 reads (there's a gene with 4 exons in 100 bp)
 
 The output of `read-simulator.py` has headers that look like the following:
 
@@ -63,8 +63,8 @@ The output of `read-simulator.py` has headers that look like the following:
 >81|Transcript:C23H3.3b.1|+|57750-57846,58307-58309|-
 ```
 
-- "81" means the read was generated a position 81 of the transcript
-- "Transcript:C23H3.3b.1" describes the name of the transcript
+- "81" means the read was generated at position 81 of the transcript
+- "Transcript:C23H3.3b.1" is the name of the transcript
 - "+" means the transcript is on the plus strand
 - "57750-57846,58307-58309" describes the position of the read in the genome
 - "-" means the sequence is generated from the reverse-complement
