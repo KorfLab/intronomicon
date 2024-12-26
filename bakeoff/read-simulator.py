@@ -13,12 +13,12 @@ def show_introns(genome, exons):
 
 def read_seq(genome, exons):
 	seqs = []
-	for beg, end in exons: seqs.append(genome[beg:end])
+	for beg, end in exons: seqs.append(genome[beg-1:end])
 	return ''.join(seqs)
 
 def read_name(exons):
 	name = []
-	for beg, end in exons: name.append(f'{beg+1}-{end+1}')
+	for beg, end in exons: name.append(f'{beg}-{end}')
 	return ','.join(name)
 
 
@@ -47,19 +47,19 @@ def read_coords(tx, pos, rlen):
 		tot += rend - rbeg
 	assert(idx is not None)
 
-	# create alignment coordinates
+	# create human-readable (1-offset) alignment coordinates
 	align = []
 	avail = rlen
 	for (beg, end) in dna_exons[idx:]:
-		elen = end - beg # + 1?
+		elen = end - beg
 		if len(align) == 0:
-			a = beg + off
+			a = beg + off + 1
 			b = min(end, beg + off + avail)
 		else:
-			if avail > elen:  a, b = beg, end
-			else:             a, b = beg, beg + avail
+			if avail > elen:  a, b = beg+1, end
+			else:             a, b = beg+1, beg + avail
 		align.append((a, b))
-		avail -= b - a
+		avail -= b - a + 1
 		if avail < 1: break
 
 	return align

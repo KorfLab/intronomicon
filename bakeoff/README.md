@@ -42,21 +42,38 @@ framework underway.
 coverage for each canonical transcript of every protein-coding gene in the 1pct
 sets in datacore2024.
 
-```
-python3 read-simulator.py ~/Code/datacore2024/genome_celegans/1* --double > ce.fq
-```
-
-For minimal testing purposes, an even smaller dataset is useful. The command
-below generates 1000 reads covering 7 of the genes. There is a mixture of plus
-and minus strand genes with variable intron sizes.
+For minimal testing purposes, an even smaller dataset is useful.
 
 ```
-python3 read-simulator.py ~/Code/datacore2024/genome_celegans/1* --samplegenes 0.1 --samplereads 0.0321 --seed 1 --double > ce-min.fq
+python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 29 > mini.fa
 ```
+
+- seed 29
+- genes: 11
+- reads: 2425
+- bases: 242500
+- 1 exon: 1479
+- 2 exons: 850
+- 3 exons: 86
+- 4 exons: 10  (there's a gene with 4 exons in 100 bp)
+
+The output of `read-simulator.py` has headers that look like the following:
+
+```
+>81|Transcript:C23H3.3b.1|+|57750-57846,58307-58309|-
+```
+
+- "81" means the read was generated a position 81 of the transcript
+- "Transcript:C23H3.3b.1" describes the name of the transcript
+- "+" means the transcript is on the plus strand
+- "57750-57846,58307-58309" describes the position of the read in the genome
+- "-" means the sequence is generated from the reverse-complement
 
 ------------------------------------------------------------------------------
 
 ## Alignment Wrapper ##
+
+Need to modify this for fasta input as that is now what I'm using
 
 All programs should result in SAM and are then processed to _something_ else.
 
