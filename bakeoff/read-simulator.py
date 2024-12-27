@@ -5,69 +5,36 @@ import sys
 from grimoire.genome import Reader
 from grimoire.toolbox import revcomp_str
 
-def show_introns(genome, exons):
-	for i in range(len(exons) -1):
-		ib = exons[i][1]
-		ie = exons[i+1][0]
-		print('>', genome[ib:ie], '<')
+def generate_reads(tx, size):
 
-def read_seq(genome, exons):
-	seqs = []
-	for beg, end in exons: seqs.append(genome[beg-1:end])
-	return ''.join(seqs)
-
-def read_name(exons):
-	name = []
-	for beg, end in exons: name.append(f'{beg}-{end}')
-	return ','.join(name)
-
-
-def read_coords(tx, pos, rlen):
-	# collect exons in rna and dna coordinates
-	rna_exons = []
-	dna_exons = []
-	used = 0
-	sizes = []
+	# create linear indexes
+	dna = [] # dna positional index
+	rna = [] # rna sequence
 	for exon in tx.exons:
-		size = exon.end - exon.beg + 1
-		sizes.append(len(exon.seq_str()))
-		rna_exons.append((used, used+size))
-		dna_exons.append((exon.beg-1, exon.end))
-		used += size
+		for i in range(exon.length):
+			coor = i + exon.beg -1 # zero-based coordinates
+			dna.append(coor)
+			rna.append(tx.dna.seq[coor])
 
-	# find the exon where the read starts and its offset within the exon
-	idx = None
-	tot = 0
-	off = None
-	for i, (rbeg, rend) in enumerate(rna_exons):
-		if pos >= rbeg and pos < rend:
-			idx = i
-			off = pos - tot
-			break
-		tot += rend - rbeg
-	assert(idx is not None)
-
-	# create human-readable (1-offset) alignment coordinates
-	align = []
-	avail = rlen
-	for (beg, end) in dna_exons[idx:]:
-		elen = end - beg
-		if len(align) == 0:
-			a = beg + off + 1
-			b = min(end, beg + off + avail)
-		else:
-			if avail > elen:  a, b = beg+1, end
-			else:             a, b = beg+1, beg + avail
-		align.append((a, b))
-		avail -= b - a + 1
-		if avail < 1: break
-
-	return align
-
-def read_coords2(dna, rna, size):
-	exons = []
-	seq = None
-	return exons, seq
+	# read generator
+	for i in range(len(rna) - size + 1):
+		coor = [dna[i+j] for j in range(size)]
+		exons = []
+		beg = coor[0]
+		seen = 0
+		for j in range(size -1):
+			d = coor[j+1] - coor[j]
+			if d > 1:
+				end = beg + j -seen
+				exons.append( (beg, end) )
+				seen += end - beg + 1
+				beg = coor[j+1]
+		exons.append( (beg, beg+j -seen +1) )
+		
+		estr = ','.join([f'{beg+1}-{end+1}' for beg, end in exons]) # 1-based
+		name = '|'.join( (str(i+1), tx.id, tx.strand, estr) )
+		read = ''.join([rna[i+j] for j in range(size)])
+		yield name, read, len(exons)
 
 ##############################################################################
 
@@ -84,8 +51,6 @@ parser.add_argument('--seed', type=int, default=0, metavar='<int>',
 	help='set random seed')
 parser.add_argument('--double', action='store_true',
 	help='produce reads from both strands')
-parser.add_argument('--paired', action='store_true',
-	help='produce paired reads (not yet supported)')
 parser.add_argument('--spliced', action='store_true',
 	help='only produce reads that splice')
 arg = parser.parse_args()
@@ -104,36 +69,20 @@ for chrom in genome:
 		genes += 1
 		tx = gene.transcripts()[0] # 1 transcript per gene
 
-		# new algorithm: build index first
-		dna = []
-		rna = []
-		tot = 0
-		for exon in tx.exons:
-			for i in range(exon.length):
-				dna.append(i + tx.beg + tot)
-				rna.append(i + tot)
-			tot += exon.length
-		for i in range(len(rna) - arg.readlength -1):
-			exons, seq = read_coords2(dna, rna, arg.readlength)
-
-		""" original algorithm
-		txs = tx.tx_str()
-		for i in range(0, len(txs) - arg.readlength -1):
-			exons = read_coords(tx, i, arg.readlength)
-			if len(exons) == 1 and arg.spliced: continue
-			seq = read_seq(tx.dna.seq, exons)
-			name = '|'.join((str(i+1), tx.id, tx.strand, read_name(exons)))
-
+		for name, seq, exons in generate_reads(tx, arg.readlength):
+			if arg.spliced and exons == 1: continue
 			if random.random() < arg.samplereads:
-				print(f'>{name}|+', seq, sep='\n')
+				print('>', name, '|+', sep='')
+				print(seq)
 				reads += 1
 				bases += arg.readlength
 			if arg.double and random.random() < arg.samplereads:
 				seq = revcomp_str(seq)
-				print(f'>{name}|-', seq, sep='\n')
+				print('>', name, '|-', sep='')
+				print(seq)
 				reads += 1
 				bases += arg.readlength
-		"""
+
 print(f'genes: {genes}', f'reads: {reads}', f'bases: {bases}',
 	sep='\n', file=sys.stderr)
 

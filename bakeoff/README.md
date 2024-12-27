@@ -42,20 +42,12 @@ framework underway.
 coverage for each canonical transcript of every protein-coding gene in the 1pct
 sets in datacore2024.
 
-For minimal testing purposes, an even smaller dataset is useful.
+For minimal testing purposes, an even smaller dataset is useful. Use
+`--samplegenes 0.1` and `--samplereads 0.1` to reduce the set size
 
 ```
 python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 29 > mini.fa
 ```
-
-- seed 29
-- genes: 11
-- reads: 2425
-- bases: 242500
-- 1 exon: 1479 reads
-- 2 exons: 850 reads
-- 3 exons: 86 reads
-- 4 exons: 10 reads (there's a gene with 4 exons in 100 bp)
 
 The output of `read-simulator.py` has headers that look like the following:
 
