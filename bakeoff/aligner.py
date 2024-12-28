@@ -3,71 +3,10 @@ import gzip
 import os
 import sys
 
-def fqgz2fa(file, out):
-	fp = gzip.open(file, 'rt')
-	f2 = open(out, 'w')
-	while True:
-		h = fp.readline()
-		if h == '': break
-		s = fp.readline()
-		p = fp.readline()
-		q = fp.readline()
-		print('>', h[1:], sep='', end='', file=f2)
-		print(s, end='', file=f2)
-	fp.close()
-	f2.close()
-
 def run(cli, verbose):
 	cli = cli.replace('\t', ' ')
 	if verbose: print(cli, file=sys.stderr)
 	os.system(cli)
-
-def readfasta(filename):
-	name = None
-	seqs = []
-
-	fp = None
-	if   filename.endswith('.gz'): fp = gzip.open(filename, 'rt')
-	elif filename == '-':          fp = sys.stdin
-	else:                          fp = open(filename)
-
-	while True:
-		line = fp.readline()
-		if line == '': break
-		line = line.rstrip()
-		if line.startswith('>'):
-			if len(seqs) > 0:
-				seq = ''.join(seqs)
-				yield(name, seq)
-				name = line[1:]
-				seqs = []
-			else:
-				name = line[1:]
-		else:
-			seqs.append(line)
-	yield(name, ''.join(seqs))
-	fp.close()
-
-def readsam(filename):
-	fp = None
-	if   filename.endswith('.gz'): fp = gzip.open(filename, 'rt')
-	elif filename == '-':          fp = sys.stdin
-	else:                          fp = open(filename)
-
-	while True:
-		line = fp.readline()
-		if line == '': break
-		if line.startswith('@'): continue
-		f = line.split('\t')
-		qname = f[0]
-		bflag = int(f[1])
-		strand = '+' if f'{bflag:012b}'[7] == '0' else '-'
-		pos   = int(f[3])
-		cigar = f[5]
-		seq   = f[9]
-		yield qname, seq, pos, strand, cigar
-
-##############################################################################
 
 parser = argparse.ArgumentParser(description='read alignment wrapper',
 	epilog='programs: blat bt2 bwa hs2 mm2 star')
