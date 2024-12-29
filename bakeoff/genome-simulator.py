@@ -14,10 +14,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('basename', help='directory for files')
 parser.add_argument('--flank', type=int, default=100, metavar='<int>',
 	help='flanking sequence on either side of gene [%(default)i]')
-parser.add_argument('--min', type=int, default=5, metavar='<int>',
-	help='minimum exon or intron length when variable [%(default)i]')
-parser.add_argument('--max', type=int, default=50, metavar='<int>',
-	help='maximum exon or intron length when variable [%(default)i]')
+parser.add_argument('--emin', type=int, default=5, metavar='<int>',
+	help='minimum exon length when variable [%(default)i]')
+parser.add_argument('--emax', type=int, default=50, metavar='<int>',
+	help='maximum exon length when variable [%(default)i]')
+parser.add_argument('--imin', type=int, default=25, metavar='<int>',
+	help='minimum intron length when variable [%(default)i]')
+parser.add_argument('--imax', type=int, default=50, metavar='<int>',
+	help='maximum intron length when variable [%(default)i]')
 parser.add_argument('--fixed', type=int, default=100, metavar='<int>',
 	help='exon or intron length when fixed [%(default)i]')
 parser.add_argument('--chroms', type=int, default=10, metavar='<int>',
@@ -33,8 +37,8 @@ for chrom in range(arg.chroms):
 	print(f'>{chrom}', file=fa)
 	off = 0
 	# f1-[e1]-i1-[e2]-v.i2-[e3]-i3-[v.e4]-i4-[e5]-f2
-	for vi2 in range(arg.min, arg.max+1):
-		for ve4 in range(arg.min, arg.max+1):
+	for vi2 in range(arg.imin, arg.imax+1):
+		for ve4 in range(arg.emin, arg.emax+1):
 			f1 = random_seq(arg.flank)
 			e1 = random_seq(arg.fixed)
 			i1 = random_intron(arg.fixed)
@@ -61,7 +65,7 @@ for chrom in range(arg.chroms):
 			print(f'{chrom}', ','.join(exons), sep='|', file=fx)
 			print(seq, file=fa)
 			off += len(seq)
-	
+
 fa.close()
 fx.close()
 

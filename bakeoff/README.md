@@ -6,23 +6,33 @@ questions "which is the best aligner of RNA-seq data?" and "what kinds of
 improvements need to made in this space?"
 
 - Stage 1: hello world
-	- install a few aligners (done)
+	- install spliced aligners (done)
 	- create minimal synthetic data (done)
 	- determine cli for each program (done)
-	- develop input wrapper for each program
-	- develop output wrapper for each program
+	- develop input wrapper for each program (done)
+	- develop output wrapper for each program (in progress for sam)
 	- develop comparison program to check accuracy
 - Stage 2: parameter optimization
 	- figure out best way to run each program
+		- accuracy
+		- time, memory, cpus
 	- create synthetic data with adversarial properties
 		- C. elegans sampled
 		- synthetic genome
-- Stage 3: more programs
-	- install other aligners
-	- add input/output wrappers
-	- optimize parameters
-- Stage 4: best practices
-	- multiple stages?
+- Stage 3: full study
+	- create full data sets
+	- perform alignments
+	- compare performance
+	- determine best practices
+	- determine areas to improve
+
+## Environment ##
+
+```
+cd bakeoff
+conda env create -f bakeoff.yml
+conda activate bakeoff
+```
 
 ## Flattened Transcript Format ##
 
@@ -31,7 +41,7 @@ project only.
 
 - file extension: `.fx` (not an official file extension)
 - field delimiter: `|`
-- 4 or 5 fields
+- 5 fields
 
 1. chromosome identifier, should match some fasta file
 2. name of transcript, should be unique for each line
@@ -40,28 +50,33 @@ project only.
 	- hyphen separated coordinates
 	- comma separated exons
 	- must be sorted left to right, low to high
-5. information: optional free text
+5. information: extra free text
 
 Example: Plus-strand transcript with introns inferred at 201-299 and 401-499.
 
 ```
-chr1|name|+|100-200,300-400,500-600
-chr1|name|+|100-200,300-400,500-600|with extra stuff
+chr1|name|+|100-200,300-400,500-600|whatever you like
 ```
 
-## Install aligners ##
+## Alignment Programs ##
 
-Created a simplified conda environment `intronomicon-align.yml` for 6 aligners:
+Created a conda environment `bakeoff.yml` for several aligners:
 
 - blat
-- bowtie2
-- bwa
+- gmap
 - hisat2
+- magicblast
 - minimap2
 - star
+- tophat
 
-There are several other aligners to test, but 6 is plenty to get the comparison
-framework underway.
+Originally, bowtie2 and bwa were included, but they do not perform spliced
+alignment, so they are not going to be tested. They are still included in the
+alignment wrapper (see below).
+
+Aligners not yet considered here.
+
+- dragen
 
 ## Minimal synthetic data ##
 
@@ -92,19 +107,27 @@ The output of `read-simulator.py` has headers that look like the following:
 
 ## Alignment Wrapper ##
 
-Need to modify this for fasta input as that is now what I'm using
+`alignment-wrapper.py` provides a consistent interface for every program. Input
+files are fasta, output is .fx.
 
-All programs should result in SAM and are then processed to _something_ else.
+Output is not yet complete for SAM files.
 
-- The `--threads` parameter isn't implemented for most.
-- Alignment and splicing parameters not optimized
+Many things are not optimized yet.
 
-- blat - alignments look suspect and no SAM
-- bowtie2 - done
-- bwa - done
-- hisat2 - done
-- minimap2 - done
-- star - done
+- Resources
+- Alignment and splicing parameters
+
+Wrappers for the following
+
+- blat
+- bowtie2
+- bwa
+- gmap
+- hisat2
+- magicblast
+- minimap2
+- star
+- tophat
 
 DRAGEN needs evaluation: @dragen-1.hpc.genomecenter.ucdavis.edu
 
@@ -126,8 +149,10 @@ annotation.
 Todo...
 
 - Genes are currently only on the positive strand
+	- meaning introns are all GT..AG
+	- there is no coding sequence implied
 - No non-canonical splice sites yet
-- Reads should also be varied:
+- There should be a companion read mutator
 	- substitution
 	- indels
 	- trans-spliced leaders

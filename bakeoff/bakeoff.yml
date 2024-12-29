@@ -1,0 +1,17 @@
+name: bakeoff
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - blat
+  - gmap
+  - hisat2
+  - magicblast
+  - minimap2
+  - star
+  - tophat
+  - blast       # used for indexing magicblast
+    bowtie2     # used for indexing tophat
+  - bwa         # does not perform spliced alignment
+  - samtools    # used for bam conversion of tophat
