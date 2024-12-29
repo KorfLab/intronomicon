@@ -12,6 +12,6 @@ dependencies:
   - star
   - tophat
   - blast       # used for indexing magicblast
-    bowtie2     # used for indexing tophat
+  - bowtie2     # used for indexing tophat
   - bwa         # does not perform spliced alignment
   - samtools    # used for bam conversion of tophat
