@@ -1,18 +1,14 @@
 Bakeoff
 =======
 
-## WARNING ##
-
-EVERYTHING IS CURRENTLY BROKEN. THERE IS A NEW BAKEOFF LIBRARY. MUST CHANGE ALL
-PREVIOUS CODE TO USE LIBRARY.
-
-
-This is the home of the alignment bakeoff project.
+This is the home of the alignment bakeoff sub-project that seeks to answer the
+questions "which is the best aligner of RNA-seq data?" and "what kinds of
+improvements need to made in this space?"
 
 - Stage 1: hello world
-	- install a few aligners
-	- create minimal synthetic data
-	- determine cli for each program
+	- install a few aligners (done)
+	- create minimal synthetic data (done)
+	- determine cli for each program (done)
 	- develop input wrapper for each program
 	- develop output wrapper for each program
 	- develop comparison program to check accuracy
@@ -77,19 +73,19 @@ For minimal testing purposes, an even smaller dataset is useful. Use
 `--samplegenes 0.1` and `--samplereads 0.1` to reduce the set size
 
 ```
-python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 29 > mini.fa
+python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 13 > mini.fa
 ```
 
 The output of `read-simulator.py` has headers that look like the following:
 
 ```
->81|Transcript:C23H3.3b.1|+|57750-57846,58307-58309|-
+>I|Transcript:F53G12.5b.1|+|127305-127336,127385-127436,128697-128712|-
 ```
 
-- "81" means the read was generated at position 81 of the transcript
-- "Transcript:C23H3.3b.1" is the name of the transcript
+- "I" means it was generated from chromosome I
+- "Transcript:F53G12.5b.1" is the name of the transcript
 - "+" means the transcript is on the plus strand
-- "57750-57846,58307-58309" describes the position of the read in the genome
+- "27305-127336,127385-127436,128697-128712" are genome coordinates
 - "-" means the sequence is generated from the reverse-complement
 
 ------------------------------------------------------------------------------

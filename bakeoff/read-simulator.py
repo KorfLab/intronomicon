@@ -2,10 +2,12 @@ import argparse
 import random
 import sys
 
+import bakeoff
 from grimoire.genome import Reader
 from grimoire.toolbox import revcomp_str
 
 def generate_reads(tx, size):
+	chrom = tx.dna
 
 	# create linear indexes
 	dna = [] # dna positional index
@@ -14,7 +16,7 @@ def generate_reads(tx, size):
 		for i in range(exon.length):
 			coor = i + exon.beg -1 # zero-based coordinates
 			dna.append(coor)
-			rna.append(tx.dna.seq[coor])
+			rna.append(chrom.seq[coor])
 
 	# read generator
 	for i in range(len(rna) - size + 1):
@@ -30,13 +32,10 @@ def generate_reads(tx, size):
 				seen += end - beg + 1
 				beg = coor[j+1]
 		exons.append( (beg, beg+j -seen +1) )
-		
-		!change to bakeoff version
-		
-		estr = ','.join([f'{beg+1}-{end+1}' for beg, end in exons]) # 1-based
-		name = '|'.join( (str(i+1), tx.id, tx.strand, estr) )
-		read = ''.join([rna[i+j] for j in range(size)])
-		yield name, read, len(exons)
+		fx = bakeoff.fxcompose(chrom.name, tx.id, tx.strand, exons)
+		read = ''.join([chrom.seq[beg:end+1] for beg, end in exons])
+
+		yield fx, read, len(exons)
 
 ##############################################################################
 

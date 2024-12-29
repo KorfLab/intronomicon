@@ -11,12 +11,12 @@ def getfp(filename):
 	else:                          fp = open(filename)
 	return fp
 
-def fxcompose(chrom, uid, strand, exons, xtra):
+def fxcompose(chrom, uid, strand, exons, info=None):
 	"""creates fx string from components, including exons"""
 	estr = ','.join([f'{beg+1}-{end+1}' for beg, end in exons]) # 1-based
 	stuff = [chrom, uid, strand, estr]
-	if extra: stuff.append(xtra)
-	name = '|'.join(stuff)
+	if info: stuff.append(info)
+	return '|'.join(stuff)
 
 def fxparse(text):
 	"""returns structred object from fx string"""
@@ -42,20 +42,20 @@ def fxread(filename):
 
 def fxoverlap(fx1, fx2):
 	"""compares 2 fx objects"""
-	
+
 	# compare chromosomes - should be unneccesary
-	if fx1.chrom != fx2.chrom return False
-	
+	if fx1.chrom != fx2.chrom: return False
+
 	# compare transcript extent
 	b1 = fx1.exons[0][0]
 	e1 = fx1.exons[-1][1]
 	b2 = fx2.exons[0][0]
 	e2 = fx2.exons[-1][1]
-	
+
 	# compare interiors
-	
+
 	#if b2 <= e1 and e2 >= b1: return True
-	
+
 	# is this just a true/false?
 	# is this even necessary?
 
@@ -81,37 +81,3 @@ def readfasta(filename):
 	yield(name, ''.join(seqs))
 	fp.close()
 
-def readsam(filename):
-	"""yields subset of info from sam file"""
-	fp = getfp(filename)
-	while True:
-		line = fp.readline()
-		if line == '': break
-		if line.startswith('@'): continue
-		f = line.split('\t')
-		qname = f[0]
-		bflag = int(f[1])
-		pos   = int(f[3])
-		cigar = f[5]
-		seq   = f[9]
-		yield qname, seq, pos, cigar, bflag
-	fp.close()
-
-def fq2fa(infile, outfile):
-	"""converts fastq stream to fasta stream"""
-	fp = gzip.open(file, 'rt')
-	f2 = open(out, 'w')
-	while True:
-		h = fp.readline()
-		if h == '': break
-		s = fp.readline()
-		p = fp.readline()
-		q = fp.readline()
-		print('>', h[1:], sep='', end='', file=f2)
-		print(s, end='', file=f2)
-	fp.close()
-	f2.close()
-
-def fa2fq(infile, outfile):
-	"""converts fasta stream to fastq stream"""
-	pass
