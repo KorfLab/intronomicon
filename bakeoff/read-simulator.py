@@ -2,7 +2,7 @@ import argparse
 import random
 import sys
 
-import bakeoff
+from ftx import FTX
 from grimoire.genome import Reader
 from grimoire.toolbox import revcomp_str
 
@@ -32,10 +32,10 @@ def generate_reads(tx, size):
 				seen += end - beg + 1
 				beg = coor[j+1]
 		exons.append( (beg, beg+j -seen +1) )
-		fx = bakeoff.fxcompose(chrom.name, tx.id, tx.strand, exons)
+		ftx = FTX(chrom.name, tx.id, tx.strand, exons, 'syn')
 		read = ''.join([chrom.seq[beg:end+1] for beg, end in exons])
 
-		yield fx, read, len(exons)
+		yield ftx, read, len(exons)
 
 ##############################################################################
 
@@ -70,16 +70,16 @@ for chrom in genome:
 		genes += 1
 		tx = gene.transcripts()[0] # 1 transcript per gene
 
-		for name, seq, exons in generate_reads(tx, arg.readlength):
+		for ftx, seq, exons in generate_reads(tx, arg.readlength):
 			if arg.spliced and exons == 1: continue
 			if random.random() < arg.samplereads:
-				print('>', name, '|+', sep='')
+				print('>', name, '+', sep='')
 				print(seq)
 				reads += 1
 				bases += arg.readlength
 			if arg.double and random.random() < arg.samplereads:
 				seq = revcomp_str(seq)
-				print('>', name, '|-', sep='')
+				print('>', name, '-', sep='')
 				print(seq)
 				reads += 1
 				bases += arg.readlength

@@ -1,8 +1,11 @@
 Bakeoff
 =======
 
+**WARNING** Must start from the beginning with read-simulator to check that it
+works with the new FTX class. Also, must debug alignment coordinates.
+
 This is the home of the alignment bakeoff sub-project that seeks to answer the
-questions "which is the best aligner of RNA-seq data?" and "what kinds of
+questions "which is the best aligner for RNA-seq data?" and "what kinds of
 improvements need to made in this space?"
 
 - Stage 1: hello world
@@ -10,8 +13,9 @@ improvements need to made in this space?"
 	- create minimal synthetic data (done)
 	- determine cli for each program (done)
 	- develop input wrapper for each program (done)
-	- develop output wrapper for each program (in progress for sam)
-	- develop comparison program to check accuracy
+	- develop output wrapper for each program (done)
+	- develop comparison program to check accuracy (in progress)
+		- **may require debugging previous steps**
 - Stage 2: parameter optimization
 	- figure out best way to run each program
 		- accuracy
@@ -22,7 +26,7 @@ improvements need to made in this space?"
 - Stage 3: full study
 	- create full data sets
 	- perform alignments
-	- compare performance
+	- compare performance and resources
 	- determine best practices
 	- determine areas to improve
 
@@ -39,7 +43,7 @@ conda activate bakeoff
 Oh yay, a new non-standard standard. This file format is used for the bakeoff
 project only.
 
-- file extension: `.fx` (not an official file extension)
+- file extension: `.ftx` (not an official file extension)
 - field delimiter: `|`
 - 5 fields
 
@@ -50,6 +54,7 @@ project only.
 	- hyphen separated coordinates
 	- comma separated exons
 	- must be sorted left to right, low to high
+	- numbers are 1-based
 5. information: extra free text
 
 Example: Plus-strand transcript with introns inferred at 201-299 and 401-499.

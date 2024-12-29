@@ -4,19 +4,47 @@ import os
 import re
 import sys
 
-import bakeoff
+from ftx import FTX
 
 def run(cli, arg):
 	cli = cli.replace('\t', ' ')
 	if arg.verbose: print(cli, file=sys.stderr)
 	os.system(cli)
 
+def getfp(filename):
+	fp = None
+	if   filename.endswith('.gz'): fp = gzip.open(filename, 'rt')
+	elif filename == '-':          fp = sys.stdin
+	else:                          fp = open(filename)
+	return fp
+
+def readfasta(filename):
+	name = None
+	seqs = []
+	fp = getfp(filename)
+	while True:
+		line = fp.readline()
+		if line == '': break
+		line = line.rstrip()
+		if line.startswith('>'):
+			if len(seqs) > 0:
+				seq = ''.join(seqs)
+				yield(name, seq)
+				name = line[1:]
+				seqs = []
+			else:
+				name = line[1:]
+		else:
+			seqs.append(line)
+	yield(name, ''.join(seqs))
+	fp.close()
+
 def needfastq(arg):
 	fastq = f'{arg.reads}.fq.gz'
 	if not os.path.exists(fastq):
 		if arg.verbose: print('creating fastq file', file=sys.stderr)
 		with gzip.open(fastq, 'wt') as fp:
-			for name, seq in bakeoff.readfasta(arg.reads):
+			for name, seq in readfasta(arg.reads):
 				print('@', name, file=fp, sep='')
 				print(seq, file=fp)
 				print('+', file=fp)
@@ -27,99 +55,107 @@ class BitFlag:
 	def __init__(self, val):
 		i = int(val)
 		b = f'{i:012b}'
+		self.read_unmapped = True if b[-3] == '1' else False
 		self.read_reverse_strand = True if b[-5] == '1' else False
 		self.not_primary_alignment = True if b[-9] == '1' else False
 		self.supplementary_alignment = True if b[-12] == '1' else False
-		self.unexpected_flag = False
-		for i in (1, 2, 3, 4, 6, 7, 8, 10, 11):
-			if b[-i] == '1': self.unexpected_flag = True
-		self.binary = b
+		self.otherflags = []
+		for i in (1, 2, 4, 6, 7, 8, 10, 11):
+			if b[-i] == '1': self.otherflags.append(i)
 
-def cigar_to_exons(s, off):
-	print(s, off)
+def cigar_to_exons(cigar, pos):
 	exons = []
-	beg = off
-	end = off
-	for match in re.finditer(r'(\d+)([A-Z])', s):
+	beg = 0
+	end = 0
+	for match in re.finditer(r'(\d+)([A-Z])', cigar):
 		n = int(match.group(1))
 		op = match.group(2)
 		if   op == 'M': end += n
 		elif op == 'D': pass
 		elif op == 'I': end += n
-		elif op == 'S': beg += n
+		#elif op == 'S': beg += n # is this right?
 		elif op == 'H': pass
 		elif op == 'N':
-			exons.append((beg, end))
+			exons.append((pos+beg, pos+end))
 			beg += n
 			end = beg
-	exons.append((beg, end))
-
-
+	exons.append((pos+beg, pos+end))
 	return exons
 
-
-def sam_to_fx(filename):
+def sam_to_ftx(filename, arg):
+	n = 0
 	with open(filename) as fp:
 		for line in fp:
 			line = fp.readline()
 			if line == '': break
 			if line.startswith('@'): continue
 			f = line.split('\t')
+			qname = f[0]
 			bf = BitFlag(f[1])
-			st = '-' if bf.read_reverse_strand else '+'
-			# do something with supplementary, not primary, unexpected
+			chrom = f[2]
 			pos   = int(f[3])
 			cigar = f[5]
-			print(pos, cigar, st)
-			#cigar_to_exons(f[5], int(f[3]))
-			#print(pos, cigar, st)
-			#stuff = cigar_to_exons(f[5], int(f[3]))
-			#print(stuff)
 
-def sim4_to_fx(filename):
-	fp = open(filename)
+			st = '-' if bf.read_reverse_strand else '+'
+			if bf.read_unmapped: continue
+			if bf.not_primary_alignment: continue
+			if bf.supplementary_alignment: continue
+			if bf.otherflags:
+				print(bf.otherflags)
+				sys.exit('unexpected flags found, debug time')
+			n += 1
+			exons = cigar_to_exons(cigar, pos)
+			ftx = FTX(chrom, str(n), st, exons, f'{arg.program} ref:{qname}')
+			print(ftx)
+
+def sim4_to_ftx(filename, arg):
 	chrom = None
 	strand = None
 	exons = []
+	ref = None
 	n = 0
-
-	for line in fp:
-		if line.startswith('seq1 ='):
-			if chrom is not None:
-				print(bakeoff.fxcompose(chrom, str(n), strand, exons, info='blat'))
-			chrom = None
-			strand = None
-			exons = []
-			n += 1
-			continue
-		elif line.startswith('seq2 ='):
+	with open(filename) as fp:
+		for line in fp:
+			if line.startswith('seq1 ='):
+				if chrom is not None:
+					ftx = FTX(chrom, str(n), strand, exons,
+						f'{arg.program} ref:{ref}')
+					print(ftx)
+				chrom = None
+				strand = None
+				exons = []
+				ref = line[7:].split(',')[0]
+				n += 1
+				continue
+			elif line.startswith('seq2 ='):
+				f = line.split()
+				chrom = f[2][:-1]
+				continue
 			f = line.split()
-			chrom = f[2][:-1]
-			continue
-		f = line.split()
-		if len(f) != 4: continue
-		beg, end = f[1][1:-1].split('-')
-		exons.append((int(beg), int(end)))
-		st = '+' if f[3] == '->' else '-'
-		if strand is None: strand = st
-		else: assert(strand == st)
-	print(bakeoff.fxcompose(chrom, str(n), strand, exons, info='blat'))
-	fp.close()
+			if len(f) != 4: continue
+			beg, end = f[1][1:-1].split('-')
+			exons.append((int(beg), int(end)))
+			st = '+' if f[3] == '->' else '-'
+			if strand is None: strand = st
+			else: assert(strand == st)
+		ftx = FTX(chrom, str(n), strand, exons, f'{arg.program} ref:{ref}')
+		print(ftx)
 
-parser = argparse.ArgumentParser(description='bakeoff alignment wrapper',
-	epilog='prog abbr: blat bt2 bwa gmap hisat magic mini star tophat')
+parser = argparse.ArgumentParser(description='spliced alignment evaluator: '
+	+ ', '.join(('blat', 'bowtie2', 'bwa-mem', 'gmap', 'hisat2',
+	'magic-blast', 'minimap2', 'star', 'tophat2')))
 parser.add_argument('genome', help='genome file in FASTA format')
 parser.add_argument('reads', help='reads file in FASTA format')
-parser.add_argument('prog', help='program name')
-parser.add_argument('--threads', type=int, default=1,
-	help='number of cores/threads [%(default)i]')
-parser.add_argument('--debug', action='store_true', help='keep SAM file')
-parser.add_argument('--verbose', action='store_true')
+parser.add_argument('program', help='program name')
+parser.add_argument('--debug', action='store_true',
+	help='keep temporary files (e.g. SAM)')
+parser.add_argument('--verbose', action='store_true',
+	help='show various informative messages')
 arg = parser.parse_args()
 
 out = f'temp-{os.getpid()}'
 
-if arg.prog == 'blat':
+if arg.program == 'blat':
 	# indexing: no
 	# reads: fa.gz
 	# output: sim4 converted to fx
@@ -130,8 +166,8 @@ if arg.prog == 'blat':
 	cli = f'blat {arg.genome} {arg.reads} {out} -out=sim4'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
-	sim4_to_fx(out)
-elif arg.prog == 'bt2':
+	sim4_to_ftx(out, arg)
+elif arg.program == 'bowtie2':
 	# indexing: yes
 	# reads: fq.gz
 	# output: sam
@@ -144,8 +180,8 @@ elif arg.prog == 'bt2':
 	cli = f'bowtie2 -x {arg.genome} -U {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'bwa':
+	sam_to_ftx(out, arg)
+elif arg.program == 'bwa-mem':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
 	# output: sam
@@ -157,8 +193,8 @@ elif arg.prog == 'bwa':
 	cli = f'bwa mem {arg.genome} {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'gmap':
+	sam_to_ftx(out, arg)
+elif arg.program == 'gmap':
 	# indexing: yes
 	# reads: fa (not compressed)
 	# output:
@@ -170,8 +206,8 @@ elif arg.prog == 'gmap':
 	cli = f'gunzip -c {arg.reads} | gmap -d {arg.genome}-gmap -D . -f samse > {out}'
 	if not arg.verbose: cli += ' 2>/dev/null'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'hisat':
+	sam_to_ftx(out, arg)
+elif arg.program == 'hisat2':
 	# indexing: yes
 	# reads: fq.gz
 	# output: sam
@@ -183,8 +219,8 @@ elif arg.prog == 'hisat':
 	cli = f'hisat2 -x {arg.genome} -U {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'magic':
+	sam_to_ftx(out, arg)
+elif arg.program == 'magic-blast':
 	# indexing: yes
 	# reads: fa.gz
 	# output: sam
@@ -194,15 +230,15 @@ elif arg.prog == 'magic':
 		run(cli, arg)
 	cli = f'magicblast -db {arg.genome} -query {arg.reads} > {out}'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'mini':
+	sam_to_ftx(out, arg)
+elif arg.program == 'minimap2':
 	# indexing: no
 	# reads: fa.gz or fq.gz
 	cli = f'minimap2 -ax splice {arg.genome} {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_fx(out)
-elif arg.prog == 'star':
+	sam_to_ftx(out, arg)
+elif arg.program == 'star':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
 	# output: sam
@@ -212,20 +248,19 @@ elif arg.prog == 'star':
 	idx = f'{arg.genome}-star'
 	if not os.path.exists(idx):
 		cli = f'STAR --runMode genomeGenerate --genomeDir {idx}\
-			--genomeFastaFiles {arg.genome} --genomeSAindexNbases 8\
-			--runThreadN {arg.threads}'
+			--genomeFastaFiles {arg.genome} --genomeSAindexNbases 8'
 		if not arg.verbose: cli += ' > /dev/null'
 		run(cli, arg)
 	cli = f'STAR --genomeDir {idx}\
 		--readFilesIn {arg.reads} --readFilesCommand "gunzip -c"\
-		--runThreadN {arg.threads} --outFileNamePrefix {out}'
+		--outFileNamePrefix {out}'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
 	os.rename(f'{out}Aligned.out.sam', f'{out}')
 	for x in ('Log.final.out', 'Log.out', 'Log.progress.out', 'SJ.out.tab'):
 		os.unlink(f'{out}{x}')
-	sam_to_fx(out)
-elif arg.prog == 'tophat':
+	sam_to_ftx(out, arg)
+elif arg.program == 'tophat2':
 	# indexing: yes, bowttie2
 	# reads: fq.gz probably
 	# output: sam
@@ -239,7 +274,7 @@ elif arg.prog == 'tophat':
 	run(cli, arg)
 	cli = f'samtools view -h tophat_out/accepted_hits.bam > {out}'
 	run(cli, arg)
-	sam_to_fx(out)
+	sam_to_ftx(out, arg)
 	if not arg.debug: os.system('rm -rf tophat_out')
 else:
 	sys.exit(f'ERROR: unknown program: {arg.prog}')
