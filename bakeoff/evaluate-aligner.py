@@ -49,7 +49,7 @@ def needfastq(arg):
 				print(seq, file=fp)
 				print('+', file=fp)
 				print('J' * len(seq), file=fp)
-	arg.reads = fastq
+	return fastq
 
 class BitFlag:
 	def __init__(self, val):
@@ -74,19 +74,18 @@ def cigar_to_exons(cigar, pos):
 		elif op == 'D': pass
 		elif op == 'I': end += n
 		#elif op == 'S': beg += n # is this right?
-		elif op == 'H': pass
+		#elif op == 'H': pass
 		elif op == 'N':
-			exons.append((pos+beg, pos+end))
-			beg += n
+			exons.append((pos+beg-1, pos+end-2))
+			beg = end + n
 			end = beg
-	exons.append((pos+beg, pos+end))
+	exons.append((pos+beg-1, pos+end-2))
 	return exons
 
-def sam_to_ftx(filename, arg):
+def sam_to_ftx(filename, out, arg):
 	n = 0
 	with open(filename) as fp:
 		for line in fp:
-			line = fp.readline()
 			if line == '': break
 			if line.startswith('@'): continue
 			f = line.split('\t')
@@ -106,9 +105,9 @@ def sam_to_ftx(filename, arg):
 			n += 1
 			exons = cigar_to_exons(cigar, pos)
 			ftx = FTX(chrom, str(n), st, exons, f'{arg.program} ref:{qname}')
-			print(ftx)
+			print(ftx, file=out)
 
-def sim4_to_ftx(filename, arg):
+def sim4_to_ftx(filename, out, arg):
 	chrom = None
 	strand = None
 	exons = []
@@ -120,11 +119,11 @@ def sim4_to_ftx(filename, arg):
 				if chrom is not None:
 					ftx = FTX(chrom, str(n), strand, exons,
 						f'{arg.program} ref:{ref}')
-					print(ftx)
+					print(ftx, file=out)
 				chrom = None
 				strand = None
 				exons = []
-				ref = line[7:].split(',')[0]
+				ref = line[7:].split(' ')[0][:-1]
 				n += 1
 				continue
 			elif line.startswith('seq2 ='):
@@ -134,12 +133,16 @@ def sim4_to_ftx(filename, arg):
 			f = line.split()
 			if len(f) != 4: continue
 			beg, end = f[1][1:-1].split('-')
-			exons.append((int(beg), int(end)))
+			exons.append((int(beg) -1, int(end) -1))
 			st = '+' if f[3] == '->' else '-'
 			if strand is None: strand = st
 			else: assert(strand == st)
 		ftx = FTX(chrom, str(n), strand, exons, f'{arg.program} ref:{ref}')
-		print(ftx)
+		print(ftx, file=out)
+
+#######
+# CLI #
+#######
 
 parser = argparse.ArgumentParser(description='spliced alignment evaluator: '
 	+ ', '.join(('blat', 'bowtie2', 'bwa-mem', 'gmap', 'hisat2',
@@ -153,7 +156,13 @@ parser.add_argument('--verbose', action='store_true',
 	help='show various informative messages')
 arg = parser.parse_args()
 
-out = f'temp-{os.getpid()}'
+###############
+# Run Aligner #
+###############
+
+out = f'temp-{os.getpid()}' # temporary output file
+ftx = f'ftx-{os.getpid()}'  # temporary ftx file
+fp = open(ftx, 'w')
 
 if arg.program == 'blat':
 	# indexing: no
@@ -166,7 +175,7 @@ if arg.program == 'blat':
 	cli = f'blat {arg.genome} {arg.reads} {out} -out=sim4'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
-	sim4_to_ftx(out, arg)
+	sim4_to_ftx(out, fp, arg)
 elif arg.program == 'bowtie2':
 	# indexing: yes
 	# reads: fq.gz
@@ -176,11 +185,11 @@ elif arg.program == 'bowtie2':
 		cli = f'bowtie2-build {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += '>/dev/null 2> /dev/null'
 		run(cli, arg)
-	needfastq(arg)
-	cli = f'bowtie2 -x {arg.genome} -U {arg.reads} > {out}'
+	fastq = needfastq(arg)
+	cli = f'bowtie2 -x {arg.genome} -U {fastq} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'bwa-mem':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
@@ -193,7 +202,7 @@ elif arg.program == 'bwa-mem':
 	cli = f'bwa mem {arg.genome} {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'gmap':
 	# indexing: yes
 	# reads: fa (not compressed)
@@ -206,7 +215,7 @@ elif arg.program == 'gmap':
 	cli = f'gunzip -c {arg.reads} | gmap -d {arg.genome}-gmap -D . -f samse > {out}'
 	if not arg.verbose: cli += ' 2>/dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'hisat2':
 	# indexing: yes
 	# reads: fq.gz
@@ -215,11 +224,11 @@ elif arg.program == 'hisat2':
 		cli = f'hisat2-build -f {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += ' >/dev/null 2> /dev/null'
 		run(cli, arg)
-	needfastq(arg)
-	cli = f'hisat2 -x {arg.genome} -U {arg.reads} > {out}'
+	fastq = needfastq(arg)
+	cli = f'hisat2 -x {arg.genome} -U {fastq} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'magic-blast':
 	# indexing: yes
 	# reads: fa.gz
@@ -230,14 +239,14 @@ elif arg.program == 'magic-blast':
 		run(cli, arg)
 	cli = f'magicblast -db {arg.genome} -query {arg.reads} > {out}'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'minimap2':
 	# indexing: no
 	# reads: fa.gz or fq.gz
 	cli = f'minimap2 -ax splice {arg.genome} {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'star':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
@@ -259,7 +268,7 @@ elif arg.program == 'star':
 	os.rename(f'{out}Aligned.out.sam', f'{out}')
 	for x in ('Log.final.out', 'Log.out', 'Log.progress.out', 'SJ.out.tab'):
 		os.unlink(f'{out}{x}')
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 elif arg.program == 'tophat2':
 	# indexing: yes, bowttie2
 	# reads: fq.gz probably
@@ -274,11 +283,46 @@ elif arg.program == 'tophat2':
 	run(cli, arg)
 	cli = f'samtools view -h tophat_out/accepted_hits.bam > {out}'
 	run(cli, arg)
-	sam_to_ftx(out, arg)
+	sam_to_ftx(out, fp, arg)
 	if not arg.debug: os.system('rm -rf tophat_out')
 else:
-	sys.exit(f'ERROR: unknown program: {arg.prog}')
+	sys.exit(f'ERROR: unknown program: {arg.program}')
 
-# Clean up
+fp.close()
+
+######################
+# Evalute Alignments #
+######################
+
+hitcount = {name:0 for name, seq in readfasta(arg.reads)}
+
+with open(ftx) as fp:
+	for line in fp:
+		f1, f2 = line.rstrip().split(' ref:')
+		alignment = FTX.parse(f1)
+		reference = FTX.parse(f2)
+		shared, total = reference.compare_coordinates(alignment)
+	#	print(reference)
+	#	print(alignment)
+		print(shared, total)
+
+		hitcount[f'{reference}'] += 1
+
+missed = 0
+extra = 0
+unique = 0
+for name, n in hitcount.items():
+	if   n == 0: missed += 1
+	elif n > 1:  extra += 1
+	else:        unique += 1
+
+print(f'missed: {missed}, extra: {extra}, unique: {unique}')
+
+
+
+############
+# Clean up #
+############
 
 if not arg.debug and os.path.exists(out): os.unlink(f'{out}')
+if not arg.debug and os.path.exists(ftx): os.unlink(f'{ftx}')

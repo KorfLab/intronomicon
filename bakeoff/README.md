@@ -110,14 +110,10 @@ The output of `read-simulator.py` has headers that look like the following:
 
 ------------------------------------------------------------------------------
 
-## Alignment Wrapper ##
+## Alignment Evaluator ##
 
-`alignment-wrapper.py` provides a consistent interface for every program. Input
-files are fasta, output is .fx.
-
-Output is not yet complete for SAM files.
-
-Many things are not optimized yet.
+`evaluate-aligner.py` provides a consistent interface for every program. Many
+things are not optimized yet.
 
 - Resources
 - Alignment and splicing parameters
@@ -162,26 +158,3 @@ Todo...
 	- indels
 	- trans-spliced leaders
 	- poly-A tails
-
-
-
-
-## Comparison ##
-
-Comparing truth to aligner
-
-- we know the location of the read, it's in the fx
-- aligners report locations of the read
-- what if the alignment reports multiple locations?
-	- reporting too many should lower aggregate performance
-
-correct - both sites found
-partial - one site found
-missed - no sites found
-fabricated - extra sites found
-
-
-when a program is wrong, why did it get the wrong answer?
-
-
-pie-charts for each algorithm?
