@@ -1,4 +1,5 @@
 import re
+import sys
 import xml.etree.ElementTree as ET
 
 def descend_tree(node, prev):
@@ -6,7 +7,7 @@ def descend_tree(node, prev):
 	objects = []
 	for item in node:
 		obj = {'tag': item.tag}
-		if item.text and re.match('\S',  item.text): obj['txt'] = item.text
+		if item.text and re.match(r'\S',  item.text): obj['txt'] = item.text
 		if item.attrib: obj['att'] = item.attrib
 		contents = descend_tree(item, [])
 		if len(contents) > 0: obj['has'] = contents
@@ -17,7 +18,7 @@ def read_xml(fp):
 	tree = ET.parse(fp)
 	root = tree.getroot()
 	data = {'tag': root.tag}
-	if re.search('\S', root.text): data['txt'] = root.text
+	if re.search(r'\S', root.text): data['txt'] = root.text
 	if root.attrib: data['att'] = root.attrib
 	contents = descend_tree(root, [])
 	if contents: data['has'] = contents
@@ -103,6 +104,9 @@ def read(fp):
 			taxid = get(thing['has'][0], 'TAXON_ID')
 		if thing['tag'] == 'SAMPLE_ATTRIBUTES':
 			for x in thing['has']:
+				if 'txt' not in x['has'][1]:
+					print(f'warning, sample section', file=sys.stderr)
+					continue
 				tag = x['has'][0]['txt']
 				val = x['has'][1]['txt']
 				satt[tag] = val

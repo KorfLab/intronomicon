@@ -27,7 +27,7 @@ url = f'{base}/esearch.fcgi?db=sra&{taxid}&retmax=1'
 if arg.verbose: print(f'requesting: {url}', file=sys.stderr)
 response = requests.get(url)
 response.encoding = 'utf-8'
-n = int(re.search('<Count>(\d+)</Count>', response.text).group(1))
+n = int(re.search(r'<Count>(\d+)</Count>', response.text).group(1))
 time.sleep(arg.delay)
 
 # full request of all records
@@ -40,7 +40,7 @@ time.sleep(arg.delay)
 # download each XML file
 done = 0
 fail = []
-for m in re.finditer('<Id>(\d+)</Id>', response.text):
+for m in re.finditer(r'<Id>(\d+)</Id>', response.text):
 	uid = m.group(1)
 	path = f'{arg.dir}/{uid}.xml'
 	if os.path.exists(path) and os.path.getsize(path) > 0:
@@ -62,7 +62,7 @@ for m in re.finditer('<Id>(\d+)</Id>', response.text):
 		time.sleep(arg.delay)
 	if success: done += 1
 	else:       fail.append(uid)
-	if done >= arg.limit: break
+	if arg.limit and done >= arg.limit: break
 
 if arg.verbose:
 	print(f'downloaded {done}, failed {len(fail)}', file=sys.stderr)
