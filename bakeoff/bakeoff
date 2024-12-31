@@ -44,6 +44,7 @@ my $rna = "reads.fa.gz";
 #########
 # Setup #
 #########
+
 if (not -d $dir) {
 	run("mkdir $dir");
 	run("cp $src_dna $dir/$dna");
@@ -58,6 +59,7 @@ if (not -d $dir) {
 #########
 # Align #
 #########
+
 chdir $dir;
 foreach my $prog (@program) {
 	my $cli = "python3 ../run-aligner.py $dna $rna $prog";

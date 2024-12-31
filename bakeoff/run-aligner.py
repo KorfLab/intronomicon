@@ -167,7 +167,7 @@ fp = open(ftx, 'w')
 if arg.program == 'blat':
 	# indexing: no
 	# reads: fa.gz
-	# output: sim4 converted to fx
+	# output: sam not available, so using/converting from sim4
 	# notes:
 	#   consider adding -fine -q=rna (they are used for full length mRNAs)
 	#   -maxIntron=N  defaults to 750000
@@ -233,6 +233,7 @@ elif arg.program == 'magic-blast':
 	# indexing: yes
 	# reads: fa.gz
 	# output: sam
+	# notes: renames the chromosomes as numbers, maybe fix?
 	if not os.path.exists(f'{arg.genome}.nsq'):
 		cli = f'makeblastdb -dbtype nucl -in {arg.genome}'
 		if not arg.verbose: cli += ' > /dev/null'
@@ -270,10 +271,10 @@ elif arg.program == 'star':
 		os.unlink(f'{out}{x}')
 	sam_to_ftx(out, fp, arg)
 elif arg.program == 'tophat2':
-	# indexing: yes, bowttie2
-	# reads: fq.gz probably
+	# indexing: yes, uses bowtie2
+	# reads: fa.gz
 	# output: sam
-	# notes: does not do spliced alignment
+	# notes: must clean up tophat_out directory
 	if not os.path.exists(f'{arg.genome}.1.bt2'):
 		cli = f'bowtie2-build {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += '>/dev/null 2> /dev/null'

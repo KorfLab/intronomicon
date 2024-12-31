@@ -20,27 +20,32 @@ class FTX:
 		self.exons = exons
 		self.info = info
 
+	def exon_length(self, n):
+		return self.exons[n][1] - self.exons[n][0] + 1
+
+	def exons_match(f1, f2):
+		for (b1, e1), (b2, e2) in zip(f1.exons, f2.exons):
+			if b1 != b2: return False
+			if e1 != e2: return False
+		return True
+
 	def overlaps(f1, f2, strand_sensitive=True):
 		if f1.chrom != f2.chrom: return False
 		if f1.strand != f2.strand and strand_sensitive: return False
 		if f1.beg <= f2.beg and f1.end >= f2.beg: return True
 		return False
 
-	def compare_coordinates(f1, f2):
+	def compare_exons(f1, f2):
 		f1b = [beg for beg, end in f1.exons]
 		f1e = [end for beg, end in f1.exons]
 		f2b = [beg for beg, end in f2.exons]
 		f2e = [end for beg, end in f2.exons]
-		total = len(f1b) + len(f1e) + len(f2b) + len(f2e)
+		total = len(f1b) + len(f1e)
 		shared = 0
 		for beg in f1b:
 			if beg in f2b: shared += 1
 		for end in f1e:
 			if end in f2e: shared += 1
-		for beg in f2b:
-			if beg in f1b: shared += 1
-		for end in f2e:
-			if end in f1e: shared += 1
 		return shared, total
 
 	def text(self):

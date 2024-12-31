@@ -80,8 +80,7 @@ The `genome-simulator.py` program creates synthetic genomes and corresponding
 annotation.
 
 
-## Log ##
-
+## Progress ##
 
 - Stage 1: hello world
 	- install spliced aligners (done)
@@ -91,15 +90,14 @@ annotation.
 	- develop output wrapper for each program (done)
 	- develop comparison program to check accuracy (in progress)
 		- **may require debugging previous steps**
-- Stage 2: parameter optimization
 	- figure out best way to run each program
 		- accuracy
 		- time, memory, cpus
-	- create synthetic data with adversarial properties
-		- C. elegans sampled (done)
-		- synthetic genome (done, needs validating)
+-Stage 2: synthetic data with adversarial properties
+	- create synthetic genomes
+	- test alignments
 - Stage 3: full study
-	- create full data sets
+	- create full C. elegans and synthetic data sets
 	- perform alignments
 	- compare performance and resources
 	- determine best practices
