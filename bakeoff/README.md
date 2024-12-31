@@ -1,9 +1,6 @@
 Bakeoff
 =======
 
-**WARNING** Must start from the beginning with read-simulator to check that it
-works with the new FTX class. Also, must debug alignment coordinates.
-
 This is the home of the alignment bakeoff sub-project that seeks to answer the
 questions "which is the best aligner for RNA-seq data?" and "what kinds of
 improvements need to made in this space?"
@@ -21,8 +18,8 @@ improvements need to made in this space?"
 		- accuracy
 		- time, memory, cpus
 	- create synthetic data with adversarial properties
-		- C. elegans sampled
-		- synthetic genome
+		- C. elegans sampled (done)
+		- synthetic genome (done, needs validating)
 - Stage 3: full study
 	- create full data sets
 	- perform alignments
@@ -99,14 +96,14 @@ python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --sa
 The output of `read-simulator.py` has headers that look like the following:
 
 ```
->I|Transcript:F53G12.5b.1|+|127305-127336,127385-127436,128697-128712|-
+>I|Transcript:F53G12.5b.1|+|127305-127336,127385-127436,128697-128712|r-
 ```
 
 - "I" means it was generated from chromosome I
 - "Transcript:F53G12.5b.1" is the name of the transcript
 - "+" means the transcript is on the plus strand
 - "27305-127336,127385-127436,128697-128712" are genome coordinates
-- "-" means the sequence is generated from the reverse-complement
+- "r-" means the read was generated from the reverse-complement
 
 ------------------------------------------------------------------------------
 
@@ -138,23 +135,3 @@ DRAGEN needs evaluation: @dragen-1.hpc.genomecenter.ucdavis.edu
 
 The `genome-simulator.py` program creates synthetic genomes and corresponding
 annotation.
-
-- Every gene is flanked on either side by a fixed amount of sequence (100)
-- Every gene has 5 exons
-- The standard exon length is 100
-- The standard intron length is 100
-- Intron 2 is variable length
-- Exon 4 is variable length
-- `f1-[e1]-i1-[e2]-v.i2-[e3]-i3-[v.e4]-i4-[e5]-f2`
-
-Todo...
-
-- Genes are currently only on the positive strand
-	- meaning introns are all GT..AG
-	- there is no coding sequence implied
-- No non-canonical splice sites yet
-- There should be a companion read mutator
-	- substitution
-	- indels
-	- trans-spliced leaders
-	- poly-A tails

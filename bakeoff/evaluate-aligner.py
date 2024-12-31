@@ -290,35 +290,21 @@ else:
 
 fp.close()
 
-######################
-# Evalute Alignments #
-######################
+#####################
+# Report Alignments #
+#####################
 
 hitcount = {name:0 for name, seq in readfasta(arg.reads)}
-
+aligned = {}
 with open(ftx) as fp:
 	for line in fp:
-		f1, f2 = line.rstrip().split(' ref:')
-		alignment = FTX.parse(f1)
-		reference = FTX.parse(f2)
-		shared, total = reference.compare_coordinates(alignment)
-	#	print(reference)
-	#	print(alignment)
-		print(shared, total)
+		ali, ref = line.rstrip().split(' ref:')
+		if ref not in aligned: aligned[ref] = ali
+		# keeping only first match (blat sometimes has more than 1)
 
-		hitcount[f'{reference}'] += 1
-
-missed = 0
-extra = 0
-unique = 0
-for name, n in hitcount.items():
-	if   n == 0: missed += 1
-	elif n > 1:  extra += 1
-	else:        unique += 1
-
-print(f'missed: {missed}, extra: {extra}, unique: {unique}')
-
-
+for ref in hitcount:
+	if ref in aligned: print(ref, aligned[ref], sep='\t')
+	else:              print(ref, 'missed')
 
 ############
 # Clean up #
