@@ -24,6 +24,9 @@ def write_gff(fp, chrom, uid, exons):
 		print('\t'.join((chrom, 'bakeoff', 'exon', str(beg+1),
 			str(end+1), strand, '.', f'Parent=tx:{uid}')), file=fp)
 
+#######
+# CLI #
+#######
 
 parser = argparse.ArgumentParser()
 parser.add_argument('basename', help='directory for files')
@@ -52,6 +55,11 @@ parser.add_argument('--double', action='store_true',
 parser.add_argument('--noncanonical', action='store_true',
 	help='include non-canonical splice sites')
 arg = parser.parse_args()
+
+#########
+# SETUP #
+#########
+
 if arg.seed: random.seed(arg.seed)
 
 sites = ['GTAG']
@@ -59,9 +67,12 @@ if arg.noncanonical: sites.extend(['GCAG', 'ATAC', 'AATT'])
 strands = ['+']
 if arg.double: strands.append('-')
 
-
 fa = open(f'{arg.basename}.fa', 'w')
 gff = open(f'{arg.basename}.gff', 'w')
+
+#############
+# MAIN LOOP #
+#############
 
 for c in range(arg.chroms):
 	chrom = f'chr{c+1}'
@@ -111,6 +122,10 @@ for c in range(arg.chroms):
 			print(seq, file=fa)
 			uid = f'{chrom}:ve:{i}:{strand}'
 			write_gff(gff, chrom, uid, exons)
+
+##########
+# FINISH #
+##########
 
 fa.close()
 gff.close()

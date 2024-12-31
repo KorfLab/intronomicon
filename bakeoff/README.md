@@ -5,40 +5,23 @@ This is the home of the alignment bakeoff sub-project that seeks to answer the
 questions "which is the best aligner for RNA-seq data?" and "what kinds of
 improvements need to made in this space?"
 
-- Stage 1: hello world
-	- install spliced aligners (done)
-	- create minimal synthetic data (done)
-	- determine cli for each program (done)
-	- develop input wrapper for each program (done)
-	- develop output wrapper for each program (done)
-	- develop comparison program to check accuracy (in progress)
-		- **may require debugging previous steps**
-- Stage 2: parameter optimization
-	- figure out best way to run each program
-		- accuracy
-		- time, memory, cpus
-	- create synthetic data with adversarial properties
-		- C. elegans sampled (done)
-		- synthetic genome (done, needs validating)
-- Stage 3: full study
-	- create full data sets
-	- perform alignments
-	- compare performance and resources
-	- determine best practices
-	- determine areas to improve
+## Quickstart ##
 
-## Environment ##
+1. Install conda (e.g. miniforge3)
+2. Clone the intronomicon repo
+3. Create the bakeoff environment `conda env create -f bakeoff.yml`
+4. Run the `bakeoff` program (see usage)
 
-```
-cd bakeoff
-conda env create -f bakeoff.yml
-conda activate bakeoff
-```
+Notes:
+
+- not all software built for ARM, may need an alternate environment
+- need to do testing on non-x86 hardware
+- dragen needs evaluation outside this scope
 
 ## Flattened Transcript Format ##
 
-Oh yay, a new non-standard standard. This file format is used for the bakeoff
-project only.
+Oh yay, a new non-standard standard. This file format is used internally for
+the bakeoff project only.
 
 - file extension: `.ftx` (not an official file extension)
 - field delimiter: `|`
@@ -60,62 +43,26 @@ Example: Plus-strand transcript with introns inferred at 201-299 and 401-499.
 chr1|name|+|100-200,300-400,500-600|whatever you like
 ```
 
-## Alignment Programs ##
-
-Created a conda environment `bakeoff.yml` for several aligners:
-
-- blat
-- gmap
-- hisat2
-- magicblast
-- minimap2
-- star
-- tophat
-
-Originally, bowtie2 and bwa were included, but they do not perform spliced
-alignment, so they are not going to be tested. They are still included in the
-alignment wrapper (see below).
-
-Aligners not yet considered here.
-
-- dragen
-
 ## Minimal synthetic data ##
 
-`read-simulator.py` is used to create a synthetic set of reads with complete
-coverage for each canonical transcript of every protein-coding gene in the 1pct
-sets in datacore2024.
+`read-simulator.py` is used to create a synthetic reads across the entirety of
+a gene. The FASTA header describes the coordinates of the reads in ftx format.
 
-For minimal testing purposes, an even smaller dataset is useful. Use
-`--samplegenes 0.1` and `--samplereads 0.1` to reduce the set size
+For testing purposes, something like this is useful.
 
 ```
 python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 13 > mini.fa
 ```
 
-The output of `read-simulator.py` has headers that look like the following:
+## Alignment Runner ##
 
-```
->I|Transcript:F53G12.5b.1|+|127305-127336,127385-127436,128697-128712|r-
-```
-
-- "I" means it was generated from chromosome I
-- "Transcript:F53G12.5b.1" is the name of the transcript
-- "+" means the transcript is on the plus strand
-- "27305-127336,127385-127436,128697-128712" are genome coordinates
-- "r-" means the read was generated from the reverse-complement
-
-------------------------------------------------------------------------------
-
-## Alignment Evaluator ##
-
-`evaluate-aligner.py` provides a consistent interface for every program. Many
+`run-aligner.py` provides a consistent interface for every program. Many
 things are not optimized yet.
 
 - Resources
 - Alignment and splicing parameters
 
-Wrappers for the following
+Wrappers for the following exist so far.
 
 - blat
 - bowtie2
@@ -127,11 +74,33 @@ Wrappers for the following
 - star
 - tophat
 
-DRAGEN needs evaluation: @dragen-1.hpc.genomecenter.ucdavis.edu
-
-------------------------------------------------------------------------------
-
 ## Genome Simulator ##
 
 The `genome-simulator.py` program creates synthetic genomes and corresponding
 annotation.
+
+
+## Log ##
+
+
+- Stage 1: hello world
+	- install spliced aligners (done)
+	- create minimal synthetic data (done)
+	- determine cli for each program (done)
+	- develop input wrapper for each program (done)
+	- develop output wrapper for each program (done)
+	- develop comparison program to check accuracy (in progress)
+		- **may require debugging previous steps**
+- Stage 2: parameter optimization
+	- figure out best way to run each program
+		- accuracy
+		- time, memory, cpus
+	- create synthetic data with adversarial properties
+		- C. elegans sampled (done)
+		- synthetic genome (done, needs validating)
+- Stage 3: full study
+	- create full data sets
+	- perform alignments
+	- compare performance and resources
+	- determine best practices
+	- determine areas to improve

@@ -40,7 +40,7 @@ def readfasta(filename):
 	fp.close()
 
 def needfastq(arg):
-	fastq = f'{arg.reads}.fq.gz'
+	fastq = f'{arg.reads[0:arg.reads.find('.')]}.fq.gz'
 	if not os.path.exists(fastq):
 		if arg.verbose: print('creating fastq file', file=sys.stderr)
 		with gzip.open(fastq, 'wt') as fp:
@@ -294,7 +294,7 @@ fp.close()
 # Report Alignments #
 #####################
 
-hitcount = {name:0 for name, seq in readfasta(arg.reads)}
+refs = [name for name, seq in readfasta(arg.reads)]
 aligned = {}
 with open(ftx) as fp:
 	for line in fp:
@@ -302,9 +302,10 @@ with open(ftx) as fp:
 		if ref not in aligned: aligned[ref] = ali
 		# keeping only first match (blat sometimes has more than 1)
 
-for ref in hitcount:
-	if ref in aligned: print(ref, aligned[ref], sep='\t')
-	else:              print(ref, 'missed')
+with gzip.open(f'{arg.program}.ftx.gz', 'wt') as fp:
+	for ref in refs:
+		if ref in aligned: print(ref, aligned[ref], sep='\t', file=fp)
+		else:              print(ref, 'None', file=fp)
 
 ############
 # Clean up #
