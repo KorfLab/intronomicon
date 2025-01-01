@@ -40,7 +40,7 @@ def readfasta(filename):
 	fp.close()
 
 def needfastq(arg):
-	fastq = f'{arg.reads[0:arg.reads.find('.')]}.fq.gz'
+	fastq = f'{arg.reads[0:arg.reads.find(".")]}.fq.gz'
 	if not os.path.exists(fastq):
 		if arg.verbose: print('creating fastq file', file=sys.stderr)
 		with gzip.open(fastq, 'wt') as fp:
@@ -146,10 +146,14 @@ def sim4_to_ftx(filename, out, arg):
 
 parser = argparse.ArgumentParser(description='spliced alignment evaluator: '
 	+ ', '.join(('blat', 'bowtie2', 'bwa-mem', 'gmap', 'hisat2',
-	'magic-blast', 'minimap2', 'star', 'tophat2')))
+	'magicblast', 'minimap2', 'star', 'tophat2')))
 parser.add_argument('genome', help='genome file in FASTA format')
 parser.add_argument('reads', help='reads file in FASTA format')
 parser.add_argument('program', help='program name')
+parser.add_argument('--threads', type=int, default=1,
+	help='number of threads if changeable [%(default)i]')
+parser.add_argument('--optimize', action='store_true',
+	help='run additional parameters rather than defaults')
 parser.add_argument('--debug', action='store_true',
 	help='keep temporary files (e.g. SAM)')
 parser.add_argument('--verbose', action='store_true',
@@ -169,10 +173,12 @@ if arg.program == 'blat':
 	# reads: fa.gz
 	# output: sam not available, so using/converting from sim4
 	# notes:
-	#   consider adding -fine -q=rna (they are used for full length mRNAs)
-	#   -maxIntron=N  defaults to 750000
+	#   no options for threads (there is a different pblat for that)
+	#   adding -fine or -q=rna is suggested for long mRNA
+	#   -maxIntron=N  defaults to 750000, changing had no effect
 	#   -out=wublast blast blast8 blast9 sim4 maf axt pslx (using sim4)
 	cli = f'blat {arg.genome} {arg.reads} {out} -out=sim4'
+	if arg.optimize: cli += ' -fine -q=rna'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
 	sim4_to_ftx(out, fp, arg)
@@ -180,7 +186,7 @@ elif arg.program == 'bowtie2':
 	# indexing: yes
 	# reads: fq.gz
 	# output: sam
-	# notes: does not do spliced alignment
+	# notes: does not do spliced alignment, so no point in optimizing
 	if not os.path.exists(f'{arg.genome}.1.bt2'):
 		cli = f'bowtie2-build {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += '>/dev/null 2> /dev/null'
@@ -194,7 +200,7 @@ elif arg.program == 'bwa-mem':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
 	# output: sam
-	# notes: does not do spliced alignment
+	# notes: does not do spliced alignment, so no point in optimizing
 	if not os.path.exists(f'{arg.genome}.bwt'):
 		cli = f'bwa index {arg.genome}'
 		if not arg.verbose: cli += ' 2> /dev/null'
@@ -206,30 +212,33 @@ elif arg.program == 'bwa-mem':
 elif arg.program == 'gmap':
 	# indexing: yes
 	# reads: fa (not compressed)
-	# output:
-	# --splice --microexon-spliceprob
+	# output: sam
+	# --microexon-spliceprob
 	if not os.path.exists(f'{arg.genome}-gmap'):
 		cli = f'gmap_build -d {arg.genome}-gmap -D . {arg.genome}'
 		if not arg.verbose: cli += '>/dev/null 2>/dev/null'
 		run(cli, arg)
-	cli = f'gunzip -c {arg.reads} | gmap -d {arg.genome}-gmap -D . -f samse > {out}'
+	cli = f'gunzip -c {arg.reads} | gmap -d {arg.genome}-gmap -D . -f samse -t {arg.threads}'
+	if arg.optimize: cli += f' -k 15 --min-intronlength 25 --microexon-spliceprob 0.05'
+	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2>/dev/null'
 	run(cli, arg)
 	sam_to_ftx(out, fp, arg)
 elif arg.program == 'hisat2':
 	# indexing: yes
-	# reads: fq.gz
+	# reads: fq.gz or fa.gz with -f
 	# output: sam
 	if not os.path.exists(f'{arg.genome}.1.ht2'):
 		cli = f'hisat2-build -f {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += ' >/dev/null 2> /dev/null'
 		run(cli, arg)
-	fastq = needfastq(arg)
-	cli = f'hisat2 -x {arg.genome} -U {fastq} > {out}'
+	cli = f'hisat2 -x {arg.genome} -U {arg.reads} -f -p {arg.threads}'
+	if arg.optimize: cli += f' --min-intronlen 25'
+	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
 	sam_to_ftx(out, fp, arg)
-elif arg.program == 'magic-blast':
+elif arg.program == 'magicblast':
 	# indexing: yes
 	# reads: fa.gz
 	# output: sam
@@ -238,13 +247,19 @@ elif arg.program == 'magic-blast':
 		cli = f'makeblastdb -dbtype nucl -in {arg.genome}'
 		if not arg.verbose: cli += ' > /dev/null'
 		run(cli, arg)
-	cli = f'magicblast -db {arg.genome} -query {arg.reads} > {out}'
+	cli = f'magicblast -db {arg.genome} -query {arg.reads} -num_threads {arg.threads}'
+	if arg.optimize: cli += f' -word_size 15 -limit_lookup F'
+	cli += f' > {out}'
 	run(cli, arg)
 	sam_to_ftx(out, fp, arg)
 elif arg.program == 'minimap2':
 	# indexing: no
 	# reads: fa.gz or fq.gz
-	cli = f'minimap2 -ax splice {arg.genome} {arg.reads} > {out}'
+	# notes:
+	#   -u can be f, b, n for matching transcript, both, or not match GT-AG
+	cli = f'minimap2 -ax splice {arg.genome} {arg.reads} -t {arg.threads}'
+	if arg.optimize: cli += f' -k 15 -u b'
+	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
 	sam_to_ftx(out, fp, arg)
@@ -261,9 +276,8 @@ elif arg.program == 'star':
 			--genomeFastaFiles {arg.genome} --genomeSAindexNbases 8'
 		if not arg.verbose: cli += ' > /dev/null'
 		run(cli, arg)
-	cli = f'STAR --genomeDir {idx}\
-		--readFilesIn {arg.reads} --readFilesCommand "gunzip -c"\
-		--outFileNamePrefix {out}'
+	cli = f'STAR --genomeDir {idx} --readFilesIn {arg.reads} --readFilesCommand "gunzip -c" --outFileNamePrefix {out} --runThreadN 1'
+	if arg.optimize: cli += f' --alignIntronMin 25'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
 	os.rename(f'{out}Aligned.out.sam', f'{out}')
@@ -279,7 +293,8 @@ elif arg.program == 'tophat2':
 		cli = f'bowtie2-build {arg.genome} {arg.genome}'
 		if not arg.verbose: cli += '>/dev/null 2> /dev/null'
 		run(cli, arg)
-	cli = f'tophat2 {arg.genome} {arg.reads}'
+	opt = f'-i 25 --coverage-search --microexon-search --min-coverage-intron 25 --b2-very-sensitive' if arg.optimize else ''
+	cli = f'tophat2 -p {arg.threads} {opt} {arg.genome} {arg.reads} '
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
 	cli = f'samtools view -h tophat_out/accepted_hits.bam > {out}'

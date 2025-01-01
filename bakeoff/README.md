@@ -2,8 +2,11 @@ Bakeoff
 =======
 
 This is the home of the alignment bakeoff sub-project that seeks to answer the
-questions "which is the best aligner for RNA-seq data?" and "what kinds of
-improvements need to made in this space?"
+questions:
+
+- Which is the most accurate aligner for RNA-seq data?
+- What kinds of exon-intron structures create the most problems?
+- What kinds of improvements need to made in this space?"
 
 ## Quickstart ##
 
@@ -14,6 +17,7 @@ improvements need to made in this space?"
 
 Notes:
 
+- you will probably need `grimore` and `datacore2024`
 - not all software built for ARM, may need an alternate environment
 - need to do testing on non-x86 hardware
 - dragen needs evaluation outside this scope
@@ -21,7 +25,8 @@ Notes:
 ## Flattened Transcript Format ##
 
 Oh yay, a new non-standard standard. This file format is used internally for
-the bakeoff project only.
+the bakeoff project only. The reason this is used is to embed the meta-data for
+alignment coordinates directly in the FASTA/FASTQ deflines.
 
 - file extension: `.ftx` (not an official file extension)
 - field delimiter: `|`
@@ -29,7 +34,7 @@ the bakeoff project only.
 
 1. chromosome identifier, should match some fasta file
 2. name of transcript, should be unique for each line
-3. strand indicator `+` or `-`
+3. strand indicator `+` or `-` for the transcript
 4. exon structure:
 	- hyphen separated coordinates
 	- comma separated exons
@@ -43,7 +48,7 @@ Example: Plus-strand transcript with introns inferred at 201-299 and 401-499.
 chr1|name|+|100-200,300-400,500-600|whatever you like
 ```
 
-## Minimal synthetic data ##
+## Read Simulator ##
 
 `read-simulator.py` is used to create a synthetic reads across the entirety of
 a gene. The FASTA header describes the coordinates of the reads in ftx format.
@@ -56,7 +61,7 @@ python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --sa
 
 ## Alignment Runner ##
 
-`run-aligner.py` provides a consistent interface for every program. Many
+`run-aligner.py` provides a consistent FASTA interface for every program. Many
 things are not optimized yet.
 
 - Resources
@@ -88,14 +93,10 @@ annotation.
 	- determine cli for each program (done)
 	- develop input wrapper for each program (done)
 	- develop output wrapper for each program (done)
-	- develop comparison program to check accuracy (in progress)
-		- **may require debugging previous steps**
-	- figure out best way to run each program
-		- accuracy
-		- time, memory, cpus
+	- develop comparison program to check accuracy (done for now)
 -Stage 2: synthetic data with adversarial properties
 	- create synthetic genomes
-	- test alignments
+	- figure out best way to run each program
 - Stage 3: full study
 	- create full C. elegans and synthetic data sets
 	- perform alignments

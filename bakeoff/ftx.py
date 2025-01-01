@@ -35,6 +35,16 @@ class FTX:
 		if f1.beg <= f2.beg and f1.end >= f2.beg: return True
 		return False
 
+	def compare_introns(f1, f2):
+		f1dons = [end for beg, end in f1.exons[:-1]]
+		f1accs = [beg for beg, end in f1.exons[1:]]
+		score = 0
+		for beg, end in f2.exons[:-1]:
+			if end in f1dons: score += 1
+		for beg, end in f2.exons[1:]:
+			if beg in f1accs: score += 1
+		return score
+
 	def compare_exons(f1, f2):
 		f1b = [beg for beg, end in f1.exons]
 		f1e = [end for beg, end in f1.exons]
