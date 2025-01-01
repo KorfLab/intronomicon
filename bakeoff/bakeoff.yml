@@ -4,14 +4,15 @@ channels:
   - bioconda
   - defaults
 dependencies:
+  - blast       # used only for magicblast indexing
   - blat
+  - bowtie2     # no spliced alignment, used for indexing tophat
+  - bwa         # no spliced alignment
   - gmap
   - hisat2
   - magicblast
   - minimap2
+  - pblat
   - star
-  - tophat
-  - blast       # used for indexing magicblast
-  - bowtie2     # used for indexing tophat
-  - bwa         # does not perform spliced alignment
-  - samtools    # used for bam conversion of tophat
+  - tophat      # is tophat2
+  - samtools    # used only for tophat bam conversion

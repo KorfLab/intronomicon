@@ -17,9 +17,9 @@ questions:
 
 Notes:
 
-- you will probably need `grimore` and `datacore2024`
-- not all software built for ARM, may need an alternate environment
-- need to do testing on non-x86 hardware
+- you will need `grimore` to simulate reads
+- you may want `datacore2024` for minimal datasets
+- x86 (only hisat2, minimap2, and pblat on osx-arm)
 - dragen needs evaluation outside this scope
 
 ## Flattened Transcript Format ##
@@ -48,42 +48,12 @@ Example: Plus-strand transcript with introns inferred at 201-299 and 401-499.
 chr1|name|+|100-200,300-400,500-600|whatever you like
 ```
 
-## Read Simulator ##
+## Programs ##
 
-`read-simulator.py` is used to create a synthetic reads across the entirety of
-a gene. The FASTA header describes the coordinates of the reads in ftx format.
-
-For testing purposes, something like this is useful.
-
-```
-python3 read-simulator.py  ~/Code/datacore2024/genome_celegans/1* --double  --samplegenes 0.1 --samplereads 0.1 --seed 13 > mini.fa
-```
-
-## Alignment Runner ##
-
-`run-aligner.py` provides a consistent FASTA interface for every program. Many
-things are not optimized yet.
-
-- Resources
-- Alignment and splicing parameters
-
-Wrappers for the following exist so far.
-
-- blat
-- bowtie2
-- bwa
-- gmap
-- hisat2
-- magicblast
-- minimap2
-- star
-- tophat
-
-## Genome Simulator ##
-
-The `genome-simulator.py` program creates synthetic genomes and corresponding
-annotation.
-
+- `genome-simulator.py` creates an experimental genome and annotation
+- `read-simulator.py` creates synthetic RNA-seq reads from FASTA + GFF
+- `run-aligner.py` provides a consistent interface to multiple programs
+- `compare-alignments.py` evaluates performance of aligners
 
 ## Progress ##
 
@@ -95,7 +65,9 @@ annotation.
 	- develop output wrapper for each program (done)
 	- develop comparison program to check accuracy (done for now)
 -Stage 2: synthetic data with adversarial properties
-	- create synthetic genomes
+	- create synthetic genomes with
+		- variable sized exons
+		- non-canonical splice sites
 	- figure out best way to run each program
 - Stage 3: full study
 	- create full C. elegans and synthetic data sets

@@ -3,8 +3,8 @@
 use strict;
 use warnings;
 use Getopt::Std;
-our ($opt_s, $opt_t, $opt_v);
-getopts('s:tv');
+our ($opt_x, $opt_s, $opt_t, $opt_v);
+getopts('s:tvx');
 
 sub run {
 	my $cli = shift;
@@ -21,15 +21,16 @@ options:
   -s <int>  random seed
   -t        minimal testing mode
   -v        verbose output
+  -x        experimental genome (not real)
 
 DNA: path to FASTA file of reference sequence
 GFF: path to GFF3 file of reference annotation
 DIR: output directory
 PROGRAMS: any collection of programs supported by run-aligner.py
-  blat bowtie2 bwa-mem gmap hisat2 magic-blast minimap2 star tophat2
+  blat bowtie2 bwa-mem gmap hisat2 magic-blast minimap2 pblat star tophat2
 
 examples:
-  ./bakeoff -ts3 1pct.dna 1pct.gff3 build blat minimap2
+  ./bakeoff -vts1 1pct.dna 1pct.gff3 build blat minimap2
 
 =============================================================================
 ";
@@ -41,24 +42,21 @@ my $dna = "genome.fa";
 my $gff = "genome.gff";
 my $rna = "reads.fa.gz";
 
-#########
-# Setup #
-#########
+# Setup
 
 if (not -d $dir) {
 	run("mkdir $dir");
 	run("cp $src_dna $dir/$dna");
 	run("cp $src_gff $dir/$gff");
 	my $cli = "python3 read-simulator.py $dir/$dna $dir/$gff --double";
+	$cli .= ' --coding' unless $opt_x;
 	if ($opt_t) {$cli .= " --samplereads 0.1 --samplegenes 0.1"}
 	if ($opt_s) {$cli .= " --seed $opt_s"}
 	$cli .= " | gzip > $dir/$rna";
 	run($cli)
 }
 
-#########
-# Align #
-#########
+# Align
 
 chdir $dir;
 foreach my $prog (@program) {
@@ -67,8 +65,4 @@ foreach my $prog (@program) {
 	run($cli) if not -s "$prog.ftx.gz";
 }
 
-###########
-# Compare #
-###########
-
-# unfinished
+# Compare, Plot, etc

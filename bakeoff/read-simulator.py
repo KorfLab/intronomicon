@@ -54,6 +54,8 @@ parser.add_argument('--double', action='store_true',
 	help='produce reads from both strands')
 parser.add_argument('--spliced', action='store_true',
 	help='only produce reads that splice')
+parser.add_argument('--coding', action='store_true',
+	help='use only good coding genes (e.g. when sampling real genomes')
 arg = parser.parse_args()
 
 if arg.seed != 0: random.seed(arg.seed)
@@ -64,8 +66,9 @@ bases = 0
 genome = Reader(fasta=arg.fasta, gff=arg.gff)
 for chrom in genome:
 	for gene in chrom.ftable.build_genes():
-		if not gene.is_coding(): continue
-		if gene.issues: continue
+		if arg.coding:
+			if gene.issues: continue
+			if not gene.is_coding(): continue
 		if random.random() > arg.samplegenes: continue
 		genes += 1
 		tx = gene.transcripts()[0] # 1 transcript per gene

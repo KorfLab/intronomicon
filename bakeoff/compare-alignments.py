@@ -11,11 +11,14 @@ parser.add_argument('--tablename', required=True,
 	help='base name for various tables')
 parser.add_argument('--minexon', type=int, default=20,
 	help='minimum exon length for table3 [%(default)i]')
+parser.add_argument('--experimental', action='store_true',
+	help='genes are simulated with variable size middle exon and not coding')
 parser.add_argument('--debug', action='store_true')
 parser.add_argument('--verbose', action='store_true')
 arg = parser.parse_args()
 
-# open file pointers to all files
+# Aggregate alignment data by reference read
+
 fps = []
 progs = []
 for file in arg.files:
@@ -25,7 +28,6 @@ for file in arg.files:
 	fps.append(fp)
 	progs.append(file[:file.index('.')])
 
-# aggregate alignment data by reference read
 data = {}
 while True:
 	lines = []
@@ -35,9 +37,7 @@ while True:
 		if ref not in data: data[ref] = {}
 		data[ref][prog] = ali
 
-###############
-# Single Exon #
-###############
+# Single exon
 
 d1 = {}
 for rstr in data:
@@ -64,9 +64,8 @@ with open(f'{arg.tablename}_table1.tsv', 'w') as fp:
 			else: print(d1[prog][cat], end='\t', file=fp)
 		print(file=fp)
 
-#############
-# Two Exons #
-#############
+# Two exons
+# To do: check strands, check canonical
 
 d2 = {}
 for rstr in data:
@@ -101,10 +100,8 @@ with open(f'{arg.tablename}_table2.tsv', 'w') as fp:
 				else: print(d2[length][prog][r], end='\t', file=fp)
 			print(file=fp)
 
-
-###############
-# Three Exons #
-###############
+# Three Exons
+# To do: focus on middle exon
 
 d3 = {}
 for rstr in data:

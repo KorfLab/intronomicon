@@ -1,6 +1,3 @@
-# ftx.py
-import sys
-
 class FTX:
 	"""Class to represent transcripts with one-line formatting"""
 

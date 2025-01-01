@@ -51,6 +51,10 @@ def needfastq(arg):
 				print('J' * len(seq), file=fp)
 	return fastq
 
+def needfasta(arg):
+	os.system(f'gunzip -k {arg.reads}')
+	return arg.reads[:-3]
+
 class BitFlag:
 	def __init__(self, val):
 		i = int(val)
@@ -263,6 +267,14 @@ elif arg.program == 'minimap2':
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
 	sam_to_ftx(out, fp, arg)
+elif arg.program == 'pblat':
+	# see blat except reads need to be uncompressed (seekable)
+	fasta = needfasta(arg)
+	cli = f'pblat {arg.genome} {fasta} {out} -threads={arg.threads} -out=sim4'
+	if arg.optimize: cli += ' -fine -q=rna'
+	if not arg.verbose: cli += ' > /dev/null'
+	run(cli, arg)
+	sim4_to_ftx(out, fp, arg)
 elif arg.program == 'star':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
