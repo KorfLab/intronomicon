@@ -8,6 +8,8 @@ questions:
 - What kinds of exon-intron structures create the most problems?
 - What kinds of improvements need to made in this space?"
 
+This project is moving to its own repo shortly.
+
 ## Quickstart ##
 
 1. Install conda (e.g. miniforge3)
@@ -97,13 +99,162 @@ chr1|name|+|100-200,300-400,500-600|whatever you like
 sort of like 2 min (all except gmap) and 8 min (gmap) for the 1% genome, so
 expecting 200 min and 800 min for full genome, or ~17 hours.
 
+might want to use a masked genome here
+and omit all transcripts with Ns in the exons
+
 ## Synthetic Experiment ##
+
+Ideally, there should be a wrapper for the entire experiment that collects the
+resource usage as well.
+
+
+### Setup
+
+```
+python3 genome-simulator.py exp1 --seed 1 --double --noncanonical
+./bakeoff -x exp1.fa exp1.gff exp1
+```
 
 - genes: 3680
 - reads: 1,479,360
 - bases: 147,936,000
 
-The synthetic experiment with 10 chromosomes is about 4 times larger than the
-1pct_full (8 + 32 min)
+### blat
 
-magicblast uses more than 4G memory and kills itself on the vm
+blat doesn't do separate indexing and only uses 1 cpu
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 blat
+101% 512952 46.17 2.84 0:48.53
+```
+
+### bowtie2
+
+1 cpu with indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 bowtie2
+98% 285928 62.47 1.84 1:05.52
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 bowtie2
+98% 285820 53.88 1.39 0:56.34
+```
+
+### bwa-mem
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 bwa-mem
+95% 495716 38.37 2.19 0:42.41
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 bwa-mem
+99% 495832 39.76 2.04 0:41.82
+```
+
+### gmap
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 gmap
+100% 507772 6720.62 721.45 2:03:18
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 gmap
+200% 507800 7238.28 1053.59 1:08:48
+```
+
+### hisat2
+
+```
+usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 hisat2
+97% 453324 25.57 1.69 0:27.86
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 hisat2
+131% 444808 28.49 4.70 0:25.26
+```
+
+### magicblast
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 magicblast
+98% 3838932 48.34 8.08 0:57.04
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 magicblast
+139% 7063188 52.20 20.25 0:51.99
+```
+
+### minimap2
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 minimap2
+99% 632196 39.52 1.75 0:41.29
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 minimap2
+138% 632196 32.42 8.94 0:29.86
+```
+
+### pblat
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 pblat
+99% 514032 45.01 1.03 0:46.04
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 pblat
+148% 514184 43.18 0.90 0:29.76
+```
+
+
+### star
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 star
+99% 511572 31.46 1.20 0:32.92
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 star
+99% 511528 31.02 0.96 0:32.23
+```
+
+### tophat2
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -x exp1.fa exp1.gff exp1 tophat2
+146% 442372 222.51 233.12 5:10.03
+```
+
+2 cpus with previous indexing
+
+```
+/usr/bin/time -f "%P %M %U %S %E" ./bakeoff -xp2 exp1.fa exp1.gff exp1 tophat2
+177% 880140 217.00 246.21 4:20.46
+```
+
+

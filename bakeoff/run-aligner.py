@@ -218,6 +218,7 @@ elif arg.program == 'pblat':
 	fasta = needfasta(arg)
 	cli = f'pblat {arg.genome} {fasta} {out} -threads={arg.threads} -out=sim4'
 	if arg.optimize: cli += ' -fine -q=rna'
+	cli += ' 2> /dev/null' # it makes a blank line
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
 	sim4_to_ftx(out, fp, arg.program)
