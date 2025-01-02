@@ -53,8 +53,9 @@ def needfastq(arg):
 	return fastq
 
 def needfasta(arg):
-	os.system(f'gunzip -k {arg.reads}')
-	return arg.reads[:-3]
+	fasta = arg.reads[:-3]
+	if not os.path.exists(fasta): os.system(f'gunzip -k {arg.reads}')
+	return fasta
 
 def sim4_to_ftx(filename, out, name):
 	chrom = None

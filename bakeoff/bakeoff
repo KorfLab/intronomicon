@@ -16,7 +16,7 @@ my $usage = "
 =============================================================================
 Spliced Alignment Bakeoff Runner
 
-usage: $0 [options] <DNA> <GFF> <DIR> <PROGRAMS>
+usage: $0 [options] <DNA> <GFF> <DIR> [<PROGRAMS...>]
 options:
   -p <int>  processors [1]
   -s <int>  random seed [unset]
@@ -36,7 +36,7 @@ example:
 =============================================================================
 ";
 
-die $usage unless @ARGV > 3;
+die $usage unless @ARGV >= 3;
 my ($src_dna, $src_gff, $dir, @program) = @ARGV;
 
 my $dna = "genome.fa";
