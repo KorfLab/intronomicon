@@ -5,6 +5,7 @@ import re
 import sys
 
 from ftx import FTX
+from sam2ftx import sam_to_ftx
 
 def run(cli, arg):
 	cli = cli.replace('\t', ' ')
@@ -55,63 +56,7 @@ def needfasta(arg):
 	os.system(f'gunzip -k {arg.reads}')
 	return arg.reads[:-3]
 
-class BitFlag:
-	def __init__(self, val):
-		i = int(val)
-		b = f'{i:012b}'
-		self.read_unmapped = True if b[-3] == '1' else False
-		self.read_reverse_strand = True if b[-5] == '1' else False
-		self.not_primary_alignment = True if b[-9] == '1' else False
-		self.supplementary_alignment = True if b[-12] == '1' else False
-		self.otherflags = []
-		for i in (1, 2, 4, 6, 7, 8, 10, 11):
-			if b[-i] == '1': self.otherflags.append(i)
-
-def cigar_to_exons(cigar, pos):
-	exons = []
-	beg = 0
-	end = 0
-	for match in re.finditer(r'(\d+)([A-Z])', cigar):
-		n = int(match.group(1))
-		op = match.group(2)
-		if   op == 'M': end += n
-		elif op == 'D': pass
-		elif op == 'I': end += n
-		#elif op == 'S': beg += n # is this right?
-		#elif op == 'H': pass
-		elif op == 'N':
-			exons.append((pos+beg-1, pos+end-2))
-			beg = end + n
-			end = beg
-	exons.append((pos+beg-1, pos+end-2))
-	return exons
-
-def sam_to_ftx(filename, out, arg):
-	n = 0
-	with open(filename) as fp:
-		for line in fp:
-			if line == '': break
-			if line.startswith('@'): continue
-			f = line.split('\t')
-			qname = f[0]
-			bf = BitFlag(f[1])
-			chrom = f[2]
-			pos   = int(f[3])
-			cigar = f[5]
-
-			st = '-' if bf.read_reverse_strand else '+'
-			if bf.read_unmapped: continue
-			if bf.not_primary_alignment: continue
-			if bf.supplementary_alignment: continue
-			if bf.otherflags:
-				print(bf.otherflags)
-				sys.exit('unexpected flags found, debug time')
-			n += 1
-			exons = cigar_to_exons(cigar, pos)
-			ftx = FTX(chrom, str(n), st, exons, f'{arg.program} ref:{qname}')
-			print(ftx, file=out)
-
-def sim4_to_ftx(filename, out, arg):
+def sim4_to_ftx(filename, out, name):
 	chrom = None
 	strand = None
 	exons = []
@@ -141,7 +86,7 @@ def sim4_to_ftx(filename, out, arg):
 			st = '+' if f[3] == '->' else '-'
 			if strand is None: strand = st
 			else: assert(strand == st)
-		ftx = FTX(chrom, str(n), strand, exons, f'{arg.program} ref:{ref}')
+		ftx = FTX(chrom, str(n), strand, exons, f'{name} ref:{ref}')
 		print(ftx, file=out)
 
 #######
@@ -185,7 +130,7 @@ if arg.program == 'blat':
 	if arg.optimize: cli += ' -fine -q=rna'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
-	sim4_to_ftx(out, fp, arg)
+	sim4_to_ftx(out, fp, arg.program)
 elif arg.program == 'bowtie2':
 	# indexing: yes
 	# reads: fq.gz
@@ -199,7 +144,7 @@ elif arg.program == 'bowtie2':
 	cli = f'bowtie2 -x {arg.genome} -U {fastq} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'bwa-mem':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
@@ -212,7 +157,7 @@ elif arg.program == 'bwa-mem':
 	cli = f'bwa mem {arg.genome} {arg.reads} > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'gmap':
 	# indexing: yes
 	# reads: fa (not compressed)
@@ -227,7 +172,7 @@ elif arg.program == 'gmap':
 	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2>/dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'hisat2':
 	# indexing: yes
 	# reads: fq.gz or fa.gz with -f
@@ -241,7 +186,7 @@ elif arg.program == 'hisat2':
 	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'magicblast':
 	# indexing: yes
 	# reads: fa.gz
@@ -255,7 +200,7 @@ elif arg.program == 'magicblast':
 	if arg.optimize: cli += f' -word_size 15 -limit_lookup F'
 	cli += f' > {out}'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'minimap2':
 	# indexing: no
 	# reads: fa.gz or fq.gz
@@ -266,7 +211,7 @@ elif arg.program == 'minimap2':
 	cli += f' > {out}'
 	if not arg.verbose: cli += ' 2> /dev/null'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'pblat':
 	# see blat except reads need to be uncompressed (seekable)
 	fasta = needfasta(arg)
@@ -274,7 +219,7 @@ elif arg.program == 'pblat':
 	if arg.optimize: cli += ' -fine -q=rna'
 	if not arg.verbose: cli += ' > /dev/null'
 	run(cli, arg)
-	sim4_to_ftx(out, fp, arg)
+	sim4_to_ftx(out, fp, arg.program)
 elif arg.program == 'star':
 	# indexing: yes
 	# reads: fa.gz or fq.gz
@@ -295,7 +240,7 @@ elif arg.program == 'star':
 	os.rename(f'{out}Aligned.out.sam', f'{out}')
 	for x in ('Log.final.out', 'Log.out', 'Log.progress.out', 'SJ.out.tab'):
 		os.unlink(f'{out}{x}')
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 elif arg.program == 'tophat2':
 	# indexing: yes, uses bowtie2
 	# reads: fa.gz
@@ -311,7 +256,7 @@ elif arg.program == 'tophat2':
 	run(cli, arg)
 	cli = f'samtools view -h tophat_out/accepted_hits.bam > {out}'
 	run(cli, arg)
-	sam_to_ftx(out, fp, arg)
+	sam_to_ftx(out, fp, arg.program)
 	if not arg.debug: os.system('rm -rf tophat_out')
 else:
 	sys.exit(f'ERROR: unknown program: {arg.program}')

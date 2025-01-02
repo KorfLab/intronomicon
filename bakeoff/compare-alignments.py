@@ -52,9 +52,9 @@ for rstr in data:
 			ali = 'None'
 		else:
 			ali = FTX.parse(astr)
-			if ref.beg <= ali.beg and ref.end >= ali.beg:
-
-				# put artefact back in
+			if len(ali.exons) != 1:
+				r = 'artefact'
+			elif ref.beg <= ali.beg and ref.end >= ali.beg:
 				if ref.beg == ali.beg and ref.end == ali.end: r = 'hit'
 				else: r = 'near'
 			else: r = 'miss'
@@ -63,7 +63,7 @@ for rstr in data:
 		if r not in d1[prog]: d1[prog][r] = 0
 		d1[prog][r] += 1
 
-categories = ('hit', 'miss', 'near', 'unaliged')
+categories = ('hit', 'miss', 'near', 'artefact', 'unaligned')
 
 with open(f'{arg.basename}_table1.tsv', 'w') as fp:
 	print('program\t', '\t'.join(categories), file=fp)
@@ -160,7 +160,7 @@ with open(f'{arg.basename}_table3.tsv', 'w') as fp:
 			print(file=fp)
 
 # Four Exons
-# This doesn't happen in the synthetic data
+# This doesn't happen in the synthetic data experiments
 # In real data, we are ignoring this for now
 
 dfp.close()
