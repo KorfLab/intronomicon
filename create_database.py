@@ -6,14 +6,13 @@ import sys
 import sraxml
 
 parser = argparse.ArgumentParser(description='create intronomicon database')
-parser.add_argument('--name', default='intronomicon.db',
-	help='database name [%(default)s]')
-parser.add_argument('--xml', default='build',
-	help='directory of xml files [%(default)s]')
-parser.add_argument('--taxid', default='6239',
-	help='verify the correct taxon [%(default)s]')
-parser.add_argument('--test', action='store_true')
+parser.add_argument('name', help='database name (including .db suffix)')
+parser.add_argument('xml', help='directory of xml files, (e.g. build)')
+parser.add_argument('taxid', help='taxid (e.g. 6239 is C. elegans)')
+parser.add_argument('--test', action='store_true', help='stops after 10 files')
 arg = parser.parse_args()
+
+if not arg.name.endswith('.db'): sys.exit('database name must end in .db')
 
 con = sqlite3.connect(arg.name)
 cur = con.cursor()
@@ -30,6 +29,7 @@ tables = [
 		FOREIGN KEY (exp_id) REFERENCES experiment (exp_id))""",
 	"""CREATE TABLE experiment(
 		exp_id TEXT PRIMARY KEY,
+		geo_id TEXT,
 		platform TEXT,
 		model TEXT,
 		paired INTEGER CHECK (paired in (0, 1)),
@@ -59,6 +59,7 @@ for filename in glob.glob(f'{arg.xml}/*'):
 
 	# experiment table
 	xid = data['srx_id']
+	gid = data['geo_id']
 	plt = data['platform']
 	mod = data['model']
 	par = data['paired']
@@ -66,8 +67,8 @@ for filename in glob.glob(f'{arg.xml}/*'):
 	for tag, txt in data['info'].items(): freetext.append(f'{tag}: {txt}')
 	info = '\n'.join(freetext)
 	info = info.replace('"', "'")
-	rows = '(exp_id, platform, model, paired, info)'
-	vals = f'("{xid}", "{plt}", "{mod}", {par}, "{info}")'
+	rows = '(exp_id, geo_id, platform, model, paired, info)'
+	vals = f'("{xid}", "{gid}", "{plt}", "{mod}", {par}, "{info}")'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO experiment {rows} VALUES {vals}')
 	except:

@@ -91,6 +91,12 @@ def read(fp):
 	obj['platform'] = exp['has'][4]['has'][0]['tag']
 	obj['model'] = exp['has'][4]['has'][0]['has'][0]['txt']
 
+	# geo (may be buried)
+	obj['geo_id'] = None
+	for sid in des['has'][1]['has'][0]['has']:
+		if 'att' in sid and 'namespace' in sid['att'] \
+			and sid['att']['namespace'] == 'GEO': obj['geo_id'] = sid['txt']
+
 	##################
 	# SAMPLE SECTION #
 	##################

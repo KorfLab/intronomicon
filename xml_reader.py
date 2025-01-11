@@ -31,7 +31,9 @@ for filename in glob.glob(f'{arg.dir}/*'):
 		if data['srx_id'] in printed: continue
 		printed.add(data['srx_id'])
 		print(data['srx_id'], end='\t')
-		print('; '.join(stuff))
+		print(data['geo_id'], end='\t')
+		print()
+		#print('; '.join(stuff))
 		#if 'strain' in data['info']:
 		#	print(data['info']['strain'])
 		#else:
@@ -43,5 +45,5 @@ for filename in glob.glob(f'{arg.dir}/*'):
 
 		#print(data['runs'][0]['date'])
 		#print(json.dumps(data, indent=4))
-		#print(json.dumps(raw, indent=2))
+	#	print(json.dumps(raw, indent=2))
 #print(json.dumps(log, indent=4), file=sys.stderr)

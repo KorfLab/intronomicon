@@ -2,8 +2,7 @@ import argparse
 import sqlite3
 
 parser = argparse.ArgumentParser(description='aligns sequences, talks to db')
-parser.add_argument('--database', default='intronomicon.db',
-	help='database name [%(default)s]')
+parser.add_argument('database', help='database name (e.g. something.db)')
 arg = parser.parse_args()
 
 # connect to db
@@ -13,6 +12,7 @@ arg = parser.parse_args()
 		# it isn't being worked on
 	# check out sra - prevent others from working on this
 	# do the alignments
+	# do whatever post-processing is required (e.g. exon overlap length)
 	# push intron data to db
 
 
