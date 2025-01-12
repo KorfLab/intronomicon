@@ -38,6 +38,7 @@ def read(fp):
 		'srx_id': None,
 		'srp_id': None,
 		'sam_id': None,
+		'geo_id': None,
 		'paired': None,
 		'platform': None,
 		'model': None,
@@ -92,7 +93,6 @@ def read(fp):
 	obj['model'] = exp['has'][4]['has'][0]['has'][0]['txt']
 
 	# geo (may be buried)
-	obj['geo_id'] = None
 	for sid in des['has'][1]['has'][0]['has']:
 		if 'att' in sid and 'namespace' in sid['att'] \
 			and sid['att']['namespace'] == 'GEO': obj['geo_id'] = sid['txt']
@@ -129,7 +129,7 @@ def read(fp):
 		spots = get(r, 'RUN', att='total_spots')
 		bases = get(r, 'RUN', att='total_bases')
 		size = get(r, 'RUN', att='size')
-		date = get(r, 'RUN', att='published')
+		date = get(r, 'RUN', att='published').split(' ')[0]
 		for val in (srr_id, spots, bases, size):
 			if val is None: sys.exit('wtf run')
 			obj['runs'].append({
