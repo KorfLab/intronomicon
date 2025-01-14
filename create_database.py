@@ -32,13 +32,15 @@ tables = [
 		geo_id TEXT,
 		platform TEXT,
 		model TEXT,
-		paired INTEGER CHECK (paired in (0, 1)),
-		info TEXT)""",
+		paired INTEGER CHECK (paired in (0, 1)))""",
 	"""CREATE TABLE runs(
 		run_id TEXT PRIMARY KEY,
 		nts INTEGER,
 		seqs INTEGER,
 		exp_id TEXT,
+		aligned INTEGER CHECK (aligned in (0, 1)),
+		labeled INTEGER CHECK (labeled in (0, 1)),
+		locked INTEGER CHECK (locked in (0, 1)),
 		FOREIGN KEY (exp_id) REFERENCES experiment (exp_id))"""
 ]
 
@@ -63,12 +65,8 @@ for filename in glob.glob(f'{arg.xml}/*'):
 	plt = data['platform']
 	mod = data['model']
 	par = data['paired']
-	freetext = []
-	for tag, txt in data['info'].items(): freetext.append(f'{tag}: {txt}')
-	info = '\n'.join(freetext)
-	info = info.replace('"', "'")
-	rows = '(exp_id, geo_id, platform, model, paired, info)'
-	vals = f'("{xid}", "{gid}", "{plt}", "{mod}", {par}, "{info}")'
+	rows = '(exp_id, geo_id, platform, model, paired)'
+	vals = f'("{xid}", "{gid}", "{plt}", "{mod}", {par})'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO experiment {rows} VALUES {vals}')
 	except:
@@ -79,8 +77,8 @@ for filename in glob.glob(f'{arg.xml}/*'):
 		rid = run['run_id']
 		nts = run['nts']
 		seqs = run['seqs']
-		rows = '(run_id, nts, seqs, exp_id)'
-		vals = f'("{rid}", {nts}, {seqs}, "{xid}")'
+		rows = '(run_id, nts, seqs, exp_id, aligned, labeled, locked)'
+		vals = f'("{rid}", {nts}, {seqs}, "{xid}", 0, 0, 0)'
 		try:
 			cur.execute(f'INSERT OR IGNORE INTO runs {rows} VALUES {vals}')
 		except:
