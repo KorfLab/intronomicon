@@ -12,7 +12,7 @@ parser.add_argument('dir', help='directory of xml files')
 parser.add_argument('--test', action='store_true', help='limit to 999 files')
 arg = parser.parse_args()
 
-log = {'count': 0, 'RNA-Seq': 0}
+log = {'count': 0, 'RNA-Seq': 0, 'GEO': 0}
 printed = set()
 for filename in glob.glob(f'{arg.dir}/*'):
 	if arg.test and log['count'] >= 999: break
@@ -30,6 +30,7 @@ for filename in glob.glob(f'{arg.dir}/*'):
 			stuff.append(f'{tag}: {val}')
 		if data['srx_id'] in printed: continue
 		if data['geo_id'] is None: continue
+		log['GEO'] += 1
 		printed.add(data['srx_id'])
 
 		year = int(data['runs'][0]['date'][:4])
@@ -41,3 +42,5 @@ for filename in glob.glob(f'{arg.dir}/*'):
 		if rsize < 100: continue
 
 		print('\t'.join((data['srx_id'], data['geo_id'], txt)))
+
+print(log)
