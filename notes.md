@@ -1,17 +1,65 @@
-GSM7653734
+Notes
+=====
 
-https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=gpl96&targ=self&view=brief&form=text
+SRA, GEO, PubMed
+
+
+## GEO ##
+
+gpl - platform (e.g. Illumina NovoSeq 6000 w/ C. elegans)
+	gse - a study (e.g. a paper or papers)
+		gsm - samples --> SRX
+			some controls
+				which can contain multiple sequencing runs
+			some experimentals
+				which can contain multiple sequencing runs
+
 
 acc = a valid GEO accession i.e., gplxxx, gsmxxx or gsexxx
 targ = self, gsm, gpl, gse or all
 view = brief, quick, data or full
 form = text, html or xml
 
-gpl
-	gsm - a study
-		gse - individual runs
-			some controls
-			some experimentals
+
+## GEO Example GSE237802 ##
+
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE237802&targ=self&view=brief&form=text
+
+"The 18S rRNA Methyltransferase DIMT-1 Regulates Lifespan in the Germline Later in Life"
+
+PubMed: 38798397, 38946979
+
+GSM:
+GSM7653725 Germline ribosome-bound mRNA, control RNAi, biological replicate 1
+GSM7653726 Germline ribosome-bound mRNA, control RNAi, biological replicate 2
+GSM7653727 Germline ribosome-bound mRNA, control RNAi, biological replicate 3
+GSM7653728 Germline ribosome-bound mRNA, control RNAi, biological replicate 4
+GSM7653729 Germline ribosome-bound mRNA, dimt-1 RNAi, biological replicate 1
+GSM7653730 Germline ribosome-bound mRNA, dimt-1 RNAi, biological replicate 2
+GSM7653731 Germline ribosome-bound mRNA, dimt-1 RNAi, biological replicate 3
+GSM7653732 Germline ribosome-bound mRNA, dimt-1 RNAi, biological replicate 4
+GSM7653733 Total RNA, control RNAi, biological replicate 1
+GSM7653734 Total RNA, control RNAi, biological replicate 2
+GSM7653735 Total RNA, control RNAi, biological replicate 3
+GSM7653736 Total RNA, control RNAi, biological replicate 4
+GSM7653737 Total RNA, dimt-1 RNAi, biological replicate 1
+GSM7653738 Total RNA, dimt-1 RNAi, biological replicate 2
+GSM7653739 Total RNA, dimt-1 RNAi, biological replicate 3
+GSM7653740 Total RNA, dimt-1 RNAi, biological replicate 4
+
+
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7653725&targ=self&view=brief&form=text
+
+
+Each GSM links directly to a SRX
+
+BioProject: PRJNA996637 links directly to GSE237802
+
+
+
+
+
+
 
 
 The text form is very easily parsed
