@@ -24,7 +24,7 @@ def soft2text(path, fields):
 		else: d[k] += f'; {v}'
 
 	output = [f'{k}: {d[k]}' for k in fields if k in d]
-	text = ' '.join(output).replace('"', '')
+	text = '. '.join(output).replace('"', '')
 
 	return uid, text
 
@@ -87,7 +87,7 @@ n = 0
 for filename in glob.glob(f'{arg.dir}/gse/*'):
 	if arg.debug and n >= 10: break
 	n += 1
-	gse_id, gse_txt = soft2text(filename, ('Series_title', 'Series_summary'
+	gse_id, gse_txt = soft2text(filename, ('Series_title', 'Series_summary',
 		'Series_overall_design', 'Series_type', 'Series_sample_id'))
 	rows = '(gse_id, gse_txt)'
 	vals = f'("{gse_id}", "{gse_txt}")'
@@ -111,8 +111,11 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 	gsm_id, gsm_txt = soft2text(f'{arg.dir}/gsm/{data["gsm_id"]}.txt',
 		('Sample_source_name_ch1', 'Sample_title' 'Sample_description',
 		'Sample_molecule_ch1', 'Sample_library_selection',
-		'Sample_library_strategy', 'Sample_characteristics_ch1'))
+		'Sample_library_strategy', 'Sample_characteristics_ch1',
+		'Sample_series_id'))
 	assert(gsm_id == data['gsm_id'])
+	m = re.search(r'Sample_series_id: (GSE\d+)', gsm_txt) # keeping 1 GSE
+	gse_id = m.group(1) # note: a sample can appear in more than one series
 	n += 1
 
 	# experiment table
@@ -120,8 +123,8 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 	plt = data['platform']
 	mod = data['model']
 	par = data['paired']
-	rows = '(srx_id, gsm_id, gsm_txt, platform, model, paired)'
-	vals = f'("{srx}", "{gsm_id}", "{gsm_txt}", "{plt}", "{mod}", {par})'
+	rows = '(srx_id, gse_id, gsm_id, gsm_txt, platform, model, paired)'
+	vals = f'("{srx}", "{gse_id}", "{gsm_id}", "{gsm_txt}", "{plt}", "{mod}", {par})'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO experiment {rows} VALUES {vals}')
 	except:
