@@ -3,15 +3,15 @@ intronomicon
 
 Database of introns
 
-## Manifest ##
+## Massive Re-Write ##
 
-In the order of how you use them
+Previous plans were short-sighted. The new plan:
 
-- `downloader.py` downloads SRA and GEO files from NCBI for taxid
-- `create-database.py` sets up sqlite db, reads SRA/GEO, imports data
-- `intron-injector.py` requests run, aligns, post-processes, injects introns
-- `meta-injector.py` requests run, parses SRA/GEO, injects meta
-- `meta-tabler.py` creates some training data
-- `sraxml.py` library for interacting with sra xml files
-- `xmltoy.py` Ian's toy for figuring shit out
-- `notes` random thoughts of the moment
+- Start with GEO GSE
+- Then go to GSM
+- Then go to SRR
+
+In the new version:
+
+- No need for SRX
+- No need for XML
