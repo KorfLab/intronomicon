@@ -28,25 +28,6 @@ def soft2text(path, fields):
 
 	return uid, text
 
-def read_gsm(filename):
-	return soft2text(filename, ('Sample_source_name_ch1',
-		'Sample_title' 'Sample_description', 'Sample_molecule_ch1',
-		'Sample_library_selection', 'Sample_library_strategy'
-		'Sample_characteristics_ch1'))
-	#output = [f'{k}: {d[k]}' for k in want if k in d]
-	#gsm_txt = ' '.join(output).replace('"', '')
-	#return gsm_id, gsm_txt
-
-def read_gse(filename):
-	return soft2text(filename, ('Series_title', 'Series_summary'
-		'Series_overall_design', 'Series_type', 'Series_sample_id'))
-
-	#gse_id, d = soft2dict(filename)
-	#want =
-	#output = [f'{k}: {d[k]}' for k in want]
-	#gse_txt = ' '.join(output).replace('"', '')
-	#return gse_id, gse_txt
-
 ## CLI ##
 
 parser = argparse.ArgumentParser(description='intronomicon database builder')
@@ -106,7 +87,8 @@ n = 0
 for filename in glob.glob(f'{arg.dir}/gse/*'):
 	if arg.debug and n >= 10: break
 	n += 1
-	gse_id, gse_txt = read_gse(filename)
+	gse_id, gse_txt = soft2text(filename, ('Series_title', 'Series_summary'
+		'Series_overall_design', 'Series_type', 'Series_sample_id'))
 	rows = '(gse_id, gse_txt)'
 	vals = f'("{gse_id}", "{gse_txt}")'
 	try:
@@ -126,7 +108,10 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 		print(data['taxid'], arg.taxid)
 		sys.exit(f'taxid mismatch ')
 	if not data['gsm_id']: continue
-	gsm_id, gsm_txt = read_gsm(f'{arg.dir}/gsm/{data["gsm_id"]}.txt')
+	gsm_id, gsm_txt = soft2text(f'{arg.dir}/gsm/{data["gsm_id"]}.txt',
+		('Sample_source_name_ch1', 'Sample_title' 'Sample_description',
+		'Sample_molecule_ch1', 'Sample_library_selection',
+		'Sample_library_strategy', 'Sample_characteristics_ch1'))
 	assert(gsm_id == data['gsm_id'])
 	n += 1
 
