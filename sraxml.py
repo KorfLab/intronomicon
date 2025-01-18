@@ -38,7 +38,7 @@ def read(fp):
 		'srx_id': None,
 		'srp_id': None,
 		'sam_id': None,
-		'geo_id': None,
+		'gsm_id': None,
 		'paired': None,
 		'platform': None,
 		'model': None,
@@ -95,7 +95,7 @@ def read(fp):
 	# geo (may be buried)
 	for sid in des['has'][1]['has'][0]['has']:
 		if 'att' in sid and 'namespace' in sid['att'] \
-			and sid['att']['namespace'] == 'GEO': obj['geo_id'] = sid['txt']
+			and sid['att']['namespace'] == 'GEO': obj['gsm_id'] = sid['txt']
 
 	##################
 	# SAMPLE SECTION #

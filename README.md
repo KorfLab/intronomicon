@@ -1,17 +1,17 @@
-intronomicon
+INTRONOMICON
 ============
 
-Database of introns
+The Book of Introns
 
-## Massive Re-Write ##
+## Manifest ##
 
-Previous plans were short-sighted. The new plan:
+In the order of use (-ish)
 
-- Start with GEO GSE
-- Then go to GSM
-- Then go to SRR
+- `downloader.py` retrieve GEO and SRA files for a taxid
+- `database-builder.py` read GEO and SRA files into database
+- `intron-injector.py` add introns to database (via sequence alignment)
+- `meta-injector.py` add metadata to database (via text interpreatation)
+- `sraxml.py` shared library for reading XML files from SRA
+- `xmltoy.py` something for debugging and exploring
+- `notes.md` random stuff the devs are currently thinking about
 
-In the new version:
-
-- No need for SRX
-- No need for XML

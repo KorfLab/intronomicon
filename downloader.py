@@ -41,7 +41,7 @@ parser.add_argument('--verbose', action='store_true',
 	help='print status messages')
 arg = parser.parse_args()
 
-os.system(f'mkdir -p {arg.dir}/sra {arg.dir}/geo')
+os.system(f'mkdir -p {arg.dir}/sra {arg.dir}/gsm {arg.dir}/gse')
 
 base = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils'
 taxid = f'term=txid{arg.taxid}[Organism]'
@@ -55,28 +55,42 @@ n = int(re.search(r'<Count>(\d+)</Count>', txt).group(1))
 url = f'{base}/esearch.fcgi?db=sra&{taxid}&retmax={n}'
 txt = download(url, arg)
 
-# download each XML file and corresponding GEO file (if available)
+# download each XML file and corresponding GEO files (if available)
 done = 0
 for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 
 	# download sra xml file
 	uid = m.group(1)
 	sfile = f'{arg.dir}/sra/{uid}.xml'
-	if have(sfile, arg): continue
-	url = f'{base}/efetch.fcgi?db=sra&id={uid}&rettype=xml&retmode=text'
-	sra = download(url, arg)
-	if sra is None: continue
-	with open(sfile, 'w') as fp: fp.write(sra)
+	sra = None # to be filled
+	if have(sfile, arg):
+		with open(sfile) as fp: sra = fp.read()
+	else:
+		url = f'{base}/efetch.fcgi?db=sra&id={uid}&rettype=xml&retmode=text'
+		sra = download(url, arg)
+		if sra is None: continue
+		with open(sfile, 'w') as fp: fp.write(sra)
 
-	# download geo txt file
+	# download gsm txt file
 	data, status = sraxml.read(io.StringIO(sra))
 	if data is None: continue
-	if not data['geo_id']: continue
-	gfile = f'{arg.dir}/geo/{data["geo_id"]}.txt'
-	if have(gfile, arg): continue
-	url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["geo_id"]}&targ=self&view=brief&form=text'
-	geo = download(url, arg)
-	with open(gfile, 'w') as fp: fp.write(geo)
+	if not data['gsm_id']: continue
+	gsm_file = f'{arg.dir}/gsm/{data["gsm_id"]}.txt'
+	if have(gsm_file, arg):
+		with open(gsm_file) as fp: gsm = fp.read()
+	else:
+		url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["gsm_id"]}&targ=self&view=brief&form=text'
+		gsm = download(url, arg)
+		with open(gsm_file, 'w') as fp: fp.write(gsm)
+
+	# download gse txt file (retrieves using indirection from gsm)
+	m = re.search(r'Sample_series_id = (\S+)', gsm)
+	gse_id = m.group(1)
+	gse_file = f'{arg.dir}/gse/{gse_id}.txt'
+	if have(gse_file,arg): continue
+	url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["gsm_id"]}&targ=gse&view=brief&form=text'
+	gse = download(url, arg)
+	with open(gse_file, 'w') as fp: fp.write(gse)
 
 	# debug
 	done += 1
