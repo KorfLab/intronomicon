@@ -8,10 +8,11 @@ import time
 
 import sraxml
 
-def soft2dict(path):
+def soft2text(path, fields):
 	with open(path) as fp: text = fp.read()
 	lines = text.split('!')
-	uid = lines[0][10:-1]
+	m = re.search(r'^\^\S+ = (\S+)', lines[0])
+	uid = m.group(1)
 	d = {}
 	for line in lines[1:]:
 		f = line.split()
@@ -21,24 +22,30 @@ def soft2dict(path):
 		v = ' '.join(f[2:])
 		if k not in d: d[k] = v
 		else: d[k] += f'; {v}'
-	return uid, d
+
+	output = [f'{k}: {d[k]}' for k in fields if k in d]
+	text = ' '.join(output).replace('"', '')
+
+	return uid, text
 
 def read_gsm(filename):
-	gsm_id, d = soft2dict(filename)
-	want = ('Sample_source_name_ch1', 'Sample_title', 'Sample_description',
-		'Sample_molecule_ch1', 'Sample_library_selection',
-		'Sample_library_strategy', 'Sample_characteristics_ch1')
-	output = [f'{k}: {d[k]}' for k in want if k in d]
-	gsm_txt = ' '.join(output).replace('"', '')
-	return gsm_id, gsm_txt
+	return soft2text(filename, ('Sample_source_name_ch1',
+		'Sample_title' 'Sample_description', 'Sample_molecule_ch1',
+		'Sample_library_selection', 'Sample_library_strategy'
+		'Sample_characteristics_ch1'))
+	#output = [f'{k}: {d[k]}' for k in want if k in d]
+	#gsm_txt = ' '.join(output).replace('"', '')
+	#return gsm_id, gsm_txt
 
 def read_gse(filename):
-	gse_id, d = soft2dict(filename)
-	want = ('Series_title', 'Series_summary', 'Series_overall_design',
-		'Series_type', 'Series_sample_id')
-	output = [f'{k}: {d[k]}' for k in want]
-	gse_txt = ' '.join(output).replace('"', '')
-	return gse_id, gse_txt
+	return soft2text(filename, ('Series_title', 'Series_summary'
+		'Series_overall_design', 'Series_type', 'Series_sample_id'))
+
+	#gse_id, d = soft2dict(filename)
+	#want =
+	#output = [f'{k}: {d[k]}' for k in want]
+	#gse_txt = ' '.join(output).replace('"', '')
+	#return gse_id, gse_txt
 
 ## CLI ##
 
@@ -50,6 +57,7 @@ parser.add_argument('--debug', action='store_true')
 arg = parser.parse_args()
 
 if not arg.name.endswith('.db'): sys.exit('database name must end in .db')
+create_tables = False if os.path.exists(arg.name) else True
 
 ## SQL ##
 
@@ -90,7 +98,7 @@ tables = [
 ]
 
 # create tables
-if not os.path.exists(arg.name):
+if create_tables:
 	for table in tables: cur.execute(table)
 
 # gse table
