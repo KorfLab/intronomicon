@@ -2,10 +2,8 @@ import argparse
 from difflib import SequenceMatcher
 import gzip
 import json
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.cluster.hierarchy import linkage, dendrogram
-from scipy.spatial.distance import pdist, squareform
 import sys
 
 def distance(a, b):
