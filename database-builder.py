@@ -67,7 +67,7 @@ tables = [
 	"""CREATE TABLE run(
 		run_id TEXT PRIMARY KEY,
 		nts INTEGER,
-		seqs INTEGER,
+		rlen INTEGER,
 		srx_id TEXT,
 		aligned INTEGER CHECK (aligned in (0, 1)),
 		labeled INTEGER CHECK (labeled in (0, 1)),
@@ -109,7 +109,7 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 		sys.exit(f'taxid mismatch ')
 	if not data['gsm_id']: continue
 	gsm_id, gsm_txt = soft2text(f'{arg.dir}/gsm/{data["gsm_id"]}.txt',
-		('Sample_source_name_ch1', 'Sample_title' 'Sample_description',
+		('Sample_source_name_ch1', 'Sample_title', 'Sample_description',
 		'Sample_molecule_ch1', 'Sample_library_selection',
 		'Sample_library_strategy', 'Sample_characteristics_ch1',
 		'Sample_series_id'))
@@ -134,9 +134,9 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 	for run in data['runs']:
 		rid = run['run_id']
 		nts = run['nts']
-		seqs = run['seqs']
-		rows = '(run_id, nts, seqs, srx_id, aligned, labeled, locked)'
-		vals = f'("{rid}", {nts}, {seqs}, "{srx}", 0, 0, 0)'
+		rlen = int(run['nts'] / run['seqs'])
+		rows = '(run_id, nts, rlen, srx_id, aligned, labeled, locked)'
+		vals = f'("{rid}", {nts}, {rlen}, "{srx}", 0, 0, 0)'
 		try:
 			cur.execute(f'INSERT OR IGNORE INTO run {rows} VALUES {vals}')
 		except:
