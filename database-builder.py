@@ -21,10 +21,10 @@ def soft2text(path, fields):
 		k = f[0]
 		v = ' '.join(f[2:])
 		if k not in d: d[k] = v
-		else: d[k] += f'; {v}'
+		else: d[k] += f' #-# {v}'
 
 	output = [f'{k}: {d[k]}' for k in fields if k in d]
-	text = '. '.join(output).replace('"', '')
+	text = ' #+# '.join(output).replace('"', '')
 
 	return uid, text
 
