@@ -14,14 +14,8 @@ def commonsize(sizes):
 		if c > 0.05 * len(sizes) or c > 100: common.append(f'{size}:{c}')
 	return common
 
-def set_tagval(d, s):
-	tag, val = s.split(':', maxsplit=1)
-	tag = tag.rstrip().lstrip()
-	val = val.rstrip().lstrip()
-	if tag in d: d[tag] += '; {val}'
-	d[tag] = val
 
-actions = ('stats', 'training', 'metamorph')
+actions = ('stats')
 
 parser = argparse.ArgumentParser(description='reads intronomica and stuff')
 parser.add_argument('database', help='database name (e.g. something.db)')
@@ -55,27 +49,3 @@ if arg.action == 'stats':
 	print("Read lengths")
 	for p, a in plen.items(): print(p, min(a), max(a), commonsize(a))
 
-if arg.action == 'training':
-	d = {}
-	cur.execute(f'SELECT gse_id, rlen, platform FROM run INNER JOIN experiment ON experiment.srx_id = run.srx_id where platform = "ILLUMINA"')
-	for gse_id, rlen, plat in cur.fetchall():
-		if gse_id not in d: d[gse_id] = []
-		d[gse_id].append(rlen)
-	for gse_id, sizes in d.items():
-		if min(sizes) < 100: continue
-		print(gse_id, len(sizes), min(sizes), max(sizes), sep='\t')
-
-if arg.action == 'metamorph':
-	cur.execute(f'SELECT gse_id, gsm_id, gsm_txt FROM run INNER JOIN experiment ON experiment.srx_id = run.srx_id where platform = "ILLUMINA" and rlen >= 100')
-	d = {}
-	for gse_id, gsm_id, gsm_txt in cur.fetchall():
-		sd = {}
-		for thing in gsm_txt.split(' #+# '):
-			if thing.startswith('Sample_character'):
-				for text in thing[28:].split('#-#'): set_tagval(sd, text)
-			else:
-				set_tagval(sd, thing)
-		if gse_id not in d: d[gse_id] = {}
-		d[gse_id][gsm_id] = sd
-
-	print(json.dumps(d, indent=2))
