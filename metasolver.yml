@@ -1,7 +1,10 @@
-name: intronomicon-db
+name: metasolver
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - sqlite
+  - matplotlib
+  - numpy
+  - requests
+  - scipy
