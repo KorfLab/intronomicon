@@ -65,7 +65,7 @@ tables = [
 		paired INTEGER CHECK (paired in (0, 1)),
 		FOREIGN KEY (gse_id) REFERENCES series (gse_id))""",
 	"""CREATE TABLE run(
-		run_id TEXT PRIMARY KEY,
+		srr_id TEXT PRIMARY KEY,
 		nts INTEGER,
 		rlen INTEGER,
 		srx_id TEXT,
@@ -135,7 +135,7 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 		rid = run['run_id']
 		nts = run['nts']
 		rlen = int(run['nts'] / run['seqs'])
-		rows = '(run_id, nts, rlen, srx_id, aligned, labeled, locked)'
+		rows = '(srr_id, nts, rlen, srx_id, aligned, labeled, locked)'
 		vals = f'("{rid}", {nts}, {rlen}, "{srx}", 0, 0, 0)'
 		try:
 			cur.execute(f'INSERT OR IGNORE INTO run {rows} VALUES {vals}')

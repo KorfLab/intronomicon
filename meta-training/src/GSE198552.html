@@ -1,0 +1,146 @@
+<html><head><title>GSE198552</title></head>
+<body>
+<h1>GSE198552</h1>
+<img src="png/GSE198552.png" style="float:right;width:600px;height:400px;">
+<li>Series_title: Maternal H3K36 and H3K27 HMTs protect germline development via regulation of the transcription factor LIN-15B
+<li>Series_summary: Maternally synthesized products play critical roles in development of offspring. A premier example is the C. elegans H3K36 methyltransferase MES-4, which is essential for germline survival and development in offspring. How maternal MES-4 protects the germline is not well understood, but its role in H3K36 methylation hinted that it may regulate gene expression in Primordial Germ Cells (PGCs). We tested this hypothesis by profiling transcripts from nascent germlines (PGCs and their descendants) dissected from wild-type and mes-4 mutant (lacking maternal and zygotic MES-4) larvae. mes-4 nascent germlines displayed down-regulation of some germline genes, up-regulation of some somatic genes, and dramatic up-regulation of hundreds of genes on the X chromosome. We demonstrated that up-regulation of 1 or more genes on the X is the cause of germline death by generating and analyzing mes-4 mutants that inherited different endowments of X chromosome(s). Intriguingly, removal of the THAP transcription factor LIN-15B from mes-4 mutants reduced X mis-expression and prevented germline death. lin-15B is X-linked and mis-expressed in mes-4 PGCs, identifying it as a critical target for MES-4 repression. The above findings extend to the H3K27 methyltransferase MES-2/3/6, the C. elegans version of Polycomb Repressive Complex 2. We propose that maternal MES-4 and PRC2 cooperate to protect germline survival by preventing synthesis of germline-toxic products encoded by genes on the X chromosome, including the key transcription factor LIN-15B.
+<li>Series_overall_design: We profiled transcripts from Primordial Germ Cells (PGCs) and Early Germ Cells (EGCs) dissected from wild-type and mutant L1 or L2 larvae, respectively. We used pairwise differential expression analyses (mutant vs wild type) to compare samples of mes-4(bn73), mes-3(bn199), mrg-1(qa6200), and met-1(bn200) null M-Z- mutants to samples of wild type. Samples of PGCs and EGCs were sequenced in 2 batches: pgcs_egcs_batch01 on an Illumina HiSeq 2500 and pgcs_egcs_batch02 on an Illumina NovaSeq 6000. Principal Component Analysis (PCA) did not reveal batch effects in the top 2 principal components among samples that had some replicates sequenced in 1 batch and some replicates sequenced in the other batch. Thus, we did not batch-correct samples of PGCs and EGCs. All samples of PGCs and EGCs were used to calculate normalization scaling factors (using the pooling and deconvolution approach in the R package scran) and to perform quality control. In this study, the samples of PGCs dissected from drh-3(bn197) hypomorphic mutant L1s were only used for normalization and quality control; they were not used for differential expression analysis. Our drh-3(bn197) allele is genetically linked to glh-1::GFP::3xFLAG on chromosome 1 and produces the same protein as the drh-3(ne4253) hypomorphic allele (Gu et al., 2009). All worms strains, including wild-type, carry a germline-specific glh-1:GFP:3xFLAG marker that was used to isolate germ cells. We also profiled transcripts from distal halves of gonads dissected from mes-4(bn73) M+Z-, mes-4 (bn73) M+Z-; lin-15B(n744) M-Z- mutant and wild-type adult hermaphrodites. Samples of adult gonads were sequenced in 2 batches: adgerm_batch01 and adgerm_batch02, both on an Illumina NovaSeq 6000. We performed pairiwse differential expression analyses comparing samples of mutants to samples of wild type that were sequenced in the same batch.
+<li>Series_type: Expression profiling by high throughput sequencing
+<dl><dt>C1</dt>
+<dd><b>GSM5952132</b> wt_adgerm_batch01_rep03 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952137</b> wt_adgerm_batch02_rep05 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952140</b> mes4lin15b_adgerm_batch02_rep02 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V; lin-15B(n744) M-Z- X</dd>
+<dd><b>GSM5952136</b> wt_adgerm_batch02_rep04 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952130</b> wt_adgerm_batch01_rep01 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952135</b> mes4_adgerm_batch01_rep03 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V</dd>
+<dd><b>GSM5952133</b> mes4_adgerm_batch01_rep01 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V</dd>
+<dd><b>GSM5952134</b> mes4_adgerm_batch01_rep02 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V</dd>
+<dd><b>GSM5952139</b> mes4lin15b_adgerm_batch02_rep01 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V; lin-15B(n744) M-Z- X</dd>
+<dd><b>GSM5952131</b> wt_adgerm_batch01_rep02 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952138</b> wt_adgerm_batch02_rep06 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952141</b> mes4lin15b_adgerm_batch02_rep03 | Gonads (distal half) | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M+Z- V; lin-15B(n744) M-Z- X</dd>
+</dl>
+<dl><dt>C2</dt>
+<dd><b>GSM5952056</b> mes4_l1pgcs_rep10 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952024</b> wt_l1pgcs_rep15 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952103</b> met1_l1pgcs_rep08 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952046</b> wt_l2germ_rep14 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952051</b> mes4_l1pgcs_rep05 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952050</b> mes4_l1pgcs_rep04 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952091</b> mes3_l2germ_rep08 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952074</b> mes3_l1pgcs_rep02 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952105</b> met1_l1pgcs_rep10 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952039</b> wt_l2germ_rep07 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952072</b> mes4_l2germ_rep15 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952031</b> wt_l1pgcs_rep22 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952096</b> met1_l1pgcs_rep01 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952128</b> drh3_l1pgcs_rep10 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952022</b> wt_l1pgcs_rep13 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952117</b> mrg1_l1pgcs_rep10 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952070</b> mes4_l2germ_rep13 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952100</b> met1_l1pgcs_rep05 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952071</b> mes4_l2germ_rep14 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952076</b> mes3_l1pgcs_rep04 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952045</b> wt_l2germ_rep13 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952108</b> mrg1_l1pgcs_rep01 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952124</b> drh3_l1pgcs_rep06 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952023</b> wt_l1pgcs_rep14 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952081</b> mes3_l1pgcs_rep09 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952106</b> met1_l1pgcs_rep11 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952032</b> wt_l1pgcs_rep23 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952089</b> mes3_l2germ_rep06 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952067</b> mes4_l2germ_rep10 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952065</b> mes4_l2germ_rep08 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952012</b> wt_l1pgcs_rep03 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952029</b> wt_l1pgcs_rep20 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952043</b> wt_l2germ_rep11 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952085</b> mes3_l2germ_rep02 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952021</b> wt_l1pgcs_rep12 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952093</b> mes3_l2germ_rep10 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952098</b> met1_l1pgcs_rep03 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952086</b> mes3_l2germ_rep03 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952062</b> mes4_l2germ_rep05 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952087</b> mes3_l2germ_rep04 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952129</b> drh3_l1pgcs_rep11 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952119</b> drh3_l1pgcs_rep01 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952118</b> mrg1_l1pgcs_rep11 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952125</b> drh3_l1pgcs_rep07 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952040</b> wt_l2germ_rep08 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952083</b> mes3_l1pgcs_rep11 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952014</b> wt_l1pgcs_rep05 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952020</b> wt_l1pgcs_rep11 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952079</b> mes3_l1pgcs_rep07 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952127</b> drh3_l1pgcs_rep09 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952027</b> wt_l1pgcs_rep18 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952092</b> mes3_l2germ_rep09 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952026</b> wt_l1pgcs_rep17 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952104</b> met1_l1pgcs_rep09 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952015</b> wt_l1pgcs_rep06 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952069</b> mes4_l2germ_rep12 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952038</b> wt_l2germ_rep06 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952018</b> wt_l1pgcs_rep09 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952060</b> mes4_l2germ_rep03 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952073</b> mes3_l1pgcs_rep01 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952113</b> mrg1_l1pgcs_rep06 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952115</b> mrg1_l1pgcs_rep08 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952064</b> mes4_l2germ_rep07 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952068</b> mes4_l2germ_rep11 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952078</b> mes3_l1pgcs_rep06 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952097</b> met1_l1pgcs_rep02 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952041</b> wt_l2germ_rep09 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952055</b> mes4_l1pgcs_rep09 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952102</b> met1_l1pgcs_rep07 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952034</b> wt_l2germ_rep02 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952049</b> mes4_l1pgcs_rep03 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952121</b> drh3_l1pgcs_rep03 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952066</b> mes4_l2germ_rep09 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952052</b> mes4_l1pgcs_rep06 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952061</b> mes4_l2germ_rep04 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952025</b> wt_l1pgcs_rep16 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952094</b> mes3_l2germ_rep11 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952110</b> mrg1_l1pgcs_rep03 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952037</b> wt_l2germ_rep05 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952101</b> met1_l1pgcs_rep06 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952036</b> wt_l2germ_rep04 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952088</b> mes3_l2germ_rep05 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952042</b> wt_l2germ_rep10 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952047</b> mes4_l1pgcs_rep01 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952107</b> met1_l1pgcs_rep12 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952010</b> wt_l1pgcs_rep01 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952082</b> mes3_l1pgcs_rep10 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952120</b> drh3_l1pgcs_rep02 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952016</b> wt_l1pgcs_rep07 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952017</b> wt_l1pgcs_rep08 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952099</b> met1_l1pgcs_rep04 | Primordial Germ Cells | met-1(bn200) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952095</b> mes3_l2germ_rep12 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952013</b> wt_l1pgcs_rep04 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952126</b> drh3_l1pgcs_rep08 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952112</b> mrg1_l1pgcs_rep05 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952048</b> mes4_l1pgcs_rep02 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952084</b> mes3_l2germ_rep01 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952057</b> mes4_l1pgcs_rep11 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952123</b> drh3_l1pgcs_rep05 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952111</b> mrg1_l1pgcs_rep04 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952109</b> mrg1_l1pgcs_rep02 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952011</b> wt_l1pgcs_rep02 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952044</b> wt_l2germ_rep12 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952030</b> wt_l1pgcs_rep21 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952114</b> mrg1_l1pgcs_rep07 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+<dd><b>GSM5952090</b> mes3_l2germ_rep07 | Early Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952035</b> wt_l2germ_rep03 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952033</b> wt_l2germ_rep01 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952080</b> mes3_l1pgcs_rep08 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952122</b> drh3_l1pgcs_rep04 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) drh-3(bn197) I</dd>
+<dd><b>GSM5952075</b> mes3_l1pgcs_rep03 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952054</b> mes4_l1pgcs_rep08 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952063</b> mes4_l2germ_rep06 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952077</b> mes3_l1pgcs_rep05 | Primordial Germ Cells | mes-3(bn199) M-Z- glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952053</b> mes4_l1pgcs_rep07 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952059</b> mes4_l2germ_rep02 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952058</b> mes4_l2germ_rep01 | Early Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mes-4(bn73) M-Z- V</dd>
+<dd><b>GSM5952019</b> wt_l1pgcs_rep10 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952028</b> wt_l1pgcs_rep19 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I</dd>
+<dd><b>GSM5952116</b> mrg1_l1pgcs_rep09 | Primordial Germ Cells | glh-1(sams24[glh-1::GFP::3xFLAG]) I; mrg-1(qa6200) M-Z- III</dd>
+</dl>
+</body>
+</html>

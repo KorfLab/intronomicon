@@ -50,13 +50,13 @@ parser.add_argument('--method', default='weighted',
 	help=f'clustering method [%(default)s] {cluster_methods}')
 arg = parser.parse_args()
 
-os.system(f'mkdir -p {arg.out}/png')
+os.system(f'mkdir -p {arg.out}/png {arg.out}/r1/original')
 
 con = sqlite3.connect(arg.db)
 cur = con.cursor()
 
 # gsm stuff
-cur.execute(f'SELECT gse_id, gsm_id, gsm_txt FROM run INNER JOIN experiment ON experiment.srx_id = run.srx_id where platform = "ILLUMINA" and rlen >= 100')
+cur.execute(f'SELECT gse_id, gsm_id, gsm_txt FROM run INNER JOIN experiment ON experiment.srx_id = run.srx_id WHERE platform = "ILLUMINA" and rlen >= 100')
 d = {}
 for gse_id, gsm_id, gsm_txt in cur.fetchall():
 	sd = {}
@@ -79,7 +79,7 @@ for gse_id, gsmd in d.items():
 	gsm_ids = list(gsmd.keys())
 	if len(gsm_ids) < 4: continue # skipping small series for now
 
-	# create pairwise distances among GSEs
+	# create pairwise distances among GSMs
 	condmat = []
 	for i in range(len(gsm_ids)):
 		for j in range(i+1, len(gsm_ids)):
@@ -100,7 +100,7 @@ for gse_id, gsmd in d.items():
 		group[color].add(leaf)
 
 	# create page
-	with open(f'{arg.out}/{gse_id}.html', 'w') as fp:
+	with open(f'{arg.out}/src/{gse_id}.html', 'w') as fp:
 		print(f'<html><head><title>{gse_id}</title></head>\n<body>', file=fp)
 		print(f'<h1>{gse_id}</h1>', file=fp)
 		print(f'<img src="png/{gse_id}.png" style="float:right;width:600px;height:400px;">', file=fp)

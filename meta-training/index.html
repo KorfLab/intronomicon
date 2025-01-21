@@ -10,28 +10,28 @@
             font-family: Arial, sans-serif;
             padding: 20px;
         }
-    
+
         #file-list {
             margin-bottom: 20px;
         }
-    
+
         iframe {
             width: 100%;
             height: 500px;
             border: 1px solid #ccc;
             margin-bottom: 20px;
         }
-    
+
         .controls {
             display: flex;
             gap: 10px;
         }
-    
+
         .controls button {
             padding: 10px 20px;
             cursor: pointer;
         }
-    
+
         /* Custom style for the save button */
         #save-html {
             background-color: #66BB6A;
@@ -45,7 +45,7 @@
             transition: background-color 0.3s ease;
             /* Smooth hover effect */
         }
-    
+
         #save-html:hover {
             background-color: #57A05B;
             /* Slightly darker green on hover */
@@ -143,7 +143,7 @@
             const blob = new Blob([updatedContent], { type: 'text/html' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `${currentFile.name.replace('.html', '')}-Edited.html`;
+            a.download = `${currentFile.name.replace('.html', '')}-edited.html`;
             a.click();
             URL.revokeObjectURL(a.href);
         });
@@ -187,14 +187,14 @@
                 const dropdownContainer = iframe.contentDocument.createElement('div');
                 dropdownContainer.classList.add('dropdown-container');
                 dropdownContainer.innerHTML = `
-                    <label>Genotype: 
+                    <label>Genotype:
                         <select class="dropdown genotype">
                             <option value="">Unknown</option>
                             <option value="Wild-Type">Wild-Type</option>
                             <option value="Mutant">Mutant</option>
                         </select>
                     </label>
-                    <label>Stage: 
+                    <label>Stage:
                         <select class="dropdown stage">
                             <option value="">Unknown</option>
                             <option value="Mixed">Mixed</option>
@@ -207,7 +207,7 @@
                             <option value="Dauer">Dauer</option>
                         </select>
                     </label>
-                    <label>Tissue: 
+                    <label>Tissue:
                         <select class="dropdown tissue">
                             <option value="">Unknown</option>
                             <option value="Whole">Whole</option>
@@ -218,7 +218,7 @@
                             <option value="Hypodermis">Hypodermis</option>
                         </select>
                     </label>
-                    <label>Sex: 
+                    <label>Sex:
                         <select class="dropdown sex">
                             <option value="">Unknown</option>
                             <option value="Hermaphrodite">Hermaphrodite</option>
@@ -226,7 +226,7 @@
                             <option value="Female">Female</option>
                         </select>
                     </label>
-                    <label>Insult: 
+                    <label>Insult:
                         <select class="dropdown insult">
                             <option value="">Unknown</option>
                             <option value="None">None</option>
