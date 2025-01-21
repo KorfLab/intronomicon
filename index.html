@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML File Organizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+    
+        #file-list {
+            margin-bottom: 20px;
+        }
+    
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+    
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+    
+        .controls button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    
+        /* Custom style for the save button */
+        #save-html {
+            background-color: #66BB6A;
+            /* Set the background color */
+            color: white;
+            /* White text for contrast */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Add slight rounding for aesthetics */
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
+        }
+    
+        #save-html:hover {
+            background-color: #57A05B;
+            /* Slightly darker green on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>GSE HTML Elements Organizer</h1>
+    <div id="file-list">
+        <label for="files">Choose an HTML file:</label>
+        <input type="file" id="files" accept=".html" multiple>
+    </div>
+    <iframe id="editor-frame" src="" style="height: 600px;"></iframe>
+    <div class="controls">
+        <button id="add-group">Add New Group</button>
+        <button id="remove-group">Remove Selected Group</button>
+        <button id="save-html">Save Changes to New HTML</button>
+        <button id="reload-html">Reload File</button>
+    </div>
+
+    <script>
+        let currentFile = null;
+        const fileInput = document.getElementById('files');
+        const iframe = document.getElementById('editor-frame');
+        const saveButton = document.getElementById('save-html');
+        const reloadButton = document.getElementById('reload-html');
+
+        // Load selected file into the iframe
+        fileInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            if (files.length > 0) {
+                const file = files[0];
+                currentFile = file;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    iframe.srcdoc = reader.result;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Save changes made in the iframe
+        saveButton.addEventListener('click', () => {
+            if (!currentFile) {
+                alert('No file loaded!');
+                return;
+            }
+
+            const doc = iframe.contentDocument;
+
+            // Clone the document to clean without affecting the original
+            const clonedDoc = doc.cloneNode(true);
+
+            // Copy dropdown values from the live document into the cloned document
+            const groups = doc.querySelectorAll('.group'); // Live groups in iframe
+            const clonedGroups = clonedDoc.querySelectorAll('.group'); // Cloned groups
+
+            groups.forEach((group, index) => {
+                const clonedGroup = clonedGroups[index]; // Corresponding cloned group
+
+                // Get dropdown values from the live document
+                const genotype = group.querySelector('.dropdown.genotype').value || "Unknown";
+                const stage = group.querySelector('.dropdown.stage').value || "Unknown";
+                const tissue = group.querySelector('.dropdown.tissue').value || "Unknown";
+                const sex = group.querySelector('.dropdown.sex').value || "Unknown";
+                const insult = group.querySelector('.dropdown.insult').value || "Unknown";
+
+                // Add a comma-separated line with the selections
+                const tagLine = clonedDoc.createElement('p');
+                tagLine.textContent = `Tags: ${genotype}, ${stage}, ${tissue}, ${sex}, ${insult}`;
+                clonedGroup.appendChild(tagLine);
+
+                // Remove dynamic dropdowns from the cloned group
+                const dropdownContainer = clonedGroup.querySelector('.dropdown-container');
+                if (dropdownContainer) dropdownContainer.remove();
+
+                // Clear classes and inline styles in the cloned document
+                clonedGroup.classList.remove('group');
+                clonedGroup.querySelectorAll('dt').forEach((dt) => (dt.style = ''));
+                clonedGroup.querySelectorAll('dd').forEach((dd) => {
+                    dd.style = '';
+                    dd.removeAttribute('draggable');
+                });
+            });
+
+            // Remove dynamically injected CSS
+            const styles = clonedDoc.querySelectorAll('style');
+            styles.forEach((style) => style.remove());
+
+            // Get the cleaned-up HTML
+            const updatedContent = clonedDoc.documentElement.outerHTML;
+
+            // Create a new file to download
+            const blob = new Blob([updatedContent], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${currentFile.name.replace('.html', '')}-Edited.html`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
+        // Reload the original file
+        reloadButton.addEventListener('click', () => {
+            if (currentFile) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    iframe.srcdoc = reader.result;
+                };
+                reader.readAsText(currentFile);
+            } else {
+                alert('No file loaded!');
+            }
+        });
+
+        iframe.onload = () => {
+            if (!iframe.contentDocument) {
+                console.error('Failed to load content into iframe');
+                return;
+            }
+
+            // Dynamically adjust iframe height
+            const resizeIframe = () => {
+                const contentHeight = iframe.contentDocument.body.scrollHeight;
+                iframe.style.height = Math.max(contentHeight, 800) + 'px'; // Ensure a minimum height
+            };
+
+            // Call resize function initially and on content changes
+            resizeIframe();
+            iframe.contentDocument.body.addEventListener('input', resizeIframe);
+
+            const groups = iframe.contentDocument.querySelectorAll('dl');
+            groups.forEach((group) => {
+                if (!group.classList.contains('group')) {
+                    group.classList.add('group'); // Ensure the group class is added
+                }
+
+                // Add dropdowns
+                const dropdownContainer = iframe.contentDocument.createElement('div');
+                dropdownContainer.classList.add('dropdown-container');
+                dropdownContainer.innerHTML = `
+                    <label>Genotype: 
+                        <select class="dropdown genotype">
+                            <option value="">Unknown</option>
+                            <option value="Wild-Type">Wild-Type</option>
+                            <option value="Mutant">Mutant</option>
+                        </select>
+                    </label>
+                    <label>Stage: 
+                        <select class="dropdown stage">
+                            <option value="">Unknown</option>
+                            <option value="Mixed">Mixed</option>
+                            <option value="Adult">Adult</option>
+                            <option value="E">E</option>
+                            <option value="L1">L1</option>
+                            <option value="L2">L2</option>
+                            <option value="L3">L3</option>
+                            <option value="L4">L4</option>
+                            <option value="Dauer">Dauer</option>
+                        </select>
+                    </label>
+                    <label>Tissue: 
+                        <select class="dropdown tissue">
+                            <option value="">Unknown</option>
+                            <option value="Whole">Whole</option>
+                            <option value="Muscle">Muscle</option>
+                            <option value="Intestine">Intestine</option>
+                            <option value="Neuron">Neuron</option>
+                            <option value="Gonad">Gonad</option>
+                            <option value="Hypodermis">Hypodermis</option>
+                        </select>
+                    </label>
+                    <label>Sex: 
+                        <select class="dropdown sex">
+                            <option value="">Unknown</option>
+                            <option value="Hermaphrodite">Hermaphrodite</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </label>
+                    <label>Insult: 
+                        <select class="dropdown insult">
+                            <option value="">Unknown</option>
+                            <option value="None">None</option>
+                            <option value="RNAi">RNAi</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Environment">Environment</option>
+                            <option value="Age">Age</option>
+                            <option value="Other">Other</option>
+                            <option value="Physical">Physical</option>
+                            <option value="Emotional">Emotional</option>
+                            <option value="Infection">Infection</option>
+                            <option value="Starved">Starved</option>
+                        </select>
+                    </label>
+                `;
+                group.appendChild(dropdownContainer);
+
+                // Style existing elements
+                group.querySelectorAll('dt').forEach((dt) => {
+                    dt.style.fontWeight = 'bold';
+                    dt.style.marginBottom = '5px';
+                    dt.style.cursor = 'pointer';
+                });
+                group.querySelectorAll('dd').forEach((dd) => {
+                    dd.style.background = '#fff';
+                    dd.style.border = '1px solid #ccc';
+                    dd.style.borderRadius = '3px';
+                    dd.style.padding = '5px';
+                    dd.style.margin = '5px 0';
+                    dd.style.userSelect = 'none'; // Prevent text selection
+                    dd.style.cursor = 'move';     // Show move cursor
+                    dd.setAttribute('draggable', 'true');
+                });
+            });
+
+
+            // Detect the <img> and reposition it
+            const img = iframe.contentDocument.querySelector('img');
+            if (img) {
+                // Wrap the image in a container and style it
+                const imgWrapper = iframe.contentDocument.createElement('div');
+                imgWrapper.style.float = 'right'; // Float image to the right
+                imgWrapper.style.margin = '10px'; // Add margin for spacing
+                imgWrapper.appendChild(img);
+
+                // Insert the wrapper back into the body
+                iframe.contentDocument.body.insertBefore(imgWrapper, iframe.contentDocument.body.firstChild);
+            }
+
+            // Inject drag-and-drop script with placeholder handling
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.textContent = `
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            `;
+            iframe.contentDocument.body.appendChild(script);
+
+            // Inject CSS styling for drag-and-drop
+            const style = document.createElement('style');
+            style.textContent = `
+                .group {
+                    margin-bottom: 20px;
+                    padding: 10px;
+                    border: 2px dashed #ccc;
+                    border-radius: 5px;
+                }
+                .group.dragging {
+                    background-color: #f0f0f0;
+                    border-color: #888;
+                }
+                .group dt {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                }
+                .group dd {
+                    background: #fff;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    padding: 5px;
+                    margin: 5px 0;
+                    user-select: none; /* Prevent text selection */
+                    cursor: move;      /* Show move cursor */
+                }
+                .group dd.placeholder {
+                    background-color: #f9f9f9;
+                    color: #aaa;
+                    font-style: italic;
+                    text-align: center;
+                    cursor: default;
+                }
+                .group dd.drag-over {
+                    background-color: #e0ffe0;
+                    border-color: #0a0;
+                }
+            `;
+            iframe.contentDocument.head.appendChild(style);
+        };
+
+
+        // Add a new group to the iframe
+        document.getElementById('add-group').addEventListener('click', () => {
+            if (!iframe.contentDocument) {
+                alert('No file loaded!');
+                return;
+            }
+
+            const newGroup = iframe.contentDocument.createElement('dl');
+            newGroup.classList.add('group');
+            newGroup.innerHTML = `
+                <dt>New Group</dt>
+                <dd class="placeholder" draggable="false">Drag items here</dd>
+            `;
+            iframe.contentDocument.body.appendChild(newGroup);
+        });
+
+        // Remove a selected group from the iframe
+        document.getElementById('remove-group').addEventListener('click', () => {
+            if (!iframe.contentDocument) {
+                alert('No file loaded!');
+                return;
+            }
+
+            const groups = iframe.contentDocument.querySelectorAll('dl');
+            if (groups.length === 0) {
+                alert('No groups to remove!');
+                return;
+            }
+
+            const groupNames = Array.from(groups).map((group, index) => `${index + 1}: ${group.querySelector('dt')?.textContent.trim() || 'Unnamed Group'}`);
+            const choice = prompt(`Enter the number of the group to remove:\n${groupNames.join('\n')}`);
+            const index = parseInt(choice, 10) - 1;
+
+            if (!isNaN(index) && groups[index]) {
+                groups[index].remove();
+            } else {
+                alert('Invalid choice!');
+            }
+        });
+    </script>
+</body>
+
+</html>
