@@ -413,14 +413,74 @@
                 return;
             }
 
+            // Create a new group
             const newGroup = iframe.contentDocument.createElement('dl');
             newGroup.classList.add('group');
             newGroup.innerHTML = `
                 <dt>New Group</dt>
                 <dd class="placeholder" draggable="false">Drag items here</dd>
+                <div class="dropdown-container">
+                    <label>Genotype: 
+                        <select class="dropdown genotype">
+                            <option value="">Unknown</option>
+                            <option value="Wild-Type">Wild-Type</option>
+                            <option value="Mutant">Mutant</option>
+                        </select>
+                    </label>
+                    <label>Stage: 
+                        <select class="dropdown stage">
+                            <option value="">Unknown</option>
+                            <option value="Mixed">Mixed</option>
+                            <option value="Adult">Adult</option>
+                            <option value="E">E</option>
+                            <option value="L1">L1</option>
+                            <option value="L2">L2</option>
+                            <option value="L3">L3</option>
+                            <option value="L4">L4</option>
+                            <option value="Dauer">Dauer</option>
+                        </select>
+                    </label>
+                    <label>Tissue: 
+                        <select class="dropdown tissue">
+                            <option value="">Unknown</option>
+                            <option value="Whole">Whole</option>
+                            <option value="Muscle">Muscle</option>
+                            <option value="Intestine">Intestine</option>
+                            <option value="Neuron">Neuron</option>
+                            <option value="Gonad">Gonad</option>
+                            <option value="Hypodermis">Hypodermis</option>
+                        </select>
+                    </label>
+                    <label>Sex: 
+                        <select class="dropdown sex">
+                            <option value="">Unknown</option>
+                            <option value="Hermaphrodite">Hermaphrodite</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </label>
+                    <label>Insult: 
+                        <select class="dropdown insult">
+                            <option value="">Unknown</option>
+                            <option value="None">None</option>
+                            <option value="RNAi">RNAi</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Environment">Environment</option>
+                            <option value="Age">Age</option>
+                            <option value="Other">Other</option>
+                            <option value="Physical">Physical</option>
+                            <option value="Emotional">Emotional</option>
+                            <option value="Infection">Infection</option>
+                            <option value="Starved">Starved</option>
+                        </select>
+                    </label>
+                </div>
             `;
-            iframe.contentDocument.body.appendChild(newGroup);
-        });
+
+                // Append the new group to the body
+                iframe.contentDocument.body.appendChild(newGroup);
+            });
+
 
         // Remove a selected group from the iframe
         document.getElementById('remove-group').addEventListener('click', () => {
