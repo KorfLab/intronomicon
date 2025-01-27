@@ -1,0 +1,123 @@
+<html><head><title>GSE57351</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE57351.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE57351</h1>
+
+<li>Series_title: Paternal RNA contributions in the C. elegans zygote
+</li><li>Series_summary: Development of the early embryo is thought to be mainly driven by maternal gene products and post-transcriptional gene regulation. Here, we used metabolic labeling to show that RNA can be transferred by sperm into the embryo. To identify genes with paternal expression in the embryo, we performed crosses of males and females from divergent C. elegans strains. RNA sequencing of mRNAs and small RNAs in the 1-cell hybrid embryo revealed that about two hundred paternal mRNAs are reproducibly expressed in the embryo, and that about half of assayed endogenous siRNAs and piRNAs are also of paternal origin. Together, our results suggest an unexplored paternal contribution to early development.
+</li><li>Series_overall_design: To reveal the identity of paternal RNA molecules, we performed a cross of males and females from two divergent C. elegans strains because we reasoned that sequencing of embryonic RNA and SNP analysis should then identify and quantify maternal and paternal transcripts. These sequencing experiments were carried out in purified hybrid 1-cell embryos and comprised small RNAs and mRNAs. For comparison we sequenced mRNAs and small RNAs from the parental strains: paternal (Hawaiian males, CB4856) and maternal (fem-1(hc17ts)/TX189(OMA-1::GFP). For the annotation of strain specific mutations (SNPs) we sequenced mRNA and small RNAs extracted from whole worms. All experiments were performed in at least two independent biological replicates.
+</li><li>Series_type: Expression profiling by high throughput sequencing #-# Non-coding RNA profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1380826</b> 1-cell embryos (ribominus replicate 1) | 1-cell embyro RiboMinus-extracted mRNA library</dd>
+
+<dd style="" class=""><b>GSM1380827</b> 1-cell embryos (ribominus replicate 2) | 1-cell embyro RiboMinus-extracted mRNA library</dd>
+
+<dd style="" class=""><b>GSM1380828</b> 1-cell embryos (ribominus replicate 3) | 1-cell embyro RiboMinus-extracted mRNA library</dd>
+
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C0</dt><dd style="" class=""><b>GSM1380825</b> 1-cell embryos (polyA replicate 3) | 1-cell embyro poly(A)-extracted mRNA library</dd><dd style="" class=""><b>GSM1380823</b> 1-cell embryos (polyA replicate 1) | 1-cell embyro poly(A)-extracted mRNA library</dd><dd style="" class=""><b>GSM1380824</b> 1-cell embryos (polyA replicate 2) | 1-cell embyro poly(A)-extracted mRNA library</dd>
+
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style="" class=""><b>GSM1380834</b> N2_background whole worm (polyA replicate 1) | whole worm poly(A)-extracted mRNA library</dd>
+<dd style="" class=""><b>GSM1380835</b> N2_background whole worm (polyA replicate 2) | whole worm poly(A)-extracted mRNA library</dd>
+<dd style="" class=""><b>GSM1380836</b> N2_background whole worm (polyA replicate 3) | whole worm poly(A)-extracted mRNA library</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C3</dt>
+<dd style="" class=""><b>GSM1380829</b> CB4856 whole worm (polyA replicate 1) | whole worm poly(A)-extracted mRNA library</dd>
+
+<dd style="" class=""><b>GSM1380830</b> CB4856 whole worm (polyA replicate 2) | whole worm poly(A)-extracted mRNA library</dd>
+
+<dd style="" class=""><b>GSM1380831</b> CB4856 whole worm (polyA replicate 3) | whole worm poly(A)-extracted mRNA library</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">C4</dt>
+                <dd style="" class=""><b>GSM1380837</b> fog2 sperm (polyA replicate 1) | sperm poly(A)-extracted mRNA library</dd>
+                
+            <p>Tags: other, specific, specific, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">C5</dt>
+                <dd style="" class=""><b>GSM1380833</b> CB4856 sperm (polyA high purity, pronase treated) | sperm poly(A)-extracted mRNA library</dd><dd style="" class=""><b>GSM1380832</b> CB4856 sperm (polyA low purity) | sperm poly(A)-extracted mRNA library</dd>
+                
+            <p>Tags: other, specific, specific, hermaphrodite, none</p></dl></body></html>
