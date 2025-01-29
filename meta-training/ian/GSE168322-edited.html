@@ -1,0 +1,102 @@
+<html><head><title>GSE168322</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE168322.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE168322</h1>
+
+<li>Series_title: Anti-aging effects of Vicatia thibetica de Boiss root extract on Caenorhabditis elegans and doxorubicin-induced mice via promoting collagen and stress resistance
+</li><li>Series_summary: The root of Vicatia thibetica de Boiss is a Chinese herb medicine with homology of medicine and food. We first report that HLB01 (the extract of Vicatia thibetica de Boiss root) extends lifespan and promotes healthy parameters in Caenorhabditis elegans (C. elegans). In doxorubicin-induced senescent mice, HLB01 counteracts senescence associated biomarkers significantly, including AST, ALT, p21 and γH2AX. Interestingly, HLB01 promotes the level of collagen in C. elegans and mammalian cell systemically, which might be one of the essential factors to exert anti-aging effects of HLB01. In addition, HLB01 can scavenge free radical to perform antioxidant ability. Lifespan extension of HLB01 also dependent on DAF-16 and HSF-1 to perform oxidative stress resistance and heat stress resistance. Taken together, these data indicate that HLB01 extends lifespan and healthspan of C. elegans, resists doxorubicin‐induced senescence in mice via collagen promoting, antioxidant and stress resistance.
+</li><li>Series_overall_design: Examination of HLB01-treated and control group in C. elegans by RNA-seq, in triplicate
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM5136249</b> Control rep1 | C.elegans</dd>
+<dd style=""><b>GSM5136250</b> Control rep2 | C.elegans</dd>
+<dd style=""><b>GSM5136251</b> Control rep3 | C.elegans</dd>
+<p>Tags: WT, other, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM5136254</b> HLB01 rep3 | C.elegans</dd>
+<dd style=""><b>GSM5136252</b> HLB01 rep1 | C.elegans</dd>
+<dd style=""><b>GSM5136253</b> HLB01 rep2 | C.elegans</dd>
+<p>Tags: WT, other, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>

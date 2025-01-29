@@ -1,0 +1,109 @@
+<html><head><title>GSE272419</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE272419.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE272419</h1>
+
+<li>Series_title: Effect of misregulation of mitochondrial 6mA on gene expression in C. elegans
+</li><li>Series_summary: In virtually all eukaryotes, the mitochondrial genome (mitochondrial DNA, mtDNA) encodes proteins necessary for oxidative phosphorylation (OXPHOS) and the RNA machinery required for their synthesis inside the mitochondria. Appropriate regulation of mtDNA copy number and expression is essential for ensuring the correct stoichiometric formation of OXPHOS complexes assembled from both nuclear- and mtDNA-encoded subunits. The mechanisms of mtDNA regulation are not completely understood but are essential to organismal viability and lifespan. Here, using multiple approaches, we identify the presence of N6-methylation of adenosine (6mA) on the mtDNA of diverse animal and plant species. Importantly, we also demonstrate that this modification is regulated in C. elegans by the DNA methyltransferase DAMT-1, and DNA demethylase ALKB-1, which localize to mitochondria. Misregulation of mtDNA 6mA through targeted overexpression of these enzymatic activities inappropriately alters mtDNA copy number and transcript levels, impairing OXPHOS function and producing increased oxidative stress, as well as a shortened lifespan. Compounding defects in mtDNA regulation, reductions in mtDNA 6mA methylation promote the propagation of a deleterious mitochondrial genome across generations. Together, these results reveal that mtDNA 6mA is highly conserved among eukaryotes and regulates lifespan by influencing mtDNA copy number, expression, and heritable mutation levels in vivo.
+</li><li>Series_overall_design: To investigate the effects of 6mA methylation of the mtDNA, we generated transgenic worms overexpressing mtDNA 6mA modifiers, establishing 6mA hypo- and hypermethylation strains. #-# We extracted total RNA from mtDNA 6mA hypo- and hypermethylation animals in a glp-4(bn2) background that do not develop a germline. #-# Comparative gene expression analysis of mRNA-seq data for mtDNA 6mA hypo- and hypermethylation animals and a corresponding control without altered mtDNA 6mA levels.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM8401804</b> L4 C. elegans, somatic tissue, control, replicate 1 | all somatic | all somatic | glp-4(bn2)</dd>
+<dd style=""><b>GSM8401805</b> L4 C. elegans, somatic tissue, control, replicate 2 | all somatic | all somatic | glp-4(bn2)</dd>
+<dd style=""><b>GSM8401806</b> L4 C. elegans, somatic tissue, control, replicate 3 | all somatic | all somatic | glp-4(bn2)</dd>
+<p>Tags: other, specific, specific, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM8401809</b> L4 C. elegans, somatic tissue, mtDNA hypomethylation, replicate 3 | all somatic | all somatic | eft-3p::ALKB-1, glp-4(bn2)</dd>
+
+
+<dd style="" class=""><b>GSM8401808</b> L4 C. elegans, somatic tissue, mtDNA hypomethylation, replicate 2 | all somatic | all somatic | eft-3p::ALKB-1, glp-4(bn2)</dd>
+<dd style="" class=""><b>GSM8401807</b> L4 C. elegans, somatic tissue, mtDNA hypomethylation, replicate 1 | all somatic | all somatic | eft-3p::ALKB-1, glp-4(bn2)</dd>
+
+<p>Tags: other, specific, specific, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd style="" class=""><b>GSM8401812</b> L4 C. elegans, somatic tissue, mtDNA hypermethylation, replicate 3 | all somatic | all somatic | eft-3p::MTSDAMT-1, glp-4(bn2)</dd><dd style="" class=""><b>GSM8401811</b> L4 C. elegans, somatic tissue, mtDNA hypermethylation, replicate 2 | all somatic | all somatic | eft-3p::MTSDAMT-1, glp-4(bn2)</dd><dd style="" class=""><b>GSM8401810</b> L4 C. elegans, somatic tissue, mtDNA hypermethylation, replicate 1 | all somatic | all somatic | eft-3p::MTSDAMT-1, glp-4(bn2)</dd>
+                
+                
+            <p>Tags: other, specific, specific, hermaphrodite, none</p></dl></body></html>
