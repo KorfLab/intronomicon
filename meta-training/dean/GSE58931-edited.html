@@ -1,0 +1,197 @@
+<html><head><title>GSE58931</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE58931.png" style="float:right;width:600px;height:400px;"></div><div style="float: right; margin: 10px;"></div>
+<h1>GSE58931</h1>
+
+<li>Series_title: Neuronal CRTC-1 governs systemic mitochondrial metabolism and lifespan via a catecholamine signal
+</li><li>Series_summary: Low energy states delay aging in multiple species, yet mechanisms coordinating energetics and longevity across tissues remain poorly defined. The conserved energy sensor AMP-activated protein kinase (AMPK) and its corresponding phosphatase calcineurin modulate longevity via the ‘CREB regulated transcriptional coactivator (CRTC)-1 in C. elegans. We show that CRTC-1 specifically uncouples AMPK/calcineurin mediated effects on lifespan from pleiotropic side effects by reprogramming mitochondrial and metabolic function. Strikingly, this pro-longevity metabolic state is regulated cell-nonautonomously by CRTC-1 in the nervous system. CRTC-1/CREB act antagonistically with the functional PPARα ortholog, NHR-49 to promote distinct peripheral metabolic programs. Neuronal CRTC-1 drives mitochondrial fragmentation in distal tissues and suppresses the effect of AMPK on systemic mitochondrial metabolism and longevity via a cell-nonautonomous catecholamine signal. These results demonstrate that transcriptional control of neuronal signals can override enzymatic regulation of metabolism in peripheral tissues. Central perception of energetic state therefore represents a target to promote healthy aging.
+</li><li>Series_overall_design: Experiment was performed with three biological replicates. Gravid adults grown at 20¡C on 100 mm NG plates seeded with OP50-1 E. coli were collected and treated with hypochlorite to release eggs. Eggs were incubated overnight in M9 media to obtain L1 synchronized populations. One thousand L1 larvae were grown on a 100 mm NG plate seeded with OP50-1 E. coli. Worms were harvested for RNA extraction when L4 larval stage was reached. Animals were collected and washed extensively with M9 media to remove bacteria. Worms were then snap frozen in liquid nitrogen. RNA was extracted by five freeze/thaw cycles in Qiazol then purified by RNeasy mini kit (Qiagen). RNA quality was checked using an Agilent Technologies 2100 Bioanalyzer. All samples had an RNA integrity number of 10. cDNA libraries were prepared from 4 ugs of total RNA using the TruSeq RNA Sample Preparation v2 kit (Illumina). 50-cycle paired-end sequencing was performed on an Illumina HiSeq 2000 by the Harvard Biopolymer Core. Read quality was evaluated with FASTQC. Adapter sequences and poor quality bases (&lt;20) were trimmed and filtered with CUTADAPT, resulting in a median of 44 million reads per replicate. These were aligned to the C. elegans genome (ce6, WS238) using TopHat version 2.0.8 (Kim et al., 2013), with a median 35 million reads mapped in proper pairs. The number of reads mapping to each gene was counted with htseq-count. Genes with less than 1 Count Per Million Reads (CPM) were discarded from further analysis. Counts were normalized for sequencing depth and RNA composition across all samples with edgeR (Robinson et al., 2010). Genes were tested for differential expression between each mutant strain and wild-type using edgeR’s glm method. For each comparison, genes with less than 5 CPM were filtered and those with at least 50% change and False Discovery Rate (FDR) of 1% or less were considered differentially expressed.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1422431</b> N2, rep3 | whole animals, N2 | whole body</dd>
+<dd style=""><b>GSM1422423</b> N2, rep1 | whole animals, N2 | whole body</dd>
+<dd style=""><b>GSM1422427</b> N2, rep2 | whole animals, N2 | whole body</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p><p>Tags: WT, mixed, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+<dd style="" class=""><b>GSM1422429</b> CA-AAK-2, rep2 | whole animals, WBM60 | whole body</dd>
+
+
+<dd style="" class=""><b>GSM1422433</b> CA-AAK-2, rep3 | whole animals, WBM60 | whole body</dd>
+<dd style="" class=""><b>GSM1422425</b> CA-AAK-2, rep1 | whole animals, WBM60 | whole body</dd>
+
+
+
+<p>Tags: other, specific, whole, hermaphrodite, none</p><p>Tags: WT, mixed, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd style="" class=""><b>GSM1422432</b> CA-CRTC-1S76A, S179A, rep3 | whole animals, WBM55 | whole body</dd><dd style="" class=""><b>GSM1422428</b> CA-CRTC-1S76A, S179A, rep2 | whole animals, WBM55 | whole body</dd>
+                <dd style="" class=""><b>GSM1422424</b> CA-CRTC-1S76A, S179A, rep1 | whole animals, WBM55 | whole body</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, none</p><p>Tags: WT, mixed, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd style="" class=""><b>GSM1422426</b> CA-AAK-2;CA-CRTC-1S76A, S179A, rep1 | whole animals, WBM66 | whole body</dd><dd style="" class=""><b>GSM1422434</b> CA-AAK-2;CA-CRTC-1S76A, S179A, rep3 | whole animals, WBM66 | whole body</dd><dd style="" class=""><b>GSM1422430</b> CA-AAK-2;CA-CRTC-1S76A, S179A, rep2 | whole animals, WBM66 | whole body</dd>
+                
+                
+            <p>Tags: other, specific, whole, hermaphrodite, none</p><p>Tags: WT, mixed, whole, hermaphrodite, some</p></dl><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>
