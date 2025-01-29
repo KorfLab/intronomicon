@@ -1,0 +1,112 @@
+<html><head><title>GSE190124</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE190124.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE190124</h1>
+
+<li>Series_title: Expression profiling of 1-day old C. elegans adult circ-crh-1(syb385), crh-1(n3315) versus wild-type
+</li><li>Series_summary: poly(A)-selected mRNA-seq of circ-crh1(syb385), crh-1(n3315) versus wild-type (N2)
+</li><li>Series_overall_design: mRNA profiles of four independent replicates of wild type (N2) and circ-crh-1 knockout [circ-crh-1(syb385)] and CREB null [crh-1(n3315)] 1-day adult worms.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM5714468</b> WT_Rep2 | Whole worm | whole worm | wild type</dd>
+<dd style=""><b>GSM5714470</b> WT_Rep4 | Whole worm | whole worm | wild type</dd>
+<dd style=""><b>GSM5714467</b> WT_Rep1 | Whole worm | whole worm | wild type</dd>
+<dd style=""><b>GSM5714469</b> WT_Rep3 | Whole worm | whole worm | wild type</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+<dd style="" class=""><b>GSM5714475</b> crh-1_KO_Rep1 | Whole worm | whole worm | crh-1(n3315)</dd>
+<dd style=""><b>GSM5714476</b> crh-1_KO_Rep2 | Whole worm | whole worm | crh-1(n3315)</dd>
+<dd style=""><b>GSM5714478</b> crh-1_KO_Rep4 | Whole worm | whole worm | crh-1(n3315)</dd>
+
+<dd style="" class=""><b>GSM5714477</b> crh-1_KO_Rep3 | Whole worm | whole worm | crh-1(n3315)</dd>
+
+
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd style="" class=""><b>GSM5714474</b> circ-crh-1_KO_Rep4 | Whole worm | whole worm | circ-crh-1(syb385)</dd><dd style="" class=""><b>GSM5714471</b> circ-crh-1_KO_Rep1 | Whole worm | whole worm | circ-crh-1(syb385)</dd><dd style="" class=""><b>GSM5714472</b> circ-crh-1_KO_Rep2 | Whole worm | whole worm | circ-crh-1(syb385)</dd><dd style=""><b>GSM5714473</b> circ-crh-1_KO_Rep3 | Whole worm | whole worm | circ-crh-1(syb385)</dd>
+                
+                
+            <p>Tags: other, specific, whole, hermaphrodite, none</p></dl></body></html>
