@@ -14,3 +14,12 @@ Training Notes
 	- GSE100929 has 1 group of immunoprecipitated RNAs
 	- GSE211846 has ATAC-Seq and small-RNA-Seq samples, 20 generation lineage
 	- GSE229078 too big to organize (FACS neuron study)
+	- GSE169137 another FACs neuron
+- Timecourse
+	- GSE122892 too long
+	- GSE102537 when does an age series become an insult?
+
+
+Maybe we should be sorting polysomal, cytoplasmic, monosomal...
+
+- GSE122097
