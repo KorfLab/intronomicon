@@ -1,0 +1,108 @@
+<html><head><title>GSE53359</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE53359.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE53359</h1>
+
+<li>Series_title: Conservation of mRNA and protein expression during development of C. elegans
+</li><li>Series_summary: Spatiotemporal control of gene expression is crucial for development and subject to evolutionary changes. Although proteins are the final product of most genes, the developmental proteome of an animal has not yet been comprehensively defined, and the correlation between RNA and protein abundance during development is largely unknown. Here, we globally measured and compared protein and mRNA expression changes during the life cycle of the nematodes C. elegans and C. briggsae, separated by ~30 million years of evolution. We observed that developmental mRNA and protein changes were highly conserved, to a surprisingly similar degree, but poorly correlated within a species, suggesting important and widespread post-transcriptional regulation. Post-transcriptional control was particularly well conserved if mRNA fold changes were buffered on the protein level, indicating a predominant repressive function. Finally, among divergently expressed genes, we identified insulin signaling, a pathway involved in life span determination, as a putative target of adaptive evolution.
+</li><li>Series_overall_design: Samples of C. elegans and C. briggsae were collected at major developmental stages throughout the nematode life cycle. These stages comprise a population of mixed embryonic stages (E), populations of all four larval stages (L1, L2, L3, L4), late L4 larvae (LL4), young adults (YA), and a reference sample consisting of a mixture of all stages. To obtain synchronized worm populations, embryos were extracted by bleaching gravid adults and synchronized by starvation. Later stages were picked at fixed timepoints after determining the developmental stages by microscopic observation. For all stages, at least a single poly(A)-extracted mRNA library was sequenced on a single lane of an Illumina Genome Analyzer IIx.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd class="" style=""><b>GSM1290034</b> C. elegans mixed embryos (sample A, replicate 2) | poly(A)-extracted mRNA library</dd>
+<dd class="" style=""><b>GSM1290035</b> C. elegans mixed embryos (sample B) | poly(A)-extracted mRNA library</dd>
+
+<p>Tags: other, mixed, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C0</dt>
+<dd class="" style=""><b>GSM1290043</b> C. elegans young adults (sample A) | poly(A)-extracted mRNA library</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt><dd class="" style=""><b>GSM1290037</b> C. elegans L1 larvae (sample A, replicate 2) | poly(A)-extracted mRNA library</dd>
+
+<dd class="" style=""><b>GSM1290038</b> C. elegans L1 larvae (sample B) | poly(A)-extracted mRNA library</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">reference?</dt><dd class="" style=""><b>GSM1290045</b> C. elegans mixed stages reference (sample A, replicate 2) | poly(A)-extracted mRNA library</dd>
+                
+                
+            <p>Tags: WT, mixed, whole, hermaphrodite, none</p></dl></body></html>
