@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <title>GSE101910</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE101910.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE101910</h1>
+
+    <li>Series_title: Indole from commensal bacteria impact the aging transcriptome of C. elegans
+    </li>
+    <li>Series_summary: We report here that in C. elegans, indole induces a gene expression profile in aged animals
+        reminiscent of that seen in the young, but which is distinct from that #-# associated with normal aging.
+        Moreover, in older animals, indole induces genes associated with oogenesis, and, accordingly, extends fecundity
+        and reproductive span.
+    </li>
+    <li>Series_overall_design: Whole animal trnascriptomic profile of old (12 day old adult) C. elegans growing on
+        indole-positive E.coli, K12 or indole-negative mutant of K12, K12tnaA was obtained using RNA-Seq with Illumina
+        Trueseq and #-# was compared with the profile of their younger (2 day old adult) counterparts #-#
+        ------------------------------------------- #-# RNA was prepared from 12 day old adult (LATE) wild type worms
+        (N2) grown on E.coli K12tnaA (tnaA) containing a deletion of #-# tryptophanase (necessary for indole production)
+        #-# N2K12 means worms were grown in E coli K12 bacteria which is indole positive #-# EARLY means RNA was
+        prepared from 2 day old adults. #-# AHRK12 means ahr-1(ia3) which has loss of function mutaion of ahr-1 gene was
+        grown on K12 condition
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">N2tnaA E</dt>
+            <dd style="" class=""><b>GSM2718514</b> 2_N2tnaA_EARLY2 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718517</b> 3_N2tnaA_EARLY3 | Whole animal</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">N2tnaA L</dt>
+            <dd style="" class=""><b>GSM2718510</b> 14_N2tnaA_LATE2 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718511</b> 15_N2tnaA_LATE3 | Whole animal</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">N2K12 E</dt>
+            <dd style="" class=""><b>GSM2718518</b> 4_N2K12_EARLY1 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718519</b> 5_N2K12_EARLY2 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718520</b> 6_N2K12_EARLY3 | Whole animal</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">N2K12 L</dt>
+            <dd style="" class=""><b>GSM2718512</b> 16_N2K12_LATE1 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718513</b> 18_N2K12_LATE3 | Whole animal</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">AHRK12</dt>
+            <dd style="" class=""><b>GSM2718515</b> 37_AHRK12_LATE1 | Whole animal</dd>
+            <dd style="" class=""><b>GSM2718516</b> 39_AHRK12_LATE3 | Whole animal</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, some</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
