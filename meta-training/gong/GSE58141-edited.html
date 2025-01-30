@@ -1,0 +1,110 @@
+<html><head><title>GSE58141</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE58141.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE58141</h1>
+
+<li>Series_title: Global characterization of the oocyte-to-embryo transition in C. elegans uncovers a novel mRNA turnover mechanism
+</li><li>Series_summary: The oocyte-to-embryo transition (OET) is thought to be mainly driven by post-transcriptional gene regulation. However, expression of both RNAs and proteins during the OET has not been comprehensively assayed. Furthermore, specific molecular mechanisms that regulate gene expression during OET are largely unknown. Here, we quantify and analyze, transcriptome-wide, expression of mRNAs, small RNAs and thousands of proteins in C. elegans oocytes, 1-cell, and 2-cell embryos. This represents a first comprehensive gene expression atlas during the OET in animals. We discovered a first wave of degradation in which thousands of mRNAs are turned over shortly after fertilization. Sequence analysis revealed a statistically highly significant presence of a novel polyC motif in the 3' untranslated regions (3' UTRs) of most of these degraded mRNAs. Transgenic reporter assays showed that this polyC motif is indeed required and sufficient for mRNA degradation after fertilization. We show that orthologs of human poly-C binding-protein specifically bind this motif. Together, our data suggest a mechanism in which the polyC motif and binding partners direct degradation of maternal mRNAs. Our data also indicate that endogenous siRNAs but not miRNAs promote mRNA clearance during the OET.
+</li><li>Series_overall_design: To study the OET in C.elegans we isolated large quantities of oocytes, 1-cell embryos, 2-cell embryos and sperm. We then sequenced polyA RNA.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1402306</b> 1-cell embryos (polyA replicate 2) | 1-cell embryo poly(A)-extracted mRNA library | 1-cell embryo</dd>
+<dd style=""><b>GSM1402305</b> 1-cell embryos (polyA replicate 1) | 1-cell embryo poly(A)-extracted mRNA library | 1-cell embryo</dd>
+
+
+<p>Tags: WT, specific, specific, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd class="" style=""><b>GSM1402310</b> oocytes (polyA replicate 2) | oocytes poly(A)-extracted mRNA library | oocyte</dd>
+<dd class="" style=""><b>GSM1402309</b> oocytes (polyA replicate 1) | oocytes poly(A)-extracted mRNA library | oocyte</dd>
+<p>Tags: WT, specific, specific, female, none</p></dl>
+<dl class=""><dt style="">C3</dt>
+<dd class="" style=""><b>GSM1402311</b> sperm (polyA replicate 1) | sperm poly(A)-extracted mRNA library | sperm</dd>
+<dd class="" style=""><b>GSM1402312</b> sperm (polyA replicate 2) | sperm poly(A)-extracted mRNA library | sperm</dd>
+<p>Tags: WT, specific, specific, male, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM1402308</b> 2-cell embryos (polyA replicate 2) | 2-cell embryo poly(A)-extracted mRNA library | 2-cell embryo</dd><dd class="" style=""><b>GSM1402307</b> 2-cell embryos (polyA replicate 1) | 2-cell embryo poly(A)-extracted mRNA library | 2-cell embryo</dd>
+                
+            <p>Tags: WT, specific, specific, hermaphrodite, none</p></dl></body></html>
