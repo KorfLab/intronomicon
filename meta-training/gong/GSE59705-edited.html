@@ -1,0 +1,104 @@
+<html><head><title>GSE59705</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE59705.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE59705</h1>
+
+<li>Series_title: The role of SPK-1 in alternative splicing regulation in C. elegans
+</li><li>Series_summary: The aim of this study was to identify target genes of the SR protein kinase SPK-1. spk-1(RNAi) leads to defects in cell polarity. We were therefore primarily interested in genes who exhibit changes in splicing regulation upon depletion of SPK-1 and could underlie the polarity phenotype of spk-1(RNAi).
+</li><li>Series_overall_design: Transcriptome profiling of control and spk-1(RNAi) worms by RNAseq
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1443915</b> spk-1(RNAi) rep1 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443917</b> spk-1(RNAi) rep2 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443919</b> spk-1(RNAi) rep3 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443921</b> spk-1(RNAi) rep4 | whole adult worms | whole worm</dd>
+<p>Tags: other, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM1443914</b> control rep1 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443916</b> control rep2 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443920</b> control rep4 | whole adult worms | whole worm</dd>
+<dd style=""><b>GSM1443918</b> control rep3 | whole adult worms | whole worm</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>

@@ -7,7 +7,13 @@
 | GSE57109     | germline biology with removing some gene            | 1 They use N2 as wildtype. <br> 2 They study fog-2 and fem-3 gene knocked C.elegan and dissect those gonald.
 | GSE57351     | parantel RNA contribution in embryo?                | 1 N2 shall be wildtype. CB4856 is name the hawaii strain. <br> 2 fog2 is female. CB4856 is male.
 | GSE58141     | mRNA turnover mechanism                             | 1 similar as 57351; RNA oocyte, sperm stuff. <br> 2 This one is kinda easy to determine. I am pretty sure about this.
- 
+| GSE58931     | longevity and metabolism of energy                  | 1 CA-AAK-2 is AMPK activation (CA-AAK-2) <br> 2  CRTC-1 is cyclic regulated transcriptional coactivator (CRTC) <br> 3 S76A and S179A is serine xx. Blocking phosphorylation of CRTC-1 at conserved AMPK target sites, serines 76 and 179, renders it refractory to AMPK regulation and constitutively nuclear. 
+| GSE59705     | SPK-1 and alternative splicing                      | 1 SPK-1 is SR protein kinase SPK-1.
+| GSE59715     | three dimensional?? not quite understand            | 1 not quite sure the Bxxx stuff, might be some dose difference, btw shall this be considered as insult difference? 
+| GSM60063     | food mechanism on removal of one gene               | 1 there is a lot different names and GSEs in this paper, but they all could able to figure out in the paper
+| GSM60825     | transient hypoxia, RNAi, ELT-2                      | 1 not a lot GSMs, but mixed stage from paper 
+|
+
 ## multi-linked GSE ##
 
 | GSE ID   |  PubMedID  | Reason
