@@ -10,9 +10,14 @@
 | GSE58931     | longevity and metabolism of energy                  | 1 CA-AAK-2 is AMPK activation (CA-AAK-2) <br> 2  CRTC-1 is cyclic regulated transcriptional coactivator (CRTC) <br> 3 S76A and S179A is serine xx. Blocking phosphorylation of CRTC-1 at conserved AMPK target sites, serines 76 and 179, renders it refractory to AMPK regulation and constitutively nuclear. 
 | GSE59705     | SPK-1 and alternative splicing                      | 1 SPK-1 is SR protein kinase SPK-1.
 | GSE59715     | three dimensional?? not quite understand            | 1 not quite sure the Bxxx stuff, might be some dose difference, btw shall this be considered as insult difference? 
-| GSM60063     | food mechanism on removal of one gene               | 1 there is a lot different names and GSEs in this paper, but they all could able to figure out in the paper
-| GSM60825     | transient hypoxia, RNAi, ELT-2                      | 1 not a lot GSMs, but mixed stage from paper 
-|
+| GSE60063     | food mechanism on removal of one gene               | 1 there is a lot different names and GSEs in this paper, but they all could able to figure out in the paper
+| GSE60825     | transient hypoxia, RNAi, ELT-2                      | 1 not a lot GSMs, but mixed stage from paper 
+| GSE61581     | tdp-1 and dsDNA conservation?                       | 1 they use IP and high-throught sequencing
+| GSE61733     | RtcB RNA and unfolded protein response              | 1 can't really figure out what's Tm stand for, suppose to be some insult
+| GSE63528     | transcriptional drift and aging                     | 1 there are different day of RNA sequencing and food treatment 
+| GSE63823     | circRNAs and specifc stage                          | 1 mock treatment are control <br> 2 RNases-R are remove linear RNA from mock sample?
+| GSE64401     | innate immune response of nematodes                 | 1 different pathogen as insult or food <br> 2 WT N2 as genotype
+| GSE54672     | NMD mutant in C.elegan                              | 1 gon --> gonald , sgo? --> somantic and gonald? glp4 --> mutant 
 
 ## multi-linked GSE ##
 

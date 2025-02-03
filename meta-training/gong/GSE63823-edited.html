@@ -1,0 +1,107 @@
+<html><head><title>GSE63823</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE63823.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE63823</h1>
+
+<li>Series_title: Analysis of intron sequences reveals hallmarks of circular RNA biogenesis in animals
+</li><li>Series_summary: Circular RNAs (circRNAs) are a large class of animal RNAs. To investigate possible circRNA functions, it is important to understand circRNA biogenesis. Besides human Alu repeats, sequence features that promote exon circularization are largely unknown. We experimentally identified new circRNAs in C. elegans. Reverse complementary sequences between introns bracketing circRNAs were significantly enriched compared to linear controls. By scoring the presence of reverse complementary sequences in human introns we predicted and experimentally validated novel circRNAs. We show that introns bracketing circRNAs are highly enriched in RNA editing or hyper-editing events. Knockdown of the double-strand RNA editing ADAR1 enzyme significantly and specifically up-regulated circRNA expression. Together, our data support a model of animal circRNA biogenesis in which competing RNA:RNA interactions of introns form larger structures which promote circularization of embedded exons, while ADAR1 antagonizes circRNA expression by melting stems within these interactions. Thus, we assign a new function to ADAR1.
+</li><li>Series_overall_design: Examination of 12 samples in different stages of C.elegans development.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt><dd class="" style=""><b>GSM1558150</b> mock treated stage 1 | worm</dd>
+
+
+<dd class="" style=""><b>GSM1558158</b> mock treated stage 5 | worm</dd>
+
+<dd class="" style=""><b>GSM1558152</b> mock treated stage 2 | worm</dd>
+<dd class="" style=""><b>GSM1558156</b> mock treated stage 4 | worm</dd><dd class="" style=""><b>GSM1558160</b> mock treated stage 6 | worm</dd>
+
+<dd class="" style=""><b>GSM1558154</b> mock treated stage 3 | worm</dd>
+<p>Tags: other, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd class="" style=""><b>GSM1558161</b> RNase R treated stage 6 | worm</dd><dd class="" style=""><b>GSM1558157</b> RNase R treated stage 4 | worm</dd><dd class="" style=""><b>GSM1558159</b> RNase R treated stage 5 | worm</dd><dd class="" style=""><b>GSM1558153</b> RNase R treated stage 2 | worm</dd><dd class="" style=""><b>GSM1558155</b> RNase R treated stage 3 | worm</dd>
+<dd style=""><b>GSM1558151</b> RNase R treated stage 1 | worm</dd>
+<p>Tags: other, specific, whole, hermaphrodite, some</p></dl>
+
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>
