@@ -189,7 +189,7 @@ def scoring( number_of_gsms, number_of_crews, number_of_keys):
     
     # calculate score
     adjustment = 0 # parameter for future thoughts 
-    score = abs(ideal_key_number - number_of_keys/number_of_crews)/(ideal_key_number) + adjustment + 1 #plus-one-for-better-output-format
+    score = abs(ideal_key_number - number_of_keys)/(ideal_key_number) + adjustment + 1 #plus-one-for-better-output-format
     return score
 
 rows = []
