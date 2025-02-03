@@ -1,0 +1,109 @@
+<html><head><title>GSE64672</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE64672.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE64672</h1>
+
+<li>Series_title: mRNA profiling of wildtype, germline depleted, NMD mutant C. elegans whole worms and wildtype dissected gonads
+</li><li>Series_summary: Adjacent alternative 3’ splice sites, those separated by ≤18nt, provide a unique problem in the study of alternative splicing regulation; there is overlap of the cis-elements that define the adjacent sites. Identification of the intron's 3' end depends upon sequence elements that define the branchpoint, polypyrimidine tract and terminal AG dinucleotide. Starting with RNA-seq data from germline-enriched and somatic cell-enriched C. elegans samples, we identify hundreds of introns with adjacent alternative 3’ splice sites. We identify 203 events that undergo tissue-specific alternative splicing. For these, the regulation is mono-directional, with somatic cells preferring to splice at the distal 3' splice site and germline cells showing a distinct shift towards usage of the adjacent proximal 3' splice site. Splicing patterns in somatic cells follow consensus rules of 3’ splice site definition, using sites with a short stretch of pyrimidines and an AG dinucleotide. Splicing in germline cells occurs at proximal 3' splice sites that frequently lack a polypyrimidine tract or, occasionally, the AG dinucleotide. We provide evidence that use of germline-specific proximal 3' splice sites is conserved across Caenorhabditis species. We propose that divergent mechanisms exist between germline and somatic cells in determining an intron terminus at adjacent alternative 3’ splice sites.
+</li><li>Series_overall_design: Examination of alternative splicing changes between germline- and somatic-cell enriched samples as well as nonsense-mediated decay mutants.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C0</dt>
+<dd style=""><b>GSM1576708</b> sgo_glp4_sb26 | glp-4(bn2ts) | glp-4</dd>
+
+<p>Tags: other, mixed, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C1</dt>
+<dd class="" style=""><b>GSM1576706</b> sgo_n2wt_sb24 | N2 wildtype | wildtype</dd>
+
+<dd class="" style=""><b>GSM1576707</b> sgo_n2wt_sb25 | N2 wildtype | wildtype</dd>
+<p>Tags: WT, mixed, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1576710</b> gon_smg2_jr02 | smg-2(e2008) | smg-2</dd>
+                
+                
+            <p>Tags: smg, mixed, specific, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM1576709</b> gon_n2wt_jr01 | N2 wildtype | wildtype</dd>
+                
+            <p>Tags: WT, mixed, specific, hermaphrodite, none</p></dl></body></html>

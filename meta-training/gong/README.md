@@ -12,7 +12,8 @@
 | GSE59715     | three dimensional?? not quite understand            | 1 not quite sure the Bxxx stuff, might be some dose difference, btw shall this be considered as insult difference? 
 | GSM60063     | food mechanism on removal of one gene               | 1 there is a lot different names and GSEs in this paper, but they all could able to figure out in the paper
 | GSM60825     | transient hypoxia, RNAi, ELT-2                      | 1 not a lot GSMs, but mixed stage from paper 
-|
+| GSM61581     | tdp-1 and dsDNA conservation?                       | 1 they use IP and high-throught sequencing
+| 
 
 ## multi-linked GSE ##
 
