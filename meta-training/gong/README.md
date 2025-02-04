@@ -18,6 +18,16 @@
 | GSE63823     | circRNAs and specifc stage                          | 1 mock treatment are control <br> 2 RNases-R are remove linear RNA from mock sample?
 | GSE64401     | innate immune response of nematodes                 | 1 different pathogen as insult or food <br> 2 WT N2 as genotype
 | GSE54672     | NMD mutant in C.elegan                              | 1 gon --> gonald , sgo? --> somantic and gonald? glp4 --> mutant 
+| GSE68002     | embryo study with different strains                 | 1 i guess they all suppose to be different strians
+| GSE72426     | daf16 and longevity                                 | 1 N2 and daf16 under daf-2 background
+| GSE72952     | rnai and different smg                              | 1 they all separate by different RNAi
+| GSE73589     | L4 and neuron                                       | 1 different insult as dose <br> 2 differnt strain
+| GSE76773     | nuclear signal stuff                                | 1 WT and mutant
+| GSE77976     | again, nuclear stuff                                | 1 different stress condition
+| GSE78878     | 
+| GSE79375     | dsRNA and development
+| GSE79567     | stress and nucleosomes
+| GSE79822     | localization stuff                                  | 1 RNA are being used by RNAi
 
 ## multi-linked GSE ##
 

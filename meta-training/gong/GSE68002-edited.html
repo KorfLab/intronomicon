@@ -1,0 +1,151 @@
+<html><head><title>GSE68002</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE68002.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE68002</h1>
+
+<li>Series_title: Widespread cytoplasmic polyadenylation programs asymmetry in the germline and early embryo
+</li><li>Series_summary: The PAT-seq approach was utilised to determine the gene expression, poly(A)-site and polyadenylation state of the transcriptome of C. elegans of wildtype (N2), gld-2(q497) and cpb-3(bt17) strains. A series of deadenylases were aditionally depleted by RNAi in the gld-2 background to determine the identity of the initiating deadenylase. RNAi was performed by bacterial feeding, using the E. Coli HT115 (DE3) strain carrying pL4440-based feeding vectors. These vectors contained individual open reading frames (ORFs) for the five deadenylases, and the pCB19 control used in this study. The RNAi constructs used were pCB19, parn-1, panl-2, ccr-4, parn-2, ccf-1. The pCB19 control contains fragment of a Arabidopsis thaliana gene that shares no homology with any C. elegans gene. All RNAi vectors were sequenced to confirm the correct target sequence prior to use. For all experiments, worms were synchronised by bleaching and harvested at 60(N2) or 65(gld-2(q497) hours post L1 stage and either imaged directly or snap-frozen with liquid nitrogen and stored at -80C until RNA/DNA/protein extraction could be performed. gld-2(q497) heterozygotes mutants were maintaned over the hT2[qIs48] I;III balancer chromosome and homozygote gld-2(q497) progeny were analysed
+</li><li>Series_overall_design: Analysis of poly(A) dynamics in early C. elegans embryos responding to depletion of specific RNA binding proteins and adenylation state regulators
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1660722</b> 1+2 cell egg rep2 | 1+2 cell egg rep2 | embryo</dd>
+<dd style=""><b>GSM1660721</b> 1+2 cell egg rep1 | 1+2 cell egg rep1 | embryo</dd>
+<p>Tags: WT, specific, specific, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+
+
+
+
+
+
+<dd class="" style=""><b>GSM1660711</b> gld-2 (parn-1 RNAi) rep1 | gld-2 (parn-1 RNAi) rep1 | whole worm</dd>
+
+
+
+
+
+
+
+
+<dd class="" style=""><b>GSM1660712</b> gld-2 (parn-1 RNAi) rep2 | gld-2 (parn-1 RNAi) rep2 | whole worm</dd>
+
+
+
+
+<p>Tags: other, specific, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660703</b> gld-2 rep1 | gld-2 rep1 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660704</b> gld-2 rep2 | gld-2 rep2 | whole worm</dd><dd class="" style=""><b>GSM1660705</b> gld-2 rep3 | gld-2 rep3 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660708</b> cbp-3 rep3 | cbp-3 rep3 | whole worm</dd><dd class="" style=""><b>GSM1660706</b> cbp-3 rep1 | cbp-3 rep1 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660707</b> cbp-3 rep2 | cbp-3 rep2 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660720</b> gld-2 (ccr-4 RNAi) rep2 | gld-2 (ccr-4 RNAi) rep2 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660719</b> gld-2 (ccr-4 RNAi) rep1 | gld-2 (ccr-4 RNAi) rep1 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM1660718</b> gld-2 (ccf-1 RNAi) rep2 | gld-2 (ccf-1 RNAi) rep2 | whole worm</dd><dd class="" style=""><b>GSM1660717</b> gld-2 (ccf-1 RNAi) rep1 | gld-2 (ccf-1 RNAi) rep1 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660714</b> gld-2 (caf-1 RNAi) rep2 | gld-2 (caf-1 RNAi) rep2 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660713</b> gld-2 (caf-1 RNAi) rep1 | gld-2 caf-1 RNAi) rep1 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660710</b> gld-2 (pcb19 non targetting control RNAi) rep2 | gld-2 (pcb19 non targetting control RNAi) | whole worm</dd>
+                <dd class="" style=""><b>GSM1660709</b> gld-2 (pcb19 non targetting control RNAi) rep1 | gld-2 (pcb19 non targetting control RNAi) | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660702</b> N2 rep3 | N2 rep3 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660701</b> N2 rep2 | N2 rep2 | whole worm</dd><dd class="" style=""><b>GSM1660700</b> N2 rep1 | N2 rep1 | whole worm</dd>
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1660716</b> gld-2 (panl-2 RNAi) rep2 | gld-2 (panl-2 RNAi) rep2 | whole worm</dd>
+                <dd class="" style=""><b>GSM1660715</b> gld-2 (panl-2 RNAi) rep1 | gld-2 (panl-2 RNAi) rep1 | whole worm</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl></body></html>

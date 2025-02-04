@@ -1,0 +1,108 @@
+<html><head><title>GSE77976</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE77976.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE77976</h1>
+
+<li>Series_title: TRX-1 Regulates SKN-1 Nuclear Localization Cell Non-Autonomously in Caenorhabditis elegans
+</li><li>Series_summary: The Caenorhabditis elegans oxidative stress response transcription factor, SKN-1, is essential for the maintenance of redox homeostasis and is a functional ortholog of the Nrf family of transcription factors. The numerous levels of regulation that govern these transcription factors underscore their importance. Here, we add a thioredoxin, encoded by trx-1, to the expansive list of SKN-1 regulators. We report that loss of trx-1 promotes nuclear localization of intestinal SKN-1 in a redox-independent, cell non-autonomous fashion from the ASJ neurons. Furthermore, this regulation is not general to the thioredoxin family, as two other C. elegans thioredoxins TRX-2 and TRX-3 do not play a role in this process. Moreover, TRX-1-dependent regulation requires signaling from the p38 MAPK signaling pathway. However, while TRX-1 regulates SKN-1 nuclear localization, SKN-1 transcriptional activity remains largely unaffected. Interestingly, RNA-Seq revealed that loss of trx-1 elicits a general, organism-wide down-regulation of several classes of genes; those encoding for collagens and lipid transport and localization being most prevalent. However, one prominent lipase-related gene, lips-6, is highly up regulated upon loss of trx-1 in a skn-1-dependent manner. Together, these results uncover a novel role for a thioredoxin in regulating intestinal SKN-1 nuclear localization in a cell non-autonomous manner, thereby contributing to the understanding of the processes involved in maintaining redox homeostasis throughout an organism.
+</li><li>Series_overall_design: Four samples were analyzed: Two nematode strains were analyzed, each under non-stressed and stressed (10mM NaAs) conditions
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+
+<dd class="" style=""><b>GSM2063246</b> VZ1Minus | unstressed animals</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+<dd class="" style=""><b>GSM2063245</b> N2Plus | stressed animals</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2063247</b> VZ1Plus | stressed animals</dd>
+                
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM2063244</b> N2Minus | unstressed animals</dd>
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p></dl></body></html>

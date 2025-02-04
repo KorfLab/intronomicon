@@ -3,6 +3,16 @@ import glob
 import sys
 import re
 import pprint
+import argparse
+
+parser = argparse.ArgumentParser(description='GSE compare grouping')
+parser.add_argument('meta_training_dir', help='Path to the meta-training directory')
+parser.add_argument('-d','--data', help='Print out the info', action= 'store_true')
+parser.add_argument('-i','--info', help='Print out the data', action= 'store_true')
+parser.add_argument('-t','--table', help='Print out the table', action= 'store_true')
+arg = parser.parse_args()
+
+meta_training_dir = arg.meta_training_dir
 
 if len(sys.argv) < 2:
     sys.exit(f"usage: {sys.argv[0]} <meta-training dir>")
@@ -136,8 +146,10 @@ for curator in subdirs:
 
 # if we wanna print out the raw data or the raw info
 
-# pprint.pprint(data)
-# pprint.pprint(info)
+if arg.data:
+    pprint.pprint(data)
+if arg.info:
+    pprint.pprint(info)
 
 ###################
 ''' error check '''
@@ -175,7 +187,7 @@ def scoring( number_of_gsms, number_of_crews, number_of_keys):
     assert( type(number_of_gsms)  == int )
     assert( type(number_of_crews) == int )
     
-    gsms = number_of_gsms/number_of_crews
+    gsms = number_of_gsms
     
     # if there's only one person did that so far
     if number_of_crews == 1:
@@ -185,31 +197,35 @@ def scoring( number_of_gsms, number_of_crews, number_of_keys):
     # ideal situation; for low gsms, that ain't sum of 2 or 3, it shall be between 1 and 2
     if gsms < 6:    ideal_key_number = gsms/1.5
     # ideal situation; for high gsms, that prob are sum of 2 or 3, it shall be between 2 and 3
-    elif gsms >= 6: ideal_key_number = gsms/2.5
+    elif 15 > gsms >= 6: ideal_key_number = gsms/2.5
+    # there is one with 20gsms that 5 in group
+    elif gsms >= 15: ideal_key_number = gsms/4.5
     
     # calculate score
     adjustment = 0 # parameter for future thoughts 
-    score = abs(ideal_key_number - number_of_keys)/(ideal_key_number) + adjustment + 1 #plus-one-for-better-output-format
+    score = abs ( (ideal_key_number - number_of_keys)/(ideal_key_number) ) + adjustment + 1 #plus-one-for-better-output-format
     return score
 
-rows = []
 
-for gse in data:
-    keys  =    len( data[gse] )
-    crews =    int ( info[gse]['Crews_count'] )
-    names =    info[gse]['Crews_name']
-    names =    ", ".join(names)
-    all_gsms = int ( info[gse]['Total_gsms']  )
-    gsms  = int(all_gsms/crews)
-    score = scoring( all_gsms, crews, keys)
-    rows.append((gse, gsms, score, crews, keys, names))
+if arg.table:
+    rows = []
+
+    for gse in data:
+        keys  =    len( data[gse] )
+        crews =    int ( info[gse]['Crews_count'] )
+        names =    info[gse]['Crews_name']
+        names =    ", ".join(names)
+        all_gsms = int ( info[gse]['Total_gsms']  )
+        gsms  = int(all_gsms/crews)
+        score = scoring( all_gsms, crews, keys)
+        rows.append((gse, gsms, score, crews, keys, names))
     
-rows = sorted(rows, key=lambda row: row[2], reverse=True)
+    rows = sorted(rows, key=lambda row: (row[2], row[3], row[4]), reverse=True)
 
-# header
-header = f"{'GSE':<10} {'GSMs':<10} {'Score':<10} {'Crews':<7} {'Keys':<7} {'Crew Names':<40}"
-print(header)
-print("-" * len(header))
+    # header
+    header = f"{'GSE':<10} {'GSMs':<10} {'Score':<10} {'Crews':<7} {'Keys':<7} {'Crew Names':<40}"
+    print(header)
+    print("-" * len(header))
 
-for gse, gsms, score, crews, keys, names in rows:
-    print(f"{gse:<10} {gsms:<10} {score:<10.4g} {crews:<7} {keys:<7} {names:<40}")
+    for gse, gsms, score, crews, keys, names in rows:
+        print(f"{gse:<10} {gsms:<10} {score:<10.4g} {crews:<7} {keys:<7} {names:<40}")

@@ -1,0 +1,137 @@
+<html><head><title>GSE72426</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE72426.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE72426</h1>
+
+<li>Series_title: daf-16/FoxO isoform-specific deletion mutants
+</li><li>Series_summary: FoxO transcription factors promote longevity across taxa. How they do so is poorly understood. In the nematode Caenorhabditis elegans, the A- and F-isoforms of the FoxO transcription factor DAF-16 extend life span in the context of reduced DAF-2 insulin-like growth factor receptor (IGFR) signaling. To elucidate the mechanistic basis for DAF-16/FoxO-dependent life span extension, we performed an integrative analysis of isoform-specific daf-16/FoxO mutants. In contrast to previous studies suggesting that DAF-16F plays a more prominent role in life span control than DAF-16A, isoform-specific daf-16/FoxO mutant phenotypes and whole transcriptome profiling revealed a predominant role for DAF-16A over DAF-16F in life span control, stress resistance, and target gene regulation. Integration of these data sets enabled the prioritization of a subset of 92 DAF-16/FoxO target genes for functional interrogation. Among 29 genes tested, two DAF-16A-specific target genes significantly influenced longevity. Our discovery of new longevity genes underscores the efficacy of our integrative strategy while providing a general framework for identifying specific downstream gene regulatory events that contribute substantially to transcription factor functions. As FoxO transcription factors have conserved functions in promoting longevity and may be dysregulated in aging-related diseases, these findings promise to illuminate fundamental principles underlying aging in animals.
+</li><li>Series_overall_design: Whole-transcriptome profiling of daf-16/FoxO isoform-specific deletion mutants in the long-lived daf-2(e1370) background. Included are daf-16 wild-type, daf-16 null mutation, daf-16a/f mutation, two independent daf-16a mutations, and daf-16f mutation. N2 wild-type controls are also included.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM1862270</b> N2 wild-type rep 3 | Day 1 adult whole-animal</dd>
+<dd style=""><b>GSM1862269</b> N2 wild-type rep 2 | Day 1 adult whole-animal</dd>
+<dd style=""><b>GSM1862268</b> N2 wild-type rep 1 | Day 1 adult whole-animal</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, some</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+<dd class="" style=""><b>GSM1862284</b> daf-16(tm5032);daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd>
+
+<dd class="" style=""><b>GSM1862285</b> daf-16(tm5032);daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+
+
+
+
+
+
+<dd class="" style=""><b>GSM1862283</b> daf-16(tm5032);daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd>
+
+
+
+
+
+
+
+<p>Tags: other, specific, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM1862272</b> daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862271</b> daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862273</b> daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM1862286</b> daf-16(tm6659);daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862287</b> daf-16(tm6659);daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862288</b> daf-16(tm6659);daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1862280</b> daf-16(tm5030);daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862282</b> daf-16(tm5030);daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+                <dd class="" style=""><b>GSM1862281</b> daf-16(tm5030);daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1862275</b> daf-16(mu86);daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862274</b> daf-16(mu86);daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862276</b> daf-16(mu86);daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+                
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM1862278</b> daf-16(mg54);daf-2(e1370) rep 2 | Day 1 adult whole-animal</dd><dd class="" style=""><b>GSM1862277</b> daf-16(mg54);daf-2(e1370) rep 1 | Day 1 adult whole-animal</dd>
+                <dd class="" style=""><b>GSM1862279</b> daf-16(mg54);daf-2(e1370) rep 3 | Day 1 adult whole-animal</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl></body></html>
