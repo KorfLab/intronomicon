@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <title>GSE229142</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE229142.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE229142</h1>
+
+    <li>Series_title: Multiple pals gene modules control a balance between immunity and development in Caenorhabditis
+        elegans [RNA-Seq 1] #-# Multiple pals gene modules control a balance between immunity and development in
+        Caenorhabditis elegans
+    </li>
+    <li>Series_summary: The immune system continually battles against pathogen-induced pressures, which often leads to
+        the evolutionary expansion of immune gene families in a species-specific manner. For example, the pals gene
+        family expanded to 39 members in the Caenorhabditis elegans genome, in comparison to a single mammalian pals
+        ortholog. Our previous studies have revealed that two members of this family, pals-22 and pals-25, act as
+        antagonistic paralogs to control the Intracellular Pathogen Response (IPR). The IPR is a protective
+        transcriptional response, which is activated upon infection by two molecularly distinct natural intracellular
+        pathogens of C. elegans – the Orsay virus and the fungus Nematocida parisii from the microsporidia phylum. In
+        this study, we identify a previously uncharacterized member of the pals family, pals-17, as a newly described
+        negative regulator of the IPR. pals-17 mutants show constitutive upregulation of IPR gene expression, increased
+        immunity against intracellular pathogens, as well as impaired development and reproduction. We also find that
+        two other previously uncharacterized pals genes, pals-20 and pals-16, are positive regulators of the IPR, acting
+        downstream of pals-17. These positive regulators reverse the effects caused by the loss of pals-17 on IPR gene
+        expression, immunity and development. We show that the negative IPR regulator protein PALS-17 and the positive
+        IPR regulator protein PALS-20 colocalize inside intestinal epithelial cells, which are the sites of infection
+        for IPR-inducing pathogens. In summary, our study demonstrates that several pals genes from the expanded pals
+        gene family act as ON/OFF switch modules to regulate a balance between organismal development and immunity
+        against natural intracellular pathogens in C. elegans. #-# This SuperSeries is composed of the SubSeries listed
+        below.
+    </li>
+    <li>Series_overall_design: Synchronized populations of wild-type (N2) and pals-17(-) mutant animals were grown at
+        20°C for 48 h and 72 h, respectively. Total RNA was isolated. 4 experimental replicates were performed. #-#
+        Refer to individual Series
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing #-# Expression profiling by high throughput
+        sequencing
+        <dl class="">
+            <dt style="">pals-17</dt>
+            <dd style=""><b>GSM7153131</b> pals-17(*) mutant Replicate 1 | Whole animal | Whole animal |
+                pals-17(syb3980)</dd>
+            <dd style="" class=""><b>GSM7153132</b> pals-17(*) mutant Replicate 2 | Whole animal | Whole animal |
+                pals-17(syb3980)</dd>
+            <dd style="" class=""><b>GSM7153133</b> pals-17(*) mutant Replicate 3 | Whole animal | Whole animal |
+                pals-17(syb3980)</dd>
+            <dd style="" class=""><b>GSM7153134</b> pals-17(*) mutant Replicate 4 | Whole animal | Whole animal |
+                pals-17(syb3980)</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">WT</dt>
+            <dd style=""><b>GSM7153127</b> Wild type Replicate 1 | Whole animal | Whole animal | Wild type</dd>
+            <dd style=""><b>GSM7153128</b> Wild type Replicate 2 | Whole animal | Whole animal | Wild type</dd>
+            <dd style=""><b>GSM7153129</b> Wild type Replicate 3 | Whole animal | Whole animal | Wild type</dd>
+            <dd style=""><b>GSM7153130</b> Wild type Replicate 4 | Whole animal | Whole animal | Wild type</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

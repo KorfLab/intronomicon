@@ -1,0 +1,134 @@
+<html>
+
+<head>
+    <title>GSE245899</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE245899.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE245899</h1>
+
+    <li>Series_title: Spliceosomal helicases DDX41/SACY-1 and PRP22/MOG-5 both contribute to proofreading against
+        proximal 3’ splice site usage
+    </li>
+    <li>Series_summary: Alleles of C. elegans genes mog-5 and sacy-1 were found to increase usage of proximal 3' splice
+        sites
+    </li>
+    <li>Series_overall_design: Alternate splicing analysis of sacy-1(tn1385) vs N2(wildtype) and mog-5(az192) vs N2
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing #-# Other
+        <dl class="">
+            <dt style="">WT for DG3430</dt>
+            <dd style="" class=""><b>GSM7850624</b> n2l3_wtype_xxxxxx_az021 | N2</dd>
+            <dd style="" class=""><b>GSM7850625</b> n2l3_wtype_xxxxxx_az022 | N2</dd>
+            <dd style="" class=""><b>GSM7850626</b> n2l3_wtype_xxxxxx_az023 | N2</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">DG3430</dt>
+            <dd style="" class=""><b>GSM7850627</b> n2l3_sacy1_dg3430_az024 | DG3430 (sacy-1(tn1385))</dd>
+            <dd style="" class=""><b>GSM7850628</b> n2l3_sacy1_dg3430_az025 | DG3430 (sacy-1(tn1385))</dd>
+            <dd style="" class=""><b>GSM7850629</b> n2l3_sacy1_dg3430_az026 | DG3430 (sacy-1(tn1385))</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">WT for SZ454</dt>
+            <dd style="" class=""><b>GSM7850630</b> n2l3_wtype_xxxxx_az041 | N2</dd>
+            <dd style="" class=""><b>GSM7850631</b> n2l3_wtype_xxxxx_az042 | N2</dd>
+            <dd style=""><b>GSM7850632</b> n2l3_wtype_xxxxx_az043 | N2</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">SZ454</dt>
+            <dd style="" class=""><b>GSM7850633</b> n2l3_mog5x_sz454_az044 | SZ454 (mog-5(az192))</dd>
+            <dd style="" class=""><b>GSM7850634</b> n2l3_mog5x_sz454_az045 | SZ454 (mog-5(az192))</dd>
+            <dd style="" class=""><b>GSM7850635</b> n2l3_mog5x_sz454_az046 | SZ454 (mog-5(az192))</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

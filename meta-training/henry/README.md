@@ -19,7 +19,7 @@ GSE191294 - ~~Assuming glp-4(bn2) is not N2 WT.~~ bn2 might be N2 var Bristol. T
 
 GSE193444 - Insult was a lower temperature.
 
-GSE211747 - Why is veh (vehicle) used here? What does "Maternal supplied vehicle" mean??? Treating them as insults for now.
+GSE211747 - Why is veh (vehicle) used here? ~~~What does "Maternal supplied vehicle" mean???~~~ Treating them as insults for now.
 
 GSE211807 - Helped me realize that bn2 might actually be N2 WT var Bristol from UK.
 
@@ -27,11 +27,19 @@ GSE213222 - Too complicated with dissection and sorting. Need explanation.
 
 GSE213367 - Very confusing, need help.
 
+GSE228784 - normal growth medium (NGM) vs 2% glucose as insult.
+
+GSE232747 - Apparently Vehicle is a dedicated term. (9 mg/ml NaCl, pH 3.6) Treating as insults no problem.
+
+GSE232747 - Treating tetraploid N2 as mutant.
+
 ### Anomalies and Fun Stuff
 
 GSE168322 - If it works, I should eat this plant to live longer - Vicatia thibetica de Boiss.
 
 GSE189660 - They put their University name and street address in Chinese. That's new.
+
+GSE232747 - GSM7373308 and GSM7373317 misspelled sample name. *Cispatin*-treated vs Cisplatin-treated.
 
 ### HTML Formatting Issue
 
