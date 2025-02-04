@@ -37,6 +37,8 @@ GSE246966 - CeMbio is supposed to be "more natural" than OP50 for C. elegans. Is
 
 GSE248324 - Not specified source. Weird. Needs further investigation.
 
+GSE79567 - Insult was heat-shock.
+
 ### Anomalies and Fun Stuff
 
 GSE168322 - If it works, I should eat this plant to live longer - Vicatia thibetica de Boiss.
