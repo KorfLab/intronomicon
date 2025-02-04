@@ -9,13 +9,23 @@ GSE57109 - "95% germline and 5% somatic gonadal tissue", specific enough or othe
 
 GSE101647 - I is infected and C is control. Problem is the researcher seems to have labeled them wrong. Have to investigate further.
 
-GSE138029 - Insult was heat shock
+GSE138029 - Insult was heat shock.
 
 GSE151035 - Missing 5 GSMs, were they not long enough?
 
 GSE173287 - I like how this experiment did the tissue they are interested in but also made a whole worm as ref.
 
+GSE191294 - ~~Assuming glp-4(bn2) is not N2 WT.~~ bn2 might be N2 var Bristol. This one is super weird. Need help.
 
+GSE193444 - Insult was a lower temperature.
+
+GSE211747 - Why is veh (vehicle) used here? What does "Maternal supplied vehicle" mean??? Treating them as insults for now.
+
+GSE211807 - Helped me realize that bn2 might actually be N2 WT var Bristol from UK.
+
+GSE213222 - Too complicated with dissection and sorting. Need explanation.
+
+GSE213367 - Very confusing, need help.
 
 ### Anomalies and Fun Stuff
 

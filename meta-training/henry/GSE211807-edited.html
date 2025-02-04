@@ -1,0 +1,141 @@
+<html>
+
+<head>
+    <title>GSE211807</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE211807.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE211807</h1>
+
+    <li>Series_title: Transcriptional profiling of Caenorhabditis elegans nematodes treated with L4440 (Empty Vector -
+        EV) or grd-1 RNAi from L1 hatch, and collected at L3 of development.
+    </li>
+    <li>Series_summary: Hedgehog morphogen GRD-1 regulates C. elegans growth and metabolism downstream of TOR complex 2.
+        Both Hedgehog (Hh) signaling and target of rapamycin complex 2 (TORC2) are evolutionarily conserved pathways
+        that regulate growth and metabolism. In C. elegans, loss of Hh morphogens often leads to developmental arrest,
+        while loss of essential TORC2 component RICTOR (rict-1) causes delayed development, reduced brood, small size,
+        increased fat, and shortened lifespan. Here we report that knockdown of Hh-related morphogen grd-1 causes
+        developmental acceleration rather than arrest by speeding up molting transitions. Further, we show that RNAi to
+        grd-1 not only suppresses the slow growth of rict-1 mutants, but also normalizes multiple abnormalities
+        downstream of TORC2 including restoration of lifespan to near normal and partial rescue of low brood, small body
+        size, and increased fat. Mechanistically, grd-1 slows growth downstream of TORC2 at least in part by increasing
+        transcription of paraquat mediator 1 (PQM-1) target genes. Given the important role of TORC2 in governance of
+        development, these data implicate grd-1 and pqm-1 as critical executors of organismal growth slowing in response
+        to unfavorable growth conditions downstream of the nutrient sensor TORC2 in C. elegans.
+    </li>
+    <li>Series_overall_design: Three independent passages of wildtype N2 animals were bleach synchronized and grown from
+        larval stage 1 (L1) of development to larval stage 3 (L3) of development on three independently grown RNAi
+        cultures of HT115 E. coli bacteria expressing L4440 (Empty Vector - EV Control) or grd-1 dsRNA to induce RNAi
+        knockdown. Animals were collected via manual inspection at the L3 stage, and snap frozen for lysis, RNA
+        extraction and downstream mRNA sequencing analysis. This experiment contains 3 control and 3 grd-1 knockdown
+        replicates, for a total of 6 samples.
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">grd-1</dt>
+            <dd style="" class=""><b>GSM6502655</b> N2 L3 animals, treated with grd-1 control RNAi from hatch, Replicate
+                1 | Whole organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <dd style="" class=""><b>GSM6502656</b> N2 L3 animals, treated with grd-1 control RNAi from hatch, Replicate
+                2 | Whole organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <dd style="" class=""><b>GSM6502657</b> N2 L3 animals, treated with grd-1 control RNAi from hatch, Replicate
+                3 | Whole organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">EV (L4440)</dt>
+            <dd style=""><b>GSM6502652</b> N2 L3 animals, treated with EV control RNAi from hatch, Replicate 1 | Whole
+                organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <dd style=""><b>GSM6502653</b> N2 L3 animals, treated with EV control RNAi from hatch, Replicate 2 | Whole
+                organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <dd style=""><b>GSM6502654</b> N2 L3 animals, treated with EV control RNAi from hatch, Replicate 3 | Whole
+                organism lysate | Whole organism lysate | Wildtype (N2 Bristol)</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
