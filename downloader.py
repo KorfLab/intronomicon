@@ -41,7 +41,7 @@ parser.add_argument('--verbose', action='store_true',
 	help='print status messages')
 arg = parser.parse_args()
 
-os.system(f'mkdir -p {arg.dir}/sra {arg.dir}/gsm {arg.dir}/gse')
+os.system(f'mkdir -p {arg.dir}/sra {arg.dir}/gsm {arg.dir}/gse {arg.dir}/raw')
 
 base = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils'
 taxid = f'term=txid{arg.taxid}[Organism]'
@@ -71,7 +71,7 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		if sra is None: continue
 		with open(sfile, 'w') as fp: fp.write(sra)
 
-	# download gsm txt file
+	# download gsm txt file, also get GSE id
 	data, status = sraxml.read(io.StringIO(sra))
 	if data is None: continue
 	if not data['gsm_id']: continue
@@ -82,16 +82,29 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["gsm_id"]}&targ=self&view=brief&form=text'
 		gsm = download(url, arg)
 		with open(gsm_file, 'w') as fp: fp.write(gsm)
-
-	# download gse txt file (retrieves using indirection from gsm)
 	m = re.search(r'Sample_series_id = (\S+)', gsm)
 	gse_id = m.group(1)
-	gse_file = f'{arg.dir}/gse/{gse_id}.txt'
-	if have(gse_file,arg): continue
-	url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["gsm_id"]}&targ=gse&view=brief&form=text'
-	gse = download(url, arg)
-	with open(gse_file, 'w') as fp: fp.write(gse)
 
+	# download gse txt file
+	gse_file = f'{arg.dir}/gse/{gse_id}.txt'
+	if not have(gse_file, arg):
+		url = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={data["gsm_id"]}&targ=gse&view=brief&form=text'
+		gse = download(url, arg)
+		with open(gse_file, 'w') as fp: fp.write(gse)
+
+	# download RAW
+	raw_file = f'{arg.dir}/raw/{gse_id}.tar.gz'
+	if have(raw_file, arg): continue
+	
+	url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
+	verbose = '' if arg.verbose else '--silent'
+	#os.system(f'curl {verbose} "{url}" --output {raw_file}')
+	
+	GRRRR is this a mac os problem with curl and wget??
+	
+	os.system(f'wget "{url}" > {raw_file}')
+	time.sleep(arg.delay)
+	
 	# debug
 	done += 1
 	if arg.debug and done >= 2: sys.exit('debugging')
