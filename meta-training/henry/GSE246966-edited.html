@@ -1,0 +1,152 @@
+<html>
+
+<head>
+    <title>GSE246966</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE246966.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE246966</h1>
+
+    <li>Series_title: Microbiome remodeling through bacterial competition and host behavior enables rapid adaptation to
+        environmental toxins
+    </li>
+    <li>Series_summary: Human activity is altering the environment at a rapid pace, challenging the adaptive capacities
+        of genetic variation within animal populations. Animals also harbor extensive gut microbiomes, which play
+        diverse roles in host health and fitness and may help expanding host capabilities. The unprecedented scale of
+        human usage of xenobiotics and contamination with environmental toxins describes one challenge against which
+        bacteria with their immense biochemical diversity are particularly suited to offer solutions. To explore the
+        paths leading to bacteria-assisted rapid adaptation, we used Caenorhabditis elegans harboring a defined
+        microbiome, and the antibiotic neomycin as a model toxin, harmful for the worm host and neutralized to different
+        extents by microbiome members. Worms exposed to neomycin showed delayed development and decreased survival but
+        were protected when colonized by neomycin-resistant members of the microbiome. Through a combination of 16S gene
+        sequencing, counting of live bacteria and behavioral assays we identified two distinct mechanisms that
+        facilitated adaptation: gut enrichment for a neomycin-modifying strain driven by altered bacterial competition;
+        and host avoidance behavior, which depended on the stress-activated KGB-1/JNK and enabled preference of
+        neomycin-protective bacteria. The straightforwardness of these mechanisms suggests that bacteria-assisted host
+        adaptation may be more common than currently appreciated, protecting animals from novel stressors. However, gut
+        remodeling may also cause dysbiosis, and additional experiments identified fitness trade-offs including
+        increased susceptibility to infection as well as metabolic remodeling. Extending these results to other toxins
+        suggests yet unaccounted-for microbiome-dependent long-term consequences of toxin exposure.
+    </li>
+    <li>Series_overall_design: To investigate how neomycin affects C. elegans, worms raised on E. coli or a complex
+        community (CeMbio) were subjected to 0.25mg/ml neomycin for 8 hours. Comparative gene expression profiling was
+        performed using the RNA-seq data of worms with or without exposure to neomycin with respect to each bacterial
+        community.
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">OP50</dt>
+            <dd style="" class=""><b>GSM7883264</b> N2,OP50,no antibiotic,1 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883265</b> N2,OP50,no antibiotic,2 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883266</b> N2,OP50,no antibiotic,3 | metagenomics | metagenomics | WT</dd>
+            <p>Tags: WT, specific, other, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">OP50 neomycin</dt>
+            <dd style="" class=""><b>GSM7883267</b> N2,OP50,neomycin,1 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883268</b> N2,OP50,neomycin,2 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883269</b> N2,OP50,neomycin,3 | metagenomics | metagenomics | WT</dd>
+            <p>Tags: WT, specific, other, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">CeMbio</dt>
+            <dd style="" class=""><b>GSM7883270</b> N2_CeMbio, no antibiotic,1 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883271</b> N2_CeMbio, no antibiotic,2 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883272</b> N2_CeMbio, no antibiotic,3 | metagenomics | metagenomics | WT</dd>
+            <p>Tags: WT, specific, other, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">CeMbio neomycin</dt>
+            <dd style="" class=""><b>GSM7883273</b> N2, CeMbio, neomycin, 1 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883274</b> N2, CeMbio, neomycin, 2 | metagenomics | metagenomics | WT</dd>
+            <dd style="" class=""><b>GSM7883275</b> N2, CeMbio, neomycin, 3 | metagenomics | metagenomics | WT</dd>
+            <p>Tags: WT, specific, other, hermaphrodite, some</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

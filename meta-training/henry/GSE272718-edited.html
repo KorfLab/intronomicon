@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <title>GSE272718</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE272718.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE272718</h1>
+
+    <li>Series_title: Effect of feeding on gene expression in WT, raga-1, and rsks-1 mutant animals
+    </li>
+    <li>Series_summary: After subjecting WT, raga-1, and rsks-1 (S6K) animals to this growth arrest, we compared them by
+        RNA sequencing (RNA-seq) to a group that was released from arrest by feeding for four hours
+    </li>
+    <li>Series_overall_design: To investigate the nutrient response on gene expression, we treated WT, raga-1, and
+        rsks-1 animals with 4 hours of feeding at the L1 larval stage.
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">WT starvation</dt>
+            <dd style="" class=""><b>GSM8409674</b> N2, Stv, 1 | whole body | whole body | WT</dd>
+            <dd style="" class=""><b>GSM8409675</b> N2, Stv, 2 | whole body | whole body | WT</dd>
+            <dd style="" class=""><b>GSM8409676</b> N2, Stv, 3 | whole body | whole body | WT</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">WT fed</dt>
+            <dd style="" class=""><b>GSM8409677</b> N2, Fed, 1 | whole body | whole body | WT</dd>
+            <dd style="" class=""><b>GSM8409678</b> N2, Fed, 2 | whole body | whole body | WT</dd>
+            <dd style="" class=""><b>GSM8409679</b> N2, Fed, 3 | whole body | whole body | WT</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">raga-1 starvation</dt>
+            <dd style="" class=""><b>GSM8409680</b> raga-1, Stv, 1 | whole body | whole body | raga-1(ok386)</dd>
+            <dd style="" class=""><b>GSM8409681</b> raga-1, Stv, 2 | whole body | whole body | raga-1(ok386)</dd>
+            <dd style="" class=""><b>GSM8409682</b> raga-1, Stv, 3 | whole body | whole body | raga-1(ok386)</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">raga-1 fed</dt>
+            <dd style="" class=""><b>GSM8409683</b> raga-1, Fed, 1 | whole body | whole body | raga-1(ok386)</dd>
+            <dd style="" class=""><b>GSM8409684</b> raga-1, Fed, 2 | whole body | whole body | raga-1(ok386)</dd>
+            <dd style="" class=""><b>GSM8409685</b> raga-1, Fed, 3 | whole body | whole body | raga-1(ok386)</dd>
+        
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">rsks-1 starvation</dt>
+            <dd style="" class=""><b>GSM8409686</b> rsks-1, Stv, 1 | whole body | whole body | rsks-1(ok1255)</dd>
+            <dd style="" class=""><b>GSM8409687</b> rsks-1, Stv, 2 | whole body | whole body | rsks-1(ok1255)</dd>
+            <dd style="" class=""><b>GSM8409688</b> rsks-1, Stv, 3 | whole body | whole body | rsks-1(ok1255)</dd>
+        
+            <p>Tags: other, specific, whole, hermaphrodite, some</p>
+        </dl>
+        <dl class="">
+            <dt style="">rsks-1 fed</dt>
+            <dd style="" class=""><b>GSM8409689</b> rsks-1, Fed, 1 | whole body | whole body | rsks-1(ok1255)</dd>
+            <dd style="" class=""><b>GSM8409690</b> rsks-1, Fed, 2 | whole body | whole body | rsks-1(ok1255)</dd>
+            <dd style="" class=""><b>GSM8409691</b> rsks-1, Fed, 3 | whole body | whole body | rsks-1(ok1255)</dd>
+        
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

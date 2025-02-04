@@ -15,23 +15,27 @@ GSE151035 - Missing 5 GSMs, were they not long enough?
 
 GSE173287 - I like how this experiment did the tissue they are interested in but also made a whole worm as ref.
 
-GSE191294 - ~~Assuming glp-4(bn2) is not N2 WT.~~ bn2 might be N2 var Bristol. This one is super weird. Need help.
+GSE191294 - ~~Assuming glp-4(bn2) is not N2 WT.~~ ~~bn2 might be N2 var Bristol.~~ This one is super weird. Need help. bn2 is not Bristol. glp-4(bn2) is a gene. **Needs revision!**
 
 GSE193444 - Insult was a lower temperature.
 
 GSE211747 - Why is veh (vehicle) used here? ~~~What does "Maternal supplied vehicle" mean???~~~ Treating them as insults for now.
 
-GSE211807 - Helped me realize that bn2 might actually be N2 WT var Bristol from UK.
+GSE211807 - ~~Helped me realize that bn2 might actually be N2 WT var Bristol from UK.~~ Bristol is N2 from UK, but bn2 has nothing to do with it. **Needs revision!**
 
 GSE213222 - Too complicated with dissection and sorting. Need explanation.
 
 GSE213367 - Very confusing, need help.
 
-GSE228784 - normal growth medium (NGM) vs 2% glucose as insult.
+GSE228784 - normal growth medium or nematode growth media (NGM) vs 2% glucose as insult.
 
 GSE232747 - Apparently Vehicle is a dedicated term. (9 mg/ml NaCl, pH 3.6) Treating as insults no problem.
 
 GSE232747 - Treating tetraploid N2 as mutant.
+
+GSE246966 - CeMbio is supposed to be "more natural" than OP50 for C. elegans. Is it insult or not? Treating it as insults for now. Source is **metagenomics**, need to flag this.
+
+GSE248324 - Not specified source. Weird. Needs further investigation.
 
 ### Anomalies and Fun Stuff
 
