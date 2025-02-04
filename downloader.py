@@ -93,16 +93,14 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		with open(gse_file, 'w') as fp: fp.write(gse)
 
 	# download RAW
-	raw_file = f'{arg.dir}/raw/{gse_id}.tar.gz'
+	raw_file = f'{arg.dir}/raw/{gse_id}'
 	if have(raw_file, arg): continue
 	
 	url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
 	verbose = '' if arg.verbose else '--silent'
-	#os.system(f'curl {verbose} "{url}" --output {raw_file}')
-	
-	GRRRR is this a mac os problem with curl and wget??
-	
-	os.system(f'wget "{url}" > {raw_file}')
+	os.system(f'curl {verbose} "{url}" --output {raw_file}')
+		
+	#os.system(f'wget "{url}" > {raw_file}')
 	time.sleep(arg.delay)
 	
 	# debug
