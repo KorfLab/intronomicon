@@ -11,6 +11,12 @@ GSE101647 - I is infected and C is control. Problem is the researcher seems to h
 
 GSE138029 - Insult was heat shock
 
+GSE151035 - Missing 5 GSMs, were they not long enough?
+
+GSE168322 - If it works, I should eat this plant to live longer - Vicatia thibetica de Boiss.
+
+
+
 ### HTML Formatting Issue
 
 Add New Group button adds new dl elements to end of HTML instead of within li element.
