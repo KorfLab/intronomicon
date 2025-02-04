@@ -13,9 +13,15 @@ GSE138029 - Insult was heat shock
 
 GSE151035 - Missing 5 GSMs, were they not long enough?
 
+GSE173287 - I like how this experiment did the tissue they are interested in but also made a whole worm as ref.
+
+
+
+### Anomalies and Fun Stuff
+
 GSE168322 - If it works, I should eat this plant to live longer - Vicatia thibetica de Boiss.
 
-
+GSE189660 - They put their University name and street address in Chinese. That's new.
 
 ### HTML Formatting Issue
 

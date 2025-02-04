@@ -1,0 +1,139 @@
+<html>
+
+<head>
+    <title>GSE190068</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE190068.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE190068</h1>
+
+    <li>Series_title: Systematic transcriptome analysis associated with physiological and chronological aging in
+        Caenorhabditis elegans
+    </li>
+    <li>Series_summary: We analyzed transcriptomic features associated with physiological and chronological aging using
+        Caenorhabditis elegans as a model.
+    </li>
+    <li>Series_overall_design: The investigation of gene expression changes during aging in wild-type and daf-2 mutant
+        worms.
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">daf-2</dt>
+            <dd style="" class=""><b>GSM5712787</b> daf-2_d1_1 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712788</b> daf-2_d1_2 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712789</b> daf-2_d1_3 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712790</b> daf-2_d4_1 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712791</b> daf-2_d4_2 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712792</b> daf-2_d4_3 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712793</b> daf-2_d7_1 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712794</b> daf-2_d7_2 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712795</b> daf-2_d7_3 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712796</b> daf-2_d11_1 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712797</b> daf-2_d11_2 | Whole body | Whole body | daf-2(e1370)</dd>
+            <dd style="" class=""><b>GSM5712798</b> daf-2_d11_3 | Whole body | Whole body | daf-2(e1370)</dd>
+            <p>Tags: other, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">WT</dt>
+            <dd style="" class=""><b>GSM5712775</b> N2_d1_1 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712776</b> N2_d1_2 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712777</b> N2_d1_3 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712778</b> N2_d4_1 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712779</b> N2_d4_2 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712780</b> N2_d4_3 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712781</b> N2_d7_1 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712782</b> N2_d7_2 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712783</b> N2_d7_3 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712784</b> N2_d11_1 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712785</b> N2_d11_2 | Whole body | Whole body | wild type</dd>
+            <dd style="" class=""><b>GSM5712786</b> N2_d11_3 | Whole body | Whole body | wild type</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

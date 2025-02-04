@@ -1,0 +1,128 @@
+<html>
+
+<head>
+    <title>GSE173646</title>
+</head>
+
+<body>
+    <div style="float: right; margin: 10px;"><img src="png/GSE173646.png" style="float:right;width:600px;height:400px;">
+    </div>
+    <h1>GSE173646</h1>
+
+    <li>Series_title: Transcriptomic analysis of Caenorhabditis elegans treated with mitochondrial Na+/Ca2+ exchanger
+        inhibitor CGP37157 vs untreated control.
+    </li>
+    <li>Series_summary: We report that CGP37157 improved the evolution with age of the sarcomeric regular structure,
+        delaying development of sarcopenia in C. elegans body wall muscle. Similarly, CGP37157 favoured the maintenance
+        of a regular mitochondrial structure during aging. CGP37157 induced a four-fold increase in the expression of
+        ncx-6, one of the C. elegans mitochondrial Na+/Ca2+ exchangers.
+    </li>
+    <li>Series_overall_design: Examination of 3 replicates of CGP37157 treated C.elegans and 3 replicates of control
+        C.elegans.
+    </li>
+    <li>Series_type: Expression profiling by high throughput sequencing
+        <dl class="">
+            <dt style="">WT</dt>
+            <dd style=""><b>GSM5272994</b> WT C. elegans control rep.1 [Control_rep1_02_12] | WT C. elegans control</dd>
+            <dd style="" class=""><b>GSM5272995</b> WT C. elegans control rep.2 [Control_rep2_04_12] | WT C. elegans
+                control</dd>
+            <dd style="" class=""><b>GSM5272996</b> WT C. elegans control rep.3 [Control_rep3_17_12] | WT C. elegans
+                control</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p>
+        </dl>
+        <dl class="">
+            <dt style="">CGP</dt>
+            <dd style="" class=""><b>GSM5272997</b> CGP37157 treated C.elegans rep1 [CGP_rep1_02_12] | CGP37157 treated
+                C.elegans</dd>
+            <dd style="" class=""><b>GSM5272998</b> CGP37157 treated C.elegans rep2 [CGP_rep2_04_12] | CGP37157 treated
+                C.elegans</dd>
+            <dd style="" class=""><b>GSM5272999</b> CGP37157 treated C.elegans rep3 [CGP_rep3_17_12] | CGP37157 treated
+                C.elegans</dd>
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p>
+        </dl>
+    </li>
+    <script type="text/javascript">
+        let draggedItem = null;
+
+        document.addEventListener('dragstart', (event) => {
+            if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                draggedItem = event.target;
+                event.target.style.opacity = 0.5;
+            }
+        });
+
+        document.addEventListener('dragend', (event) => {
+            if (draggedItem) {
+                draggedItem.style.opacity = '';
+                draggedItem = null;
+            }
+        });
+
+        document.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.add('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.add('drag-over');
+            }
+        });
+
+        document.addEventListener('dragleave', (event) => {
+            const target = event.target;
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+            }
+        });
+
+        document.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const target = event.target;
+
+            if (target.classList.contains('group')) {
+                target.classList.remove('dragging');
+                target.querySelector('dt').after(draggedItem);
+            } else if (target.tagName === 'DD') {
+                target.classList.remove('drag-over');
+                target.parentElement.insertBefore(draggedItem, target.nextSibling);
+            }
+
+            // Handle placeholder removal
+            const group = target.closest('.group');
+            const placeholder = group?.querySelector('.placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+        });
+
+        // Rename group functionality
+        document.addEventListener('click', (event) => {
+            if (event.target.tagName === 'DT') {
+                const dt = event.target;
+                const currentName = dt.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.style.width = '100%';
+                dt.textContent = '';
+                dt.appendChild(input);
+                input.focus();
+
+                input.addEventListener('blur', () => {
+                    const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                    dt.textContent = newName;
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        input.blur(); // Trigger blur to save the new name
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
