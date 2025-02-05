@@ -106,4 +106,4 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 
 	# debug
 	done += 1
-	if arg.debug and done >= 1: sys.exit('debugging')
+	if arg.debug and done >= 10: sys.exit('debugging')
