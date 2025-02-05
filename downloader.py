@@ -92,17 +92,18 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		gse = download(url, arg)
 		with open(gse_file, 'w') as fp: fp.write(gse)
 
-	# download RAW
+	# download RAW - sometimes it doesn't exist...
 	raw_file = f'{arg.dir}/raw/{gse_id}'
+	tar_file = raw_file + '.tar'
 	if have(raw_file, arg): continue
-	
 	url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
 	verbose = '' if arg.verbose else '--silent'
-	os.system(f'curl {verbose} "{url}" --output {raw_file}')
-		
-	#os.system(f'wget "{url}" > {raw_file}')
+	os.system(f'mkdir -p {raw_file}')
+	os.system(f'curl {verbose} "{url}" --output {tar_file}')
+	os.system(f'tar -xf {tar_file} -C {raw_file}')
+	os.system(f'rm -f {tar_file}')
 	time.sleep(arg.delay)
-	
+
 	# debug
 	done += 1
-	if arg.debug and done >= 2: sys.exit('debugging')
+	if arg.debug and done >= 1: sys.exit('debugging')
