@@ -1,0 +1,124 @@
+<html><head><title>GSE89295</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE89295.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE89295</h1>
+
+<li>Series_title: Gene expression changes in dauer defective strains
+</li><li>Series_summary: Animals change developmental fates in response to external cues. In the nematode Caenorhabditis elegans, unfavorable environmental conditions induce a state of diapause known as dauer by inhibiting the conserved DAF-2 insulin-like signaling (ILS) pathway through incompletely understood mechanisms. We previously established a role for the C. elegans dosage compensation protein DPY-21 in the control of dauer arrest and DAF-2 ILS. Here we show that dosage compensation acts through the histone H4 lysine 20 methyltransferase SET-4 to promote dauer arrest in part by repressing the X-linked ins-9 gene, which encodes a new agonist insulin-like peptide (ILP) expressed specifically in the paired ASI sensory neurons that are required for dauer bypass. ins-9 repression in dauer-constitutive mutants requires DPY-21, SET-4, and the FoxO transcription factor DAF-16, which is the main target of DAF-2 ILS. In contrast, autosomal genes encoding major agonist ILPs that promote reproductive development are not repressed by DPY-21, SET-4, or DAF-16/FoxO. Our results implicate the dosage compensation machinery as a sensory rheostat that reinforces developmental fates in response to environmental cues by modulating autocrine and paracrine DAF-2 ILS.
+</li><li>Series_overall_design: 35 total samples, 7 strains collected in 5 replicates each. C elegans larvae were grown for 24 hr at 25C (developmental stage L2D in eak-7;akt-1 background). L2D animals were compared to wild type animals and dauer-defective compound mutants deficient in daf-16, dpy-21, set-4 or daf-12.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM2365454</b> 45549-WT-7 | whole organisim | whole organisim</dd>
+<dd style=""><b>GSM2365463</b> 45558-WT-8 | whole organisim | whole organisim</dd>
+<dd style=""><b>GSM2365461</b> 45556-WT-6 | whole organisim | whole organisim</dd>
+<dd style=""><b>GSM2365481</b> 45576-WT-10 | whole organisim | whole organisim</dd>
+<dd style=""><b>GSM2365472</b> 45567-WT-9 | whole organisim | whole organisim</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2365455</b> 45550-DAF-16;EAK-7;AKT-1-7 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365464</b> 45559-DAF-16;EAK-7;AKT-1-8 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365462</b> 45557-DAF-16;EAK-7;AKT-1-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365473</b> 45568-DAF-16;EAK-7;AKT-1-9 | whole organisim | whole organisim</dd>
+                <dd class="" style=""><b>GSM2365482</b> 45577-DAF-16;EAK-7;AKT-1-10 | whole organisim | whole organisim</dd>
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2365458</b> 45553-SET-4(N4600);EAK-7;AKT-1-7 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365485</b> 45580-SET-4(N4600);EAK-7;AKT-1-10 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365471</b> 45566-SET-4(N4600);EAK-7;AKT-1-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365476</b> 45571-SET-4(N4600);EAK-7;AKT-1-9 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365467</b> 45562-SET-4(N4600);EAK-7;AKT-1-8 | whole organisim | whole organisim</dd>
+                
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM2365468</b> 45563-SET-4(DP268);EAK-7;AKT-1-8 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365486</b> 45581-SET-4(DP268);EAK-7;AKT-1-10 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365479</b> 45574-SET-4(DP268);EAK-7;AKT-1-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365477</b> 45572-SET-4(DP268);EAK-7;AKT-1-9 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365459</b> 45554-SET-4(DP268);EAK-7;AKT-1-7 | whole organisim | whole organisim</dd>
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM2365487</b> 45582-EAK-7;AKT-1 DPY-21-10 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365480</b> 45575-EAK-7;AKT-1 DPY-21-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365478</b> 45573-EAK-7;AKT-1 DPY-21-9 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365460</b> 45555-EAK-7;AKT-1 DPY-21-7 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365469</b> 45564-EAK-7;AKT-1 DPY-21-8 | whole organisim | whole organisim</dd>
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2365470</b> 45565-EAK-7;AKT-1-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365475</b> 45570-EAK-7;AKT-1-9 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365457</b> 45552-EAK-7;AKT-1-7 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365484</b> 45579-EAK-7;AKT-1-10 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365466</b> 45561-EAK-7;AKT-1-8 | whole organisim | whole organisim</dd>
+                
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2365483</b> 45578-EAK-7;AKT-1;DAF-12-10 | whole organisim | whole organisim</dd>
+                <dd class="" style=""><b>GSM2365456</b> 45551-EAK-7;AKT-1;DAF-12-7 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365474</b> 45569--EAK-7;AKT-1;DAF-12-9 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365488</b> 45583--EAK-7;AKT-1;DAF-12-6 | whole organisim | whole organisim</dd><dd class="" style=""><b>GSM2365465</b> 45560-EAK-7;AKT-1;DAF-12-8 | whole organisim | whole organisim</dd>
+                
+            <p>Tags: other, other, whole, hermaphrodite, some</p></dl></body></html>

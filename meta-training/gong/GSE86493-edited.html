@@ -1,0 +1,108 @@
+<html><head><title>GSE86493</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE86493.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE86493</h1>
+
+<li>Series_title: Vitamin D Promotes Protein Homeostasis and Longevity via the Stress Response Pathway Genes SKN-1, IRE-1, and XBP-1
+</li><li>Series_summary: Vitamin D is a secosteroid that has multiple regulatory roles including the regulation of bone and calcium homeostasis. Deficiency of 25-hydroxyvitamin D, the major circulating form of vitamin D, is associated with an increased risk of age-related chronic diseases including Alzheimer’s disease, Parkinson’s disease, cognitive impairment, and cancer. In this study, we utilized Caenorhabditis elegans to examine the mechanism by which vitamin D influences aging. We found that Vitamin D3-induced lifespan extension requires the stress response pathway genes SKN-1, IRE-1, and XBP-1. Vitamin D3 induced expression of SKN-1 target genes, but not canonical targets of IRE-1/XBP-1. Vitamin D3 suppressed an important molecular pathology of aging, that of widespread protein insolubility, and prevented the toxicity caused by human β-amyloid. Our observation that vitamin D3 improves protein homeostasis and slows aging highlights the importance of maintaining appropriate vitamin D serum levels, and may explain why such a wide variety of human age-related diseases are associated with a vitamin D deficiency.
+</li><li>Series_overall_design: The experimental design consisted of contrasting gene expression data derived from RNA extracted from pools of synchronized aged worms. L4 worms were placed on either vehicle (DMSO) or Vitamin D (100uM) for 44 hours prior to extraction. A pool of 50 worms was considered a single biological replicate. For the Vitamin D treated group, there were 6 independent biological replicates, and were compared with a group of untreated (vehicle) wild-type N2 animals, also using 6 biological replicates.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM2304552</b> Wild-type pool Vehicle 6 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304550</b> Wild-type pool Vehicle 4 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304548</b> Wild-type pool Vehicle 2 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304547</b> Wild-type pool Vehicle 1 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304549</b> Wild-type pool Vehicle 3 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304551</b> Wild-type pool Vehicle 5 | Pool of C. elegans (40 individuals)</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM2304554</b> Wild-type-VitD treated 2 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304556</b> Wild-type-VitD treated 4 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304558</b> Wild-type-VitD treated 6 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304553</b> Wild-type-VitD treated 1 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304557</b> Wild-type-VitD treated 5 | Pool of C. elegans (40 individuals)</dd>
+<dd style=""><b>GSM2304555</b> Wild-type-VitD treated 3 | Pool of C. elegans (40 individuals)</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>

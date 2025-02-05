@@ -1,0 +1,106 @@
+<html><head><title>GSE83216</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE83216.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE83216</h1>
+
+<li>Series_title: Developmental transcriptomes of the two sexes in Caenorhabditis elegans during sexual maturation
+</li><li>Series_summary: We compare whole-animal RNA-seq transcriptomes for C. elegans males and hermaphrodites from the late L3 larval stage to young adulthood. During this interval, male sexual structures develop, including extensive neurogenesis and synaptogenesis that nearly doubles the size of the nervous system. Previous genome-wide expression studies in C. elegans have usually focused on only one sex – the hermaphrodite, and there are a relatively large number of predicted genes that still remain without meaningful annotation. In the present study, differential expression analysis of the RNA-seq data revealed 1,751 genes expressed at a higher level in the male. By differential expression analysis, unbiased gene correlation analysis, and a guilt-by-association approach, we identified new transcription factors required for differentiation of male genital structures, semen proteins, and candidates for previously-unknown components for synapse function. The results validate the dataset as a rich resource for future gene discovery in C. elegans.
+</li><li>Series_overall_design: To analyze gene expression during sexual maturation in C. elegans, we performed RNA-seq for five samples for each sex ranging at 6 hr intervals from late L3 to young adult stages
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM2196417</b> H3-42-46h_after_hatching_herma | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196416</b> H2-36-40h_after_hatching_herma | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196419</b> H5-54-58h_after_hatching_herma | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196418</b> H4-48-52h_after_hatching_herma | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196415</b> H1-30-34h_after_hatching_herma | Whole-animal | him-5</dd>
+<p>Tags: WT, mixed, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM2196421</b> M2-36-40h_after_hatching_male | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196424</b> M5-54-58h_after_hatching_male | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196420</b> M1-30-34h_after_hatching_male | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196423</b> M4-48-52h_after_hatching_male | Whole-animal | him-5</dd>
+<dd style=""><b>GSM2196422</b> M3-42-46h_after_hatching_male | Whole-animal | him-5</dd>
+<p>Tags: WT, mixed, whole, male, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>

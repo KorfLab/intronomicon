@@ -1,0 +1,118 @@
+<html><head><title>GSE91073</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE91073.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE91073</h1>
+
+<li>Series_title: RNA-seq of N2 and lin-45(n2018) mutant C.elegans responses to osmotic stress
+</li><li>Series_summary: We profiled how animals RNA expression changes in response to osmotic stress, how lin-45 mutants have an altered response to osmotic stress, and how maternal preconditioning at 300 mM NaCl modifies progeny response to 500 mM NaCl
+</li><li>Series_overall_design: Examination of total RNAseq at 50 mM NaCl, 500 mM NaCl, and 500 mM NaCl from maternally preconditioned animals
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+
+<dd class="" style=""><b>GSM2420546</b> lin-45 50 mM 1 | embryos</dd>
+
+<dd class="" style=""><b>GSM2420547</b> lin-45 50 mM 2 | embryos</dd>
+<p>Tags: other, specific, whole, hermaphrodite, some</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+
+
+<dd class="" style=""><b>GSM2420545</b> N2 50 mM 2 | embryos</dd>
+
+<dd class="" style=""><b>GSM2420544</b> N2 50 mM 1 | embryos</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM2420551</b> lin-45 500 mM 2 | embryos</dd><dd class="" style=""><b>GSM2420550</b> lin-45 500 mM 1 | embryos</dd>
+                
+            <p>Tags: other, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM2420548</b> N2 500 mM 1 | embryos</dd><dd class="" style=""><b>GSM2420549</b> N2 500 mM 2 | embryos</dd>
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2420552</b> N2 300-500 mM 1 | embryos</dd><dd class="" style=""><b>GSM2420553</b> N2 300-500 mM 2 | embryos</dd>
+                
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, some</p></dl></body></html>

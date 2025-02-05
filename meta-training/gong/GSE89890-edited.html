@@ -1,0 +1,136 @@
+<html><head><title>GSE89890</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE89890.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE89890</h1>
+
+<li>Series_title: Gene regulation by small RNAs and ADAR RNA editing #-# Transcriptome analysis of C. elegans embryos lacking ADARs and the 26G pathway
+</li><li>Series_summary: This SuperSeries is composed of the SubSeries listed below. #-# Adenosine deaminases that act on RNA (ADARs) catalyze the conversion of adenosine to inosine in dsRNA. C. elegans ADARs, ADR-1 and ADR-2, promote the expression of genes containing dsRNA structures by preventing their processing into siRNAs and silencing by RNAi. The 26G endogenous siRNA (endo-siRNA) pathway generates a subset of siRNAs distinct from those made in adr-1;adr-2 mutants, but using many of the same factors. We found that adr-1;adr-2;rrf-3 mutants, lacking both ADARs and the RNA-dependent RNA polymerase RRF-3 required for the 26G pathway, display a bursting phenotype rescued by the RNAi factors RDE-1 and RDE-4. To determine what gene expression changes underlie the synthetic phenotype of adr-1;adr-2;rrf-3 mutants, we sequenced poly(A)+ RNA from adr-1;adr-2;rrf-3 embryos, their parent strains, and strains rescued with mutations in rde-1 and rde-4. We found that genes associated with edited structures were robustly downregulated in adr-1;adr-2;rrf-3 mutants in a manner partially dependent on rde-1 and rde-4. Additionally, genes induced during Orsay virus infections were induced in rrf-3 mutants and further upregulated in adr-1;adr-2;rrf-3 mutants, again dependent in part on rde-1 and rde-4.
+</li><li>Series_overall_design: Refer to individual Series #-# RNAseq of poly(A)+ RNA from C.elegans mixed-stage embryos, four biological replicates per genotype, six genotypes: wildtype (Bristol N2), adr-1(uu49);adr-2(uu28), rrf-3(uu56), adr-1(uu49);adr-2(uu28);rrf-3(uu56), adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-1(uu51), and adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-4(uu53).
+</li><li>Series_type: Expression profiling by high throughput sequencing #-# Third-party reanalysis #-# Non-coding RNA profiling by high throughput sequencing #-# Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM2844441</b> N2_3 | Mixed-stage embryos | Bristol N2</dd>
+<dd style=""><b>GSM2844429</b> N2_1 | Mixed-stage embryos | Bristol N2</dd>
+<dd style=""><b>GSM2844435</b> N2_2 | Mixed-stage embryos | Bristol N2</dd>
+<dd style=""><b>GSM2844447</b> N2_4 | Mixed-stage embryos | Bristol N2</dd>
+<p>Tags: WT, mixed, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+
+
+
+
+
+
+
+
+<dd class="" style=""><b>GSM2844431</b> rrf3_1 | Mixed-stage embryos | rrf-3(uu56)</dd>
+
+
+
+<dd class="" style=""><b>GSM2844437</b> rrf3_2 | Mixed-stage embryos | rrf-3(uu56)</dd>
+<dd class="" style=""><b>GSM2844449</b> rrf3_4 | Mixed-stage embryos | rrf-3(uu56)</dd>
+
+<dd class="" style=""><b>GSM2844443</b> rrf3_3 | Mixed-stage embryos | rrf-3(uu56)</dd>
+
+
+
+
+<p>Tags: other, mixed, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2844442</b> adr_3 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28)</dd><dd class="" style=""><b>GSM2844430</b> adr_1 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28)</dd><dd class="" style=""><b>GSM2844448</b> adr_4 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28)</dd><dd class="" style=""><b>GSM2844436</b> adr_2 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28)</dd>
+                
+                
+            <p>Tags: other, mixed, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2844433</b> adr_rrf3_rde1_1 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-1(uu51)</dd><dd class="" style=""><b>GSM2844451</b> adr_rrf3_rde1_4 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-1(uu51)</dd>
+                <dd class="" style=""><b>GSM2844439</b> adr_rrf3_rde1_2 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-1(uu51)</dd><dd class="" style=""><b>GSM2844445</b> adr_rrf3_rde1_3 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-1(uu51)</dd>
+                
+            <p>Tags: other, mixed, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2844434</b> adr_rrf3_rde4_1 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-4(uu53)</dd><dd class="" style=""><b>GSM2844452</b> adr_rrf3_rde4_4 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-4(uu53)</dd>
+                <dd class="" style=""><b>GSM2844440</b> adr_rrf3_rde4_2 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-4(uu53)</dd><dd class="" style=""><b>GSM2844446</b> adr_rrf3_rde4_3 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56);rde-4(uu53)</dd>
+                
+            <p>Tags: other, mixed, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt><dd class="" style=""><b>GSM2844444</b> adr_rrf3_3 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56)</dd><dd class="" style=""><b>GSM2844450</b> adr_rrf3_4 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56)</dd><dd class="" style=""><b>GSM2844438</b> adr_rrf3_2 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56)</dd>
+                <dd class="" style=""><b>GSM2844432</b> adr_rrf3_1 | Mixed-stage embryos | adr-1(uu49);adr-2(uu28);rrf-3(uu56)</dd>
+                
+            <p>Tags: other, mixed, whole, hermaphrodite, none</p></dl></body></html>

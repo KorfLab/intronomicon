@@ -24,10 +24,21 @@
 | GSE73589     | L4 and neuron                                       | 1 different insult as dose <br> 2 differnt strain
 | GSE76773     | nuclear signal stuff                                | 1 WT and mutant
 | GSE77976     | again, nuclear stuff                                | 1 different stress condition
-| GSE78878     | 
-| GSE79375     | dsRNA and development
-| GSE79567     | stress and nucleosomes
+| GSE78878     | 1                                                   | 1
+| GSE79375     | dsRNA and development                               | 1
+| GSE79567     | stress and nucleosomes                              | 1
 | GSE79822     | localization stuff                                  | 1 RNA are being used by RNAi
+| GSE81707     | epigenetic silencing at an endogenous locus         | 1 can't find what's HD12
+| GSE83216     | sexual maturation                                   | 1 late L3 stage to adult <br> 2 herma and male
+| GSE83239     | mir-60 miRNA and stree                              | 1
+| GSE85442     | RNAi and mix staged embryo                          | 1
+| GSE86077     | RNAi and longvity                                   | 1
+| GSE86493     | Vitamine D and longevity and stree                  | 1 they call DMSO as vehicle which is weird
+| GSE89295     | daf-d, L2D                                          | 1 tons of GSM <br> 2 do we consider L2D as mixed stage? 
+| GSE89890     | mixed stage, embryo                                 | 1
+| GSE91073     | osnmotic stress, mutant, WT                         | 1
+| GSE94077     | nonsense-mediated mRNA decay, daf-2                 | 1
+| GSE94412     | AXIN mutant, PRY-1(mu38)                            | 1
 
 ## multi-linked GSE ##
 
