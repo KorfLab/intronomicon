@@ -15,3 +15,10 @@ In the order of use (-ish)
 - `xmltoy.py` something for debugging and exploring xml files
 - `notes.md` random stuff the devs are currently thinking about
 
+
+## Notes ##
+
+- Don't go after the raw files
+- Need to use the FTP site
+	- Check regularity of the files there
+- Refactored the soft2text and this breaks lots of things
