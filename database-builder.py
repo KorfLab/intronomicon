@@ -6,27 +6,7 @@ import sqlite3
 import sys
 import time
 
-import sraxml
-
-def soft2text(path, fields):
-	with open(path) as fp: text = fp.read()
-	lines = text.split('!')
-	m = re.search(r'^\^\S+ = (\S+)', lines[0])
-	uid = m.group(1)
-	d = {}
-	for line in lines[1:]:
-		f = line.split()
-		if len(f) == 0: continue
-		f = line.split()
-		k = f[0]
-		v = ' '.join(f[2:])
-		if k not in d: d[k] = v
-		else: d[k] += f' #-# {v}'
-
-	output = [f'{k}: {d[k]}' for k in fields if k in d]
-	text = ' #+# '.join(output).replace('"', '')
-
-	return uid, text
+from ncbi_reader import sraxml_read, soft2text
 
 ## CLI ##
 
@@ -102,7 +82,7 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 	if arg.debug and n >= 10: break
 
 	# read sra and ensure geo
-	with open(filename) as fp: data, status = sraxml.read(fp)
+	with open(filename) as fp: data, status = sraxml_read(fp)
 	if data is None: continue
 	if data['taxid'] != arg.taxid:
 		print(data['taxid'], arg.taxid)

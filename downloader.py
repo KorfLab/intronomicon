@@ -7,7 +7,7 @@ import requests
 import sys
 import time
 
-import sraxml
+from ncbi_reader import sraxml
 
 def download(url, arg):
 	for _ in range(arg.retry + 1):
@@ -93,16 +93,16 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		with open(gse_file, 'w') as fp: fp.write(gse)
 
 	# download RAW - sometimes it doesn't exist...
-	raw_file = f'{arg.dir}/raw/{gse_id}'
-	tar_file = raw_file + '.tar'
-	if have(raw_file, arg): continue
-	url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
-	verbose = '' if arg.verbose else '--silent'
-	os.system(f'mkdir -p {raw_file}')
-	os.system(f'curl {verbose} "{url}" --output {tar_file}')
-	os.system(f'tar -xf {tar_file} -C {raw_file}')
-	os.system(f'rm -f {tar_file}')
-	time.sleep(arg.delay)
+	#raw_file = f'{arg.dir}/raw/{gse_id}'
+	#tar_file = raw_file + '.tar'
+	#if have(raw_file, arg): continue
+	#url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
+	#verbose = '' if arg.verbose else '--silent'
+	#os.system(f'mkdir -p {raw_file}')
+	#os.system(f'curl {verbose} "{url}" --output {tar_file}')
+	#os.system(f'tar -xf {tar_file} -C {raw_file}')
+	#os.system(f'rm -f {tar_file}')
+	#time.sleep(arg.delay)
 
 	# debug
 	done += 1
