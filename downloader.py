@@ -7,7 +7,7 @@ import requests
 import sys
 import time
 
-from ncbi_reader import sraxml
+from ncbi_reader import sraxml_read
 
 def download(url, arg):
 	for _ in range(arg.retry + 1):
@@ -41,7 +41,8 @@ parser.add_argument('--verbose', action='store_true',
 	help='print status messages')
 arg = parser.parse_args()
 
-os.system(f'mkdir -p {arg.dir}/sra {arg.dir}/gsm {arg.dir}/gse {arg.dir}/raw')
+subs = ('sra', 'gsm', 'gse')
+for sub in subs: os.system(f'mkdir -p {arg.dir}/{sub}')
 
 base = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils'
 taxid = f'term=txid{arg.taxid}[Organism]'
@@ -72,7 +73,7 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		with open(sfile, 'w') as fp: fp.write(sra)
 
 	# download gsm txt file, also get GSE id
-	data, status = sraxml.read(io.StringIO(sra))
+	data, status = sraxml_read(io.StringIO(sra))
 	if data is None: continue
 	if not data['gsm_id']: continue
 	gsm_file = f'{arg.dir}/gsm/{data["gsm_id"]}.txt'
@@ -92,18 +93,6 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		gse = download(url, arg)
 		with open(gse_file, 'w') as fp: fp.write(gse)
 
-	# download RAW - sometimes it doesn't exist...
-	#raw_file = f'{arg.dir}/raw/{gse_id}'
-	#tar_file = raw_file + '.tar'
-	#if have(raw_file, arg): continue
-	#url = f'https://www.ncbi.nlm.nih.gov/geo/download/?acc={gse_id}&format=file'
-	#verbose = '' if arg.verbose else '--silent'
-	#os.system(f'mkdir -p {raw_file}')
-	#os.system(f'curl {verbose} "{url}" --output {tar_file}')
-	#os.system(f'tar -xf {tar_file} -C {raw_file}')
-	#os.system(f'rm -f {tar_file}')
-	#time.sleep(arg.delay)
-
 	# debug
 	done += 1
-	if arg.debug and done >= 10: sys.exit('debugging')
+	if arg.debug and done >= 1: sys.exit('debugging')

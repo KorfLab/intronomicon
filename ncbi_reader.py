@@ -22,18 +22,21 @@ def soft2text(path, fields):
 
 	return uid, text
 
-def soft_read(path):
+def soft_read(fp):
 	d = {}
-	with open(path) as fp:
-		for line in fp:
-			f = line[1:-1].split(maxsplit=2)
-			if len(f) != 3: continue
-			tag = f[0]
-			val = f[2]
-			if tag not in d: d[tag] = []
-			d[tag].append(val)
+	toplevel = None
+	for line in fp:
+		if line.startswith('^'):
+			toplevel = line[1:-1]
+			d[toplevel] = {}
+			continue
+		f = line[1:-1].split(maxsplit=2)
+		if len(f) != 3: continue
+		tag = f[0]
+		val = f[2]
+		if tag not in d[toplevel]: d[toplevel][tag] = []
+		d[toplevel][tag].append(val)
 	return d
-	
 
 ##############################################################################
 
