@@ -3,6 +3,7 @@ GSE        GSMs       Score      Crews   Keys    Crew Names
 GSE78878   4          4.219      4       15      ian, henry, dean, gong                  
 GSE138059  12         2.438      2       13      ian, henry                              
 GSE58141   8          2.25       3       12      riya, dean, gong                        
+GSE137267  6          2.25       3       9       ian, henry, gong                        
 GSE213367  9          2          2       8       ian, henry                              
 GSE57351   15         1.95       2       13      dean, gong                              
 GSE245892  28         1.839      2       2       ian, henry                              
@@ -13,7 +14,7 @@ GSE190099  6          1.583      2       2       ian, henry
 GSE83216   10         1.55       4       4       ian, henry, dean, gong                  
 GSE274478  15         1.55       2       3       ian, henry                              
 GSE168597  10         1.55       2       2       ian, henry                              
-GSE122097  18         1.5        2       12      ian, henry                              
+GSE122097  18         1.5        3       18      ian, henry, gong                        
 GSE189437  12         1.5        2       8       ian, henry                              
 GSE245899  12         1.5        2       8       ian, henry                              
 GSE138035  12         1.5        2       8       ian, henry                              
@@ -35,26 +36,29 @@ GSE212511  8          1.438      2       2       ian, henry
 GSE213802  8          1.438      2       2       ian, henry                              
 GSE169089  8          1.438      2       2       ian, henry                              
 GSE229142  8          1.438      2       2       ian, henry                              
+GSE122544  20         1.4        3       8       ian, henry, gong                        
+GSE122728  15         1.4        3       6       ian, henry, gong                        
+GSE136826  12         1.375      3       5       ian, henry, gong                        
 GSE273339  6          1.375      2       3       ian, henry                              
-GSE137112  6          1.375      2       3       ian, henry                              
 GSE173367  6          1.375      2       3       ian, henry                              
 GSE272146  6          1.375      2       3       ian, henry                              
 GSE211807  6          1.375      2       3       ian, henry                              
 GSE247108  4          1.375      2       2       ian, henry                              
-GSE101524  18         1.312      4       21      ian, henry, dean, yusuf                 
 GSE151916  7          1.286      2       4       ian, henry                              
-GSE101910  11         1.284      4       7       ian, henry, dean, yusuf                 
-GSE100929  9          1.25       4       10      ian, henry, dean, yusuf                 
+GSE120335  10         1.28       5       8       ian, henry, dean, yusuf, gong           
+GSE102300  5          1.28       5       4       ian, henry, dean, yusuf, gong           
+GSE101645  12         1.25       5       10      ian, henry, dean, yusuf, gong           
+GSE121091  9          1.25       4       6       ian, henry, yusuf, gong                 
 GSE121920  12         1.25       3       6       ian, henry, yusuf                       
 GSE85442   4          1.25       3       6       ian, henry, gong                        
-GSE137267  6          1.25       2       6       ian, henry                              
+GSE137112  6          1.25       3       3       ian, henry, gong                        
 GSE211747  9          1.25       2       5       ian, henry                              
 GSE173287  9          1.25       2       5       ian, henry                              
 GSE228858  4          1.25       2       4       ian, henry                              
 GSE190124  12         1.25       2       4       ian, henry                              
 GSE272419  9          1.25       2       3       ian, henry                              
 GSE83239   14         1.205      4       15      ian, henry, dean, gong                  
-GSE121091  9          1.167      3       5       ian, henry, yusuf                       
+GSE100929  9          1.2        5       12      ian, henry, dean, yusuf, gong           
 GSE151340  6          1.167      2       4       ian, henry                              
 GSE173646  6          1.167      2       4       ian, henry                              
 GSE151216  6          1.167      2       4       ian, henry                              
@@ -63,6 +67,7 @@ GSE189660  6          1.167      2       4       ian, henry
 GSE55988   12         1.156      4       9       henry, dean, reese, gong                
 GSE59705   8          1.156      2       3       dean, gong                              
 GSE272616  45         1.15       2       17      ian, henry                              
+GSE101647  24         1.137      5       23      ian, henry, dean, yusuf, gong           
 GSE81707   8          1.125      4       8       ian, henry, dean, gong                  
 GSE79567   4          1.125      4       4       ian, henry, dean, gong                  
 GSE229132  30         1.125      2       15      ian, henry                              
@@ -72,18 +77,13 @@ GSE137861  12         1.125      2       6       ian, henry
 GSE168081  8          1.125      2       4       ian, henry                              
 GSE138029  8          1.125      2       4       ian, henry                              
 GSE245980  8          1.125      2       4       ian, henry                              
-GSE101647  24         1.109      4       19      ian, henry, dean, yusuf                 
-GSE120335  10         1.1        4       8       ian, henry, dean, yusuf                 
-GSE102300  5          1.1        4       4       ian, henry, dean, yusuf                 
+GSE101524  18         1.1        5       22      ian, henry, dean, yusuf, gong           
 GSE151731  45         1.1        2       18      ian, henry                              
-GSE122544  20         1.1        2       8       ian, henry                              
-GSE122728  15         1.1        2       6       ian, henry                              
 GSE151035  10         1.1        2       4       ian, henry                              
 GSE248324  10         1.1        2       4       ian, henry                              
-GSE101645  12         1.062      4       10      ian, henry, dean, yusuf                 
+GSE101910  11         1.1        5       11      ian, henry, dean, yusuf, gong           
 GSE190068  24         1.062      2       10      ian, henry                              
 GSE230640  12         1.062      2       5       ian, henry                              
-GSE136826  12         1.062      2       5       ian, henry                              
 GSE232747  18         1          2       8       ian, henry                              
 GSE151714  18         1          2       8       ian, henry                              
 GSE76773   5          1          2       4       riya, gong                              
