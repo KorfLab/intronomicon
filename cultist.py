@@ -15,7 +15,7 @@ def commonsize(sizes):
 	return common
 
 
-actions = ('stats')
+actions = ('stats', 'smg')
 
 parser = argparse.ArgumentParser(description='reads intronomica and stuff')
 parser.add_argument('database', help='database name (e.g. something.db)')
@@ -49,3 +49,7 @@ if arg.action == 'stats':
 	print("Read lengths")
 	for p, a in plen.items(): print(p, min(a), max(a), commonsize(a))
 
+if arg.action == 'smg':
+	cur.execute(f'SELECT nts, rlen, gsm_txt FROM run INNER JOIN experiment ON experiment.srx_id = run.srx_id WHERE rlen > 99 and gsm_txt like "%smg%"')
+	for nts, rlen, txt in cur.fetchall():
+		print(f'{nts/rlen/1000000:.1f}\t{txt}')
