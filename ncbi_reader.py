@@ -1,3 +1,4 @@
+import gzip
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -22,20 +23,23 @@ def soft2text(path, fields):
 
 	return uid, text
 
-def soft_read(fp):
+def soft_read(filename):
 	d = {}
 	toplevel = None
-	for line in fp:
-		if line.startswith('^'):
-			toplevel = line[1:-1]
-			d[toplevel] = {}
-			continue
-		f = line[1:-1].split(maxsplit=2)
-		if len(f) != 3: continue
-		tag = f[0]
-		val = f[2]
-		if tag not in d[toplevel]: d[toplevel][tag] = []
-		d[toplevel][tag].append(val)
+	with gzip.open(filename) as fp:
+		for line in fp:
+			line = line.decode('latin1')
+			if line.startswith('^'):
+				toplevel = line[1:-1]
+				d[toplevel] = {}
+				continue
+			elif line.startswith('!'):
+				f = line[1:-1].split(maxsplit=2)
+				if len(f) != 3: continue
+				tag = f[0]
+				val = f[2]
+				if tag not in d[toplevel]: d[toplevel][tag] = []
+				d[toplevel][tag].append(val)
 	return d
 
 ##############################################################################
