@@ -39,9 +39,24 @@
 | GSE91073     | osnmotic stress, mutant, WT                         | 1
 | GSE94077     | nonsense-mediated mRNA decay, daf-2                 | 1
 | GSE94412     | AXIN mutant, PRY-1(mu38)                            | 1
+| GSE100929    | smg, L4 stage                                       | 1
+| GSE101524    | temperature, diet                                   | 1 one new diet called Bsub lead to different interaction with temerpature
+| GSE101645    | lin-22 mutant, L3                                   | 1 well, in paper there are more staged data
+| GSE101647    | transcriptome, pathogen, time insult, innate immune responses               | 1 Myzocytiopsis humicola is oocyte pathogen of C.elegans 
+| GSE101910    | indole, aging                                       | 1
+| GSE102300    | neuron, adult, mutant                               | 1 edIs6 cannot tell what does this mean, but GSMxxxx49 48 is wt
+| GSE120335    | SMA, survival motor neuron                          | 1 SMA is Spinal muscular atrophy <br> 2 insult not sure
+| GSE121091    | innate immune responses,  OP50 as food, adult       | 1
+| GSE122097    | mito-cytoplasmic translational, longevity, RNAi     | 1 what's the catalog for monosomal, polysomal, total RNA
+| GSE122544    | NPR-8, pathogen infection                           | 1 pathogen here is P. aeruginosa
+| GSE122728    | nanoparticle toxin, incubation worm                 | 1 L1 stage in paper mentioned
+| GSE136826    | UV irrdiation, RNA seq                              | 1 L1 in GSM detail
+| GSE137112    | pathogen infection, mutant                          | 1 P.aeruginosa PA14
+| GSE137267    | crazy neuron stuff                                  | 1 
 
 ## multi-linked GSE ##
 
 | GSE ID   |  PubMedID  | Reason
 |:--------:|:----------:|:------ 
 | GSE55988 | 23935515   | In paper, they obvious test way more than this.
+| GSE122728| 1          | in paper, they have way more nanoparticle
