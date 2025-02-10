@@ -43,14 +43,14 @@ parser.add_argument('--taxid', default='6239',
 	help='NCBI taxonomy identifier [e.g. C. elegans is %(default)s]')
 parser.add_argument('--delay', type=float, default=0.5,
 	help='delay between download requests [%(default).2f]')
-parser.add_argument('--retry', type=int, default=3,
+parser.add_argument('--retry', type=int, default=5,
 	help='number of times to retry after download failure [%(default)i]')
 parser.add_argument('--verbose', action='store_true',
 	help='print status messages')
 parser.add_argument('--debug', action='store_true')
 arg = parser.parse_args()
 
-subs = ('gds_txt', 'gse_soft', 'gsm_soft', 'sra_xml')
+subs = ('gds_txt', 'gse_soft', 'gse_supp', 'gsm_soft', 'sra_xml')
 for sub in subs: os.system(f'mkdir -p {arg.dir}/{sub}')
 
 ##############################################################################
@@ -104,7 +104,7 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 		run(f'wget -P {arg.dir}/gse_soft "{soft_url}"', check=True, shell=True)
 		if os.path.getsize(gse_file) > 100000: # has embedded microarray shit
 			os.unlink(gse_file)
-			os.system(f'touch {gse_file}')
+			os.system(f'touch {gse_file}') # pretend we have it
 	except: # wget fails (URL has no soft file)
 		failures.append(('soft-fail', soft_url))
 		continue
@@ -113,13 +113,11 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 	with open(gds_file, 'w') as fp: print(gds_text, file=fp)	
 	if arg.debug: break
 
-print('gds failures', failures)
-
-#sys.exit('end of part 1')
-
-
 ##############################################################################
 # PART 2: Select the GSEs worth exploring
+#  - RNA-Seq
+#  - Not mixtures of RNA-Seq with other stuff
+#  - Have supplementary gene expression files
 ##############################################################################
 
 for path in glob.glob(f'{arg.dir}/gse_soft/*'):
@@ -170,7 +168,8 @@ for path in glob.glob(f'{arg.dir}/gse_soft/*'):
 	if len(bios) != len(sras): sys.exit('wtf')
 	
 	# find files that may be gene expression counts
-	not_wanted = ('RAW.tar', '.bw', '.bigwig', '.pdf', '.txt')
+	not_wanted = ('RAW.tar', '.bw', '.bigwig', '.pdf', 'pdf.gz', '.txt',
+		'.bedgraph.gz', '.fasta.gz', '.wig.gz')
 	keep = []
 	skey = findkeys(d, 'SERIES')[0]
 	if 'Series_supplementary_file' not in d[skey]: continue
@@ -184,23 +183,37 @@ for path in glob.glob(f'{arg.dir}/gse_soft/*'):
 		keep.append(filename)
 	if len(keep) == 0: continue
 	
+	gse_id = skey.split()[2]
+	gse_dir = f'{arg.dir}/gse_supp/{gse_id}'
+	os.system(f'mkdir -p {gse_dir}')
+	
+	for url in keep:
+		filename = url.split('/')[-1]
+		filepath = f'{gse_dir}/{filename}'
+		if os.path.exists(filepath):
+			if arg.verbose: print('skipping', filepath)
+			continue
+		try:
+			run(f'wget -P {gse_dir} "{url}"', check=True, shell=True)
+			time.sleep(0.5) # change to arg
+		except:
+			gse_fails.append(url)
+			continue
+		
 	# retrieve GSMs (just the good ones, is this even necessary?)
 	for k, sdata in d.items():
 		if not k.startswith('SAMPLE'): continue
 		gsm_id = should_be_one(sdata['Sample_geo_accession'])
 		gsm_file = f'{arg.dir}/gsm_soft/{gsm_id}.txt'
 		if os.path.exists(gsm_file):
-			with open(gsm_file) as fp: gsm_txt = fp.read()
+			if arg.verbose: print('skipping', gsm_file)
+			continue
 		else:
 			base = f'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='
 			query = f'{gsm_id}&targ=self&view=brief&form=text'
 			gsm_txt = retrieve(f'{base}{query}', arg)
 			with open(gsm_file, 'w') as fp: fp.write(gsm_txt)
-		
-
-sys.exit('end of part 2')
-
-
+	
 
 ##############################################################################
 # PART 3: Download XML from SRA
@@ -212,12 +225,12 @@ taxid = f'term=txid{arg.taxid}[Organism]'
 
 # initial request to get number of records
 url = f'{base}/esearch.fcgi?db=sra&{taxid}&retmax=1'
-txt = download(url, arg)
+txt = retrieve(url, arg)
 n = int(re.search(r'<Count>(\d+)</Count>', txt).group(1))
 
 # full request of all records
 url = f'{base}/esearch.fcgi?db=sra&{taxid}&retmax={n}'
-txt = download(url, arg)
+txt = retrieve(url, arg)
 
 # download each XML file
 done = 0
@@ -228,15 +241,11 @@ for m in re.finditer(r'<Id>(\d+)</Id>', txt):
 	sfile = f'{arg.dir}/sra_xml/{uid}.xml'
 	sra = None # to be filled
 	if os.path.exists(sfile):
-		with open(sfile) as fp: sra = fp.read()
+		if arg.verbose: print('skipping', sfile)
+		continue
 	else:
 		url = f'{base}/efetch.fcgi?db=sra&id={uid}&rettype=xml&retmode=text'
-		sra = download(url, arg)
+		sra = retrieve(url, arg)
 		if sra is None: continue
 		with open(sfile, 'w') as fp: fp.write(sra)
 
-
-
-##############################################################################
-# PART 4: Connect best GSEs to SRAs
-##############################################################################
