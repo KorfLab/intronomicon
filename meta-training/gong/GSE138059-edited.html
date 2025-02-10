@@ -1,0 +1,130 @@
+<html><head><title>GSE138059</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE138059.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE138059</h1>
+
+<li>Series_title: Transgenerational inheritance of acquired memory and epigenetic imprints through maternal gametes
+</li><li>Series_summary: Transgenerational inheritance of acquired traits/characteristics from ancestors is believed to play important roles in evolution, as well as health problems/symptoms not due to “classical genetic inheritance”. However, the central enigma, such as how the acquired transgenerational characteristics are developed, and how the acquired traits are transmitted from generations to generations of offspring, largely remained veiled. In this study, we used C elegans as a model system and provide evidence that the dynamic of H3K27me3 as a hallmark and regulator for the gut-mediated transgenerational inheritance of acquired traits. Further, we demonstrate that yolk proteins guide the establishment of the acquired epigenetic imprints in soma, as well as determines the transgenerational inheritance of epigenetic imprints and subsequent acquired behavior in offspring by maternal provision. Taken together, our findings support that yolk proteins both function as a systemic “non-nuclear factor” for establishing the somatic epigenetic imprints and as a “cargo” to transmit acquired epigenetic information to the subsequent generations through oocytes.
+</li><li>Series_overall_design: For bulk RNA-Seq, 6 samples were analyzed. For both naïve and trained condition samples there are 3 replicates. The naïve samples were considered reference sample. For barcoded single organ RNA-Seq, 4 samples were analyzed. For germline and intestine, one naïve sample and one PA14 trained sample were used. The naïve samples were considered reference sample. For barcoded single cell RNA-Seq of worm PVD and OLL neuron, 2 samples were analyzed, one naïve sample and one PA14 trained sample. The naïve sample was considered reference sample.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+
+<dd class="" style=""><b>GSM4097608</b> N2 trained PVD OLL RNA Seq | PVD and OLL neuron of worm | PVD and OLL neuron of worm</dd>
+<p>Tags: WT, specific, specific, hermaphrodite, some</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd class="" style=""><b>GSM4097601</b> N2 trained bulk-RNA Seq rep2 | bulk worms | whole worm</dd>
+<dd class="" style=""><b>GSM4097602</b> N2 trained bulk-RNA Seq rep3 | bulk worms | whole worm</dd>
+<dd class="" style=""><b>GSM4097600</b> N2 trained bulk-RNA Seq rep1 | bulk worms | whole worm</dd>
+
+
+
+<p>Tags: WT, specific, whole, hermaphrodite, some</p></dl>
+<dl class=""><dt style="">C3</dt>
+<dd class="" style=""><b>GSM4097604</b> N2 trained intestine RNA Seq | worm intestines | intestine of worm</dd>
+
+
+
+<p>Tags: WT, specific, specific, hermaphrodite, some</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM4097603</b> N2 naive intestine RNA Seq | worm intestines | intestine of worm</dd>
+                
+            <p>Tags: WT, specific, specific, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM4097597</b> N2 naive bulk-RNA Seq rep1 | bulk worms | whole worm</dd><dd class="" style=""><b>GSM4097599</b> N2 naive bulk-RNA Seq rep3 | bulk worms | whole worm</dd><dd class="" style=""><b>GSM4097598</b> N2 naive bulk-RNA Seq rep2 | bulk worms | whole worm</dd>
+                
+            <p>Tags: WT, specific, whole, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM4097607</b> N2 naive PVD OLL RNA Seq | PVD and OLL neuron of worm | PVD and OLL neuron of worm</dd>
+                
+            <p>Tags: WT, specific, specific, hermaphrodite, none</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM4097606</b> N2 trained germline RNA Seq | worm germline | germline of worm</dd>
+                
+            <p>Tags: WT, specific, specific, hermaphrodite, some</p></dl><dl class="">
+                <dt style="">New Group</dt>
+                <dd class="" style=""><b>GSM4097605</b> N2 naive germline RNA Seq | worm germline | germline of worm</dd>
+                
+            <p>Tags: WT, specific, specific, hermaphrodite, none</p></dl></body></html>

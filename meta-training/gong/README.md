@@ -53,6 +53,16 @@
 | GSE136826    | UV irrdiation, RNA seq                              | 1 L1 in GSM detail
 | GSE137112    | pathogen infection, mutant                          | 1 P.aeruginosa PA14
 | GSE137267    | crazy neuron stuff                                  | 1 
+| GSE137861    | immune, age insult, daf2                            | 1
+| GSE138029    | ELT-7, differentiation, late L4, time interval      | 1
+| GSE138035    | RNAi, LPIN-1, glucose media                         | 1
+| GSE138059    | tissue specific, trained PA15                       | 1
+| GSE138129    | RNAi VRK-1, isp-1 mutant                            | 1 
+| GSE151035    | sma-3 mutant                                        | 1 Spinal Muscular Atrophy (SMA) type x
+| GSE151216    | QR descendants                                      | 1 something related to neuroblasts
+| GSE151340    | histone methylation and etc                         | 1
+| GSE151399    | DEAD-box helicase, NAB protein                      | 1 how cell regulation determine spatiotemperal manner
+| GSE151714    | Ago proteins                                        | 1
 
 ## multi-linked GSE ##
 
@@ -60,3 +70,5 @@
 |:--------:|:----------:|:------ 
 | GSE55988 | 23935515   | In paper, they obvious test way more than this.
 | GSE122728| 1          | in paper, they have way more nanoparticle
+| GSE151035| 1          | missing 5 sma-6 GSM data
+| 
