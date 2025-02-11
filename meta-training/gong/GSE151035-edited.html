@@ -1,0 +1,106 @@
+<html><head><title>GSE151035</title></head>
+<body><div style="float: right; margin: 10px;"><img src="png/GSE151035.png" style="float:right;width:600px;height:400px;"></div>
+<h1>GSE151035</h1>
+
+<li>Series_title: Gene expression profile of sma-3 mutant Caenorhabditis elegans
+</li><li>Series_summary: N2 (wildtype) control animals vs. sma-3 mutants vs. sma-6 mutants; 5 replicates each.
+</li><li>Series_overall_design: N2 (wildtype) control animals vs. sma-3 mutants vs. sma-6 mutants; 5 replicates each.
+</li><li>Series_type: Expression profiling by high throughput sequencing
+<dl class=""><dt style="">C1</dt>
+<dd style=""><b>GSM4564639</b> sma-3_3_S16 | C. elegans whole animal | whole animal | sma-3</dd>
+<dd style=""><b>GSM4564642</b> sma-3_9rep_S19 | C. elegans whole animal | whole animal | sma-3</dd>
+<dd style=""><b>GSM4564641</b> sma-3_5_S18 | C. elegans whole animal | whole animal | sma-3</dd>
+<dd style=""><b>GSM4564640</b> sma-3_4_S17 | C. elegans whole animal | whole animal | sma-3</dd>
+<dd style=""><b>GSM4564638</b> sma-3_2_S15 | C. elegans whole animal | whole animal | sma-3</dd>
+<p>Tags: other, specific, whole, hermaphrodite, none</p></dl>
+<dl class=""><dt style="">C2</dt>
+<dd style=""><b>GSM4564636</b> N2_L2_4_S13 | C. elegans whole animal | whole animal | WT</dd>
+<dd style=""><b>GSM4564633</b> N2_L2_1_S10 | C. elegans whole animal | whole animal | WT</dd>
+<dd style=""><b>GSM4564634</b> N2_L2_2_S11 | C. elegans whole animal | whole animal | WT</dd>
+<dd style=""><b>GSM4564637</b> N2_L2_5_S14 | C. elegans whole animal | whole animal | WT</dd>
+<dd style=""><b>GSM4564635</b> N2_L2_3_S12 | C. elegans whole animal | whole animal | WT</dd>
+<p>Tags: WT, specific, whole, hermaphrodite, none</p></dl>
+
+
+</li><script type="text/javascript">
+                let draggedItem = null;
+
+                document.addEventListener('dragstart', (event) => {
+                    if (event.target.tagName === 'DD' && !event.target.classList.contains('placeholder')) {
+                        draggedItem = event.target;
+                        event.target.style.opacity = 0.5;
+                    }
+                });
+
+                document.addEventListener('dragend', (event) => {
+                    if (draggedItem) {
+                        draggedItem.style.opacity = '';
+                        draggedItem = null;
+                    }
+                });
+
+                document.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.add('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.add('drag-over');
+                    }
+                });
+
+                document.addEventListener('dragleave', (event) => {
+                    const target = event.target;
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                    }
+                });
+
+                document.addEventListener('drop', (event) => {
+                    event.preventDefault();
+                    const target = event.target;
+
+                    if (target.classList.contains('group')) {
+                        target.classList.remove('dragging');
+                        target.querySelector('dt').after(draggedItem);
+                    } else if (target.tagName === 'DD') {
+                        target.classList.remove('drag-over');
+                        target.parentElement.insertBefore(draggedItem, target.nextSibling);
+                    }
+
+                    // Handle placeholder removal
+                    const group = target.closest('.group');
+                    const placeholder = group?.querySelector('.placeholder');
+                    if (placeholder) {
+                        placeholder.remove();
+                    }
+                });
+
+                // Rename group functionality
+                document.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'DT') {
+                        const dt = event.target;
+                        const currentName = dt.textContent.trim();
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = currentName;
+                        input.style.width = '100%';
+                        dt.textContent = '';
+                        dt.appendChild(input);
+                        input.focus();
+
+                        input.addEventListener('blur', () => {
+                            const newName = input.value.trim() || currentName; // Fallback to old name if input is empty
+                            dt.textContent = newName;
+                        });
+
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                input.blur(); // Trigger blur to save the new name
+                            }
+                        });
+                    }
+                });
+            </script></body></html>
