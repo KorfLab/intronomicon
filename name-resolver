@@ -14,19 +14,29 @@ while (<DATA>) {
 	$idx{$ncbi}{$wbg} = 1;
 }
 
-while (my $token = <>) {
-	chomp $token;
+my @missed;
+my @multi;
+while (<>) {
+	chomp;
+	my ($token, $other) = split(/\t/, $_, 2);
+	my $wbgene;
 	if (exists $idx{$token}) {
 		if (scalar keys %{$idx{$token}} == 1) {
-			print keys %{$idx{$token}}, "\n";
+			($wbgene) = keys %{$idx{$token}};
+			print $wbgene, "\t", $other, "\n";
 		} else {
-			# might want to choose best if possible
-			print "multiple\n";
+			push @multi, $token;
 		}
 	} else {
-		# might want to look for most similar
-		print "NA\n";
+		push @missed, $token;
 	}
+}
+
+if (@missed) {
+	print STDERR "Missed ", scalar(@missed), ": @missed\n";
+}
+if (@multi) {
+	print STDERR "Multi ", scalar(@multi), ": @multi\n";
 }
 
 
