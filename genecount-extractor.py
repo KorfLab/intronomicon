@@ -1,0 +1,50 @@
+import argparse
+import gzip
+import sys
+
+from openpyxl import load_workbook
+
+def extract_excel(arg):
+	workbook = load_workbook(arg.file)
+	sheet_names = workbook.sheetnames
+	sheet = workbook[sheet_names[arg.sheet -1]]
+	genes = [cell.value for cell in sheet[arg.gene]]
+	fpkms = [cell.value for cell in sheet[arg.fpkm]]
+	for gene, fpkm in zip(genes[arg.header:], fpkms[arg.header:]):
+		if fpkm and fpkm > arg.min_count: print(gene, fpkm, sep='\t')
+
+def extract_text(arg, sep=None):
+	gcol = int(arg.gene) -1
+	fcol = int(arg.fpkm) -1
+	if arg.file.endswith('.gz'): fp = gzip.open(arg.file)
+	else: fp = open(arg.file, 'rb')
+	for line in fp.read().decode().splitlines()[arg.header:]:
+		f = line.split(sep)
+		gene = f[gcol]
+		fpkm = float(f[fcol])
+		if fpkm and fpkm > arg.min_count: print(gene, fpkm, sep='\t')
+
+parser = argparse.ArgumentParser(description='extract gene, counts from file')
+parser.add_argument('file')
+parser.add_argument('gene', help='column identifier for gene names')
+parser.add_argument('fpkm', help='column identifier for gene counts')
+parser.add_argument('--tsv', action='store_true',
+	help='force TSV parsing')
+parser.add_argument('--csv', action='store_true',
+	help='force CSV parsing')
+parser.add_argument('--min-count', type=float, default=1e-4,
+	help='skip over genes with low counts [%(default)i]')
+parser.add_argument('--sheet', type=int, default=1,
+	help='use specific sheet number for excel files [%(default)i]')
+parser.add_argument('--header', type=int, default=1,
+	help='skip <int> header rows [%(default)i]')
+arg = parser.parse_args()
+
+if   arg.file.endswith('.xlsx'): extract_excel(arg)
+elif arg.file.endswith('.csv'): extract_text(arg, sep=',')
+elif arg.file.endswith('.tsv'): extract_text(arg, sep='\t')
+elif arg.file.endswith('.csv.gz'): extract_text(arg, sep=',')
+elif arg.file.endswith('.tsv.gz'): extract_text(arg, sep='\t')
+elif arg.tsv: extract_text(arg, sep='\t')
+elif arg.csv: extract_text(arg, sep=',')
+
