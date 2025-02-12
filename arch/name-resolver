@@ -2,8 +2,8 @@
 use strict;
 use warnings FATAL => 'all';
 use Getopt::Std;
-our ($opt_d, $opt_m);
-getopts('d:m:');
+our ($opt_d, $opt_m, $opt_h);
+getopts('d:m:h');
 $| = 1;
 
 die "
@@ -11,12 +11,13 @@ usage: $0 <tsv>
 options:
   -d <duplicates>
   -m <missing>
-" unless @ARGV > 0;
+" if $opt_h;
 
 my %idx;
 while (<DATA>) {
 	chomp;
 	my ($wbg, $psi, $name, $wpep, $uni, $ncbi) = split(/\t/, $_);
+	$idx{$wbg}{$wbg} = 1;
 	$idx{$psi}{$wbg} = 1;
 	$idx{$name}{$wbg} = 1;
 	$idx{$wpep}{$wbg} = 1;
