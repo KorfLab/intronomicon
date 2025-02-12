@@ -1,7 +1,17 @@
 #!/usr/bin/perl
 use strict;
 use warnings FATAL => 'all';
+use Getopt::Std;
+our ($opt_d, $opt_m);
+getopts('d:m:');
 $| = 1;
+
+die "
+usage: $0 <tsv>
+options:
+  -d <duplicates>
+  -m <missing>
+" unless @ARGV > 0;
 
 my %idx;
 while (<DATA>) {
@@ -32,11 +42,20 @@ while (<>) {
 	}
 }
 
-if (@missed) {
-	print STDERR "Missed ", scalar(@missed), ": @missed\n";
+if ($opt_m) {
+	open(my $fhm, ">$opt_m") or die;
+	foreach my $missed (@missed) {
+		print $fhm "$missed\n";
+	}
+	close $fhm;
 }
-if (@multi) {
-	print STDERR "Multi ", scalar(@multi), ": @multi\n";
+
+if ($opt_d) {
+	open(my $fhd, ">$opt_d") or die;
+	foreach my $multi (@multi) {
+		print $fhd "$multi\n";
+	}
+	close $fhd;
 }
 
 
