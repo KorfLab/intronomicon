@@ -1,12 +1,13 @@
 import argparse
 import glob
+import json
 import os
 import re
 import sqlite3
 import sys
 import time
 
-from ncbi_reader import sraxml_read, soft2text
+from ncbi_reader import sraxml_read, soft_read
 
 ## CLI ##
 
@@ -37,9 +38,8 @@ tables = [
 		FOREIGN KEY (srx_id) REFERENCES experiment (srx_id))""",
 	"""CREATE TABLE experiment(
 		srx_id TEXT PRIMARY KEY,
-		gse_id TEXT,
 		gsm_id TEXT,
-		gsm_txt TEXT,
+		gse_id TEXT,
 		platform TEXT,
 		model TEXT,
 		paired INTEGER CHECK (paired in (0, 1)),
@@ -50,7 +50,6 @@ tables = [
 		rlen INTEGER,
 		srx_id TEXT,
 		aligned INTEGER CHECK (aligned in (0, 1)),
-		labeled INTEGER CHECK (labeled in (0, 1)),
 		locked INTEGER CHECK (locked in (0, 1)),
 		FOREIGN KEY (srx_id) REFERENCES experiment (srx_id))""",
 	"""CREATE TABLE series(
@@ -64,11 +63,31 @@ if create_tables:
 
 # gse table
 n = 0
-for filename in glob.glob(f'{arg.dir}/gse/*'):
+for filename in glob.glob(f'{arg.dir}/gse_soft/*'):
 	if arg.debug and n >= 10: break
 	n += 1
-	gse_id, gse_txt = soft2text(filename, ('Series_title', 'Series_summary',
-		'Series_overall_design', 'Series_type', 'Series_sample_id'))
+	thing = soft_read(filename)
+	if not thing: continue # e.g. microarray
+	skey = [x for x in thing.keys() if x.startswith('SERIES')][0]
+	series = thing[skey]
+	
+	# want 1 of platform taxid and sample taxid
+	taxids = set()
+	check = ('Series_platform_taxid', 'Series_sample_taxid')
+	for tag in check:
+		if tag not in series: continue
+		for taxid in series[tag]: taxids.add(taxid)
+	if len(taxid) > 1: continue # for now
+	#print('ok', taxid)
+	if arg.taxid not in taxid:
+		print(taxid)
+		print(json.dumps(series, indent=3))
+		sys.exit('wtf')
+
+#	print(json.dumps(series, indent=2))
+#	sys.exit()
+	gse_id = series['Series_geo_accession'][0]
+	gse_txt = series['Series_title'][0].replace('""', "'")
 	rows = '(gse_id, gse_txt)'
 	vals = f'("{gse_id}", "{gse_txt}")'
 	try:
@@ -76,9 +95,11 @@ for filename in glob.glob(f'{arg.dir}/gse/*'):
 	except:
 		sys.exit(f'series table write error {rows} {vals}')
 
+
 # experiment and run tables
 n = 0
-for filename in glob.glob(f'{arg.dir}/sra/*'):
+for filename in glob.glob(f'{arg.dir}/sra_xml/*'):
+	n += 1
 	if arg.debug and n >= 10: break
 
 	# read sra and ensure geo
@@ -88,35 +109,35 @@ for filename in glob.glob(f'{arg.dir}/sra/*'):
 		print(data['taxid'], arg.taxid)
 		sys.exit(f'taxid mismatch ')
 	if not data['gsm_id']: continue
-	gsm_id, gsm_txt = soft2text(f'{arg.dir}/gsm/{data["gsm_id"]}.txt',
-		('Sample_source_name_ch1', 'Sample_title', 'Sample_description',
-		'Sample_molecule_ch1', 'Sample_library_selection',
-		'Sample_library_strategy', 'Sample_characteristics_ch1',
-		'Sample_series_id'))
-	assert(gsm_id == data['gsm_id'])
-	m = re.search(r'Sample_series_id: (GSE\d+)', gsm_txt) # keeping 1 GSE
-	gse_id = m.group(1) # note: a sample can appear in more than one series
-	n += 1
+	gsm_file = f'{arg.dir}/gsm_soft/{data["gsm_id"]}.txt'
+	if not os.path.exists(gsm_file): continue
+	
+	thing = soft_read(gsm_file)
+	skey = [x for x in thing.keys() if x.startswith('SAMPLE')][0]
+	sample = thing[skey]
+	gsm_id = sample['Sample_geo_accession'][0]
+	gsm_txt = sample['Sample_characteristics_ch1'][0].replace('""', "'")
+	gse_id = sample['Sample_series_id'][0]
 
 	# experiment table
 	srx = data['srx_id']
 	plt = data['platform']
 	mod = data['model']
 	par = data['paired']
-	rows = '(srx_id, gse_id, gsm_id, gsm_txt, platform, model, paired)'
-	vals = f'("{srx}", "{gse_id}", "{gsm_id}", "{gsm_txt}", "{plt}", "{mod}", {par})'
+	rows = '(srx_id, gsm_id, gse_id, platform, model, paired)'
+	vals = f'("{srx}", "{gsm_id}", "{gse_id}", "{plt}", "{mod}", {par})'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO experiment {rows} VALUES {vals}')
 	except:
 		sys.exit(f'experiment table write error {rows} {vals}')
-
+	
 	# run table
 	for run in data['runs']:
 		rid = run['run_id']
 		nts = run['nts']
 		rlen = int(run['nts'] / run['seqs'])
-		rows = '(srr_id, nts, rlen, srx_id, aligned, labeled, locked)'
-		vals = f'("{rid}", {nts}, {rlen}, "{srx}", 0, 0, 0)'
+		rows = '(srr_id, nts, rlen, srx_id, aligned, locked)'
+		vals = f'("{rid}", {nts}, {rlen}, "{srx}", 0, 0)'
 		try:
 			cur.execute(f'INSERT OR IGNORE INTO run {rows} VALUES {vals}')
 		except:
