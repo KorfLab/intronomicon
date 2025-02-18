@@ -77,24 +77,17 @@ for filename in glob.glob(f'{arg.dir}/gse_soft/*'):
 	for tag in check:
 		if tag not in series: continue
 		for taxid in series[tag]: taxids.add(taxid)
-	if len(taxid) > 1: continue # for now
-	#print('ok', taxid)
-	if arg.taxid not in taxid:
-		print(taxid)
-		print(json.dumps(series, indent=3))
-		sys.exit('wtf')
-
-#	print(json.dumps(series, indent=2))
-#	sys.exit()
+	if len(taxids) > 1: continue # for now
+	if arg.taxid not in taxid: sys.exit('wtf')
 	gse_id = series['Series_geo_accession'][0]
 	gse_txt = series['Series_title'][0].replace('""', "'")
 	rows = '(gse_id, gse_txt)'
 	vals = f'("{gse_id}", "{gse_txt}")'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO series {rows} VALUES {vals}')
+		con.commit()
 	except:
 		sys.exit(f'series table write error {rows} {vals}')
-
 
 # experiment and run tables
 n = 0
@@ -117,8 +110,9 @@ for filename in glob.glob(f'{arg.dir}/sra_xml/*'):
 	sample = thing[skey]
 	gsm_id = sample['Sample_geo_accession'][0]
 	gsm_txt = sample['Sample_characteristics_ch1'][0].replace('""', "'")
-	gse_id = sample['Sample_series_id'][0]
-
+	gse_id = sample['Sample_series_id'][0] # could be more than one?
+	#print(sample['Sample_series_id']) yes, but dead before here
+	
 	# experiment table
 	srx = data['srx_id']
 	plt = data['platform']
@@ -128,6 +122,7 @@ for filename in glob.glob(f'{arg.dir}/sra_xml/*'):
 	vals = f'("{srx}", "{gsm_id}", "{gse_id}", "{plt}", "{mod}", {par})'
 	try:
 		cur.execute(f'INSERT OR IGNORE INTO experiment {rows} VALUES {vals}')
+		con.commit()
 	except:
 		sys.exit(f'experiment table write error {rows} {vals}')
 	
@@ -140,8 +135,8 @@ for filename in glob.glob(f'{arg.dir}/sra_xml/*'):
 		vals = f'("{rid}", {nts}, {rlen}, "{srx}", 0, 0)'
 		try:
 			cur.execute(f'INSERT OR IGNORE INTO run {rows} VALUES {vals}')
+			con.commit()
 		except:
 			sys.exit(f'run table write error {rows} {vals}')
 
-con.commit()
 con.close()
