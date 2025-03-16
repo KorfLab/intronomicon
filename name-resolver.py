@@ -6,11 +6,11 @@ import sys
 
 def tx2gene(uid):
 	f = uid.split('.')
-	if   len(f) == 0: return ''
+	if   len(f) < 2: return ''
 	elif len(f) == 2: clone, gene = f
 	elif len(f) == 3: clone, gene, iso = f
-	else: sys.exit('wtf')
-	
+	else: sys.exit(f'wtf {f}')
+
 	if   gene[-1].isdigit(): return f'{clone}.{gene}'
 	elif gene[-1].isalpha(): return f'{clone}.{gene[:-1]}'
 
@@ -51,8 +51,8 @@ for wbid in names:
 if arg.file == '-': fp = sys.stdin
 else: fp = open(arg.file)
 
-missing = []
-multiple = []
+missing = set()
+multiple = set()
 for line in fp:
 	line = line.rstrip()
 	f = line.split(maxsplit=1)
@@ -60,21 +60,21 @@ for line in fp:
 		uid = line
 		stuff = None
 	else: uid, stuff = f
-	
+
 	if uid not in lookup:
 		uid = tx2gene(uid) # try transcript ID instead
 		if uid not in lookup:
-			missing.append(uid)
+			missing.add(uid)
 			continue
-	
+
 	if len(lookup[uid]) > 1:
-		multiple.append(uid)
+		multiple.add(uid)
 		continue
 	if stuff is None:
 		print(lookup[uid])
 	else:
-		print(lookup[uid], stuff, sep='\t')
+		print(lookup[uid][0], stuff, sep='\t')
 
 
-print('missing:', missing)
-print('multiple:', multiple)
+print('missing:', missing, file=sys.stderr)
+print('multiple:', multiple, file=sys.stderr)

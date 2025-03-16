@@ -6,6 +6,19 @@ import sys
 
 from openpyxl import load_workbook
 
+def guess_file_type(arg):
+	if arg.file.endswith('.gz'): fp = gzip.open(arg.file)
+	else: fp = open(arg.file, 'rb')
+	tsv = 0
+	csv = 0
+	for i, line in enumerate(fp.read().decode().splitlines()):
+		if '\t' in line: tsv += 1
+		if ',' in line: csv += 1
+		if i == 10: break
+	if tsv == 0 and csv == 11: return 'csv'
+	if csv == 0 and tsv == 11: return 'tsv'
+	return None
+
 def extract_excel(arg):
 	workbook = load_workbook(arg.file)
 	sheet_names = workbook.sheetnames
@@ -49,4 +62,8 @@ elif arg.file.endswith('.csv.gz'): extract_text(arg, sep=',')
 elif arg.file.endswith('.tsv.gz'): extract_text(arg, sep='\t')
 elif arg.tsv: extract_text(arg, sep='\t')
 elif arg.csv: extract_text(arg, sep=',')
-
+else:
+	ft = guess_file_type(arg)
+	if   ft == 'tsv': extract_text(arg, sep='\t')
+	elif ft == 'csv': extract_text(arg, sep=',')
+	else: sys.exit('unknown file type')
