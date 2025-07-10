@@ -1,0 +1,68 @@
+GSE104500|RNA-Seq of L4 C. elegans
+GSE104501|Poly(A) Tail Length of L4 C. elegans
+GSE109692|Sequencing of Caenorhabditis elegans wildtype strain (N2) treated with T25B9.1 RNAi for  5 days after L4 larvae stage.
+GSE110835|Sequencing of Caenorhabditis elegans treated with L4440, M05B5.3 and T14F9.5 at two different time points
+GSE110839|Sequencing of Caenorhabditis elegans treated with L4440 and 6B3B.9
+GSE110841|Sequencing of Caenorhabditis elegans wildtype strain (N2) treated with T25B9.1 RNAi for 2 and 5 days after L4 larvae stage.
+GSE146443|Genome-wide profiling of age-dependent changes in gene expression between L4 larvae and Day 6 adult Caenorhabditis elegans
+GSE146642|RNA sequencing of nas-38(ok4307), nas-38(tm2655) and wild type C. elegans during L4 lethargus using NextSeq500
+GSE152794|RNA-seq Analysis of wildtype (N2) C. elegans at the L4 stage on diets from the laboratory environment and natural environment
+GSE15535|Genome-wide identification of the occupancy of RNA polymerase II (POL II) at L4/young adult stage in C. elegans
+GSE156507|Comparing  the transcriptomic responses of  Caenorhabditis elegans exposed to cadmium  from L1 to  L3 versus L1 to L4 stage
+GSE176088|Next Generation Sequencing Facilitates Quantitative Analysis of aged (Day10) and young (L4) C. elegans Transcriptomes
+GSE179484|Comparison of wild-type and ctbp-1(lf) AIA neuron transcriptional profiles in L4 larval stage C. elegans
+GSE192419|C. elegans L4 hypodermal SLAM-ITseq
+GSE211807|Transcriptional profiling of Caenorhabditis elegans nematodes treated with L4440 (Empty Vector - EV) or grd-1 RNAi from L1 hatch, and collected at L3 of development.
+GSE212511|Quantitative Analysis of mid-L4 WT worms after P. aeruginosa PA01 infection for 12 hours
+GSE214300|C. elegans L4 hypodermal RNA polymerase DamID
+GSE218350|Bulk RNA-seq expression data isolated from early L4 stage C. elegans larvae
+GSE218351|Bulk RNA-seq expression data isolated from early L1 and L4 stage C. elegans larvae
+GSE23250|L3-L4_PVD_OLL_neuron_tiling_array
+GSE23262|mid-L4_25dC_36hrs_post-L1_N2_tiling_array
+GSE23267|male_mid_L4_25dC_36hrs_post-L1_CB4689_tiling_array
+GSE23271|soma-only_mid-L4_25dC_36hrs_post-L1_JK1107_tiling_array
+GSE23279|L3-L4_dopaminergic_neuron_tiling_array
+GSE23283|L3-L4_reference_tiling_array
+GSE23287|L3-L4_hypodermis_tiling_array
+GSE25793|Identification of Transcription Factor N2::POL II Binding Regions in L4
+GSE25795|Identification of Transcription Factor GEI-1::GFP Binding Regions in L4
+GSE26152|Identification of Transcription Factor PES-1::GFP Binding Regions in L4
+GSE26579|mRNA sequencing from ego-1(om84) and control L3, L4, and adult C. elegans hermaphrodites
+GSE26581|5'-monophosphate-independent small RNA sequencing from ego-1(om84) and control L3, L4, and adult C. elegans hermaphrodites
+GSE29465|Identification of Transcription Factor ZTF-7::GFP Binding Regions in L4
+GSE29467|Identification of Transcription Factor CES-1::GFP Binding Regions in L4
+GSE29469|Identification of Transcription Factor NHR-28::GFP Binding Regions in L4
+GSE29479|Identification of Transcription Factor DAF-12::GFP Binding Regions in L4
+GSE37804|Identification of Transcription Factor LIN15B::GFP Binding Regions in L4
+GSE37878|Identification of Transcription Factor FOS-1::GFP Binding Regions in L4
+GSE37882|Identification of Transcription Factor NHR-77::GFP Binding Regions in L4
+GSE38437|Identification of Transcription Factor ZAG-1::GFP Binding Regions in L4
+GSE44002|Identification of Transcription Factor AHA-1::GFP Binding Regions in L4
+GSE44003|Identification of Transcription Factor DPL-1::GFP Binding Regions in L4
+GSE44011|Identification of Transcription Factor ZK377.2::GFP Binding Regions in L4
+GSE44013|Identification of Transcription Factor NHR-116::GFP Binding Regions in L4
+GSE46766|Identification of Transcription Factor JUN-1::GFP Binding Regions in L4
+GSE46768|Snyder_ZTF-11_GFP_L4
+GSE46769|Snyder_NHR-76_GFP_L4
+GSE46772|Snyder_SKN-1_GFP_L4
+GSE46782|Snyder_LIN-13_GFP_L4
+GSE46786|Snyder_NHR-10_GFP_L4
+GSE46787|Snyder_CEH-28_GFP_L4
+GSE46790|Snyder_LSY-2_GFP_L4
+GSE48690|Identification of Transcription Factor PHA-4::GFP Binding Regions in L4
+GSE48692|Identification of Transcription Factor R02D3.7::GFP Binding Regions in L4
+GSE48708|Identification of Transcription Factor NHR-6::GFP Binding Regions in L4
+GSE48713|Identification of Transcription Factor HAM-1::GFP Binding Regions in L4
+GSE48727|Snyder_NHR-11_GFP_L4
+GSE48729|Snyder_LIN-39_GFP_L4
+GSE48730|Snyder_UNC_62_GFP_L4
+GSE48737|Snyder_FKH-10_GFP_L4
+GSE48740|Identification of Transcription Factor PHA-4::GFP Binding Regions in L4
+GSE48747|Snyder_ZIP-2_GFP_L4
+GSE48748|Snyder_DVE-1_GFP_L4
+GSE48751|Snyder_HLH-30_GFP_L4
+GSE51983|Snyder_Pmex-5_HPL-2_YL472_yAd
+GSE69262|Transcriptional profile of C. elegans following RNAi of elt-2 [L4 stage]
+GSE69263|Transcriptional profile of C. elegans following over-expression of elt-2 [L4 stage & Day 13]
+GSE75703|RNA-seq from L4 animals treated with RNAi against gfp (control), ham-3, and swsn-2.2
+GSE80807|mRNA expression profile of dop-1 mutants to wild- type animals during adulthood (L4+48 hours) using RNA-seq

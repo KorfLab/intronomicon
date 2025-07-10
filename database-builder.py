@@ -28,14 +28,14 @@ cur = con.cursor()
 
 tables = [
 	"""CREATE TABLE intron(
-		intron_id TEXT PRIMARY KEY,
+		intron_id INTEGER PRIMARY KEY,
 		chrom TEXT,
 		start INTEGER,
 		end INTEGER,
-		count INTEGER,
 		strand INTEGER CHECK (strand IN (1, -1)),
-		srx_id TEXT,
-		FOREIGN KEY (srx_id) REFERENCES experiment (srx_id))""",
+		count INTEGER,
+		info_id INTEGER,
+		FOREIGN KEY (info_id) REFERENCES info (info_id))""",
 	"""CREATE TABLE experiment(
 		srx_id TEXT PRIMARY KEY,
 		gsm_id TEXT,
